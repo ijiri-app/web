@@ -2,14 +2,19 @@ import { CapsuleStage } from "@/components/landing/CapsuleStage";
 import { FeedScreen } from "@/components/landing/FeedScreen";
 import { FeedShowcase } from "@/components/landing/FeedShowcase";
 import { Glow } from "@/components/landing/Glow";
+import { InstallButton } from "@/components/landing/InstallButton";
 import { Phone } from "@/components/landing/Phone";
+import { StoreButtons } from "@/components/landing/StoreButtons";
 import { carLines } from "@/components/landing/data";
+import { installQrSvg } from "@/lib/qr";
 
 function Logo({ className = "" }: { className?: string }) {
   return <span className={`font-logo leading-none text-text-1 ${className}`}>IJIRI</span>;
 }
 
-export default function Home() {
+export default async function Home() {
+  const qrSvg = await installQrSvg();
+
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-bg/60 backdrop-blur-xl">
@@ -22,12 +27,12 @@ export default function Home() {
             <a href="#feed" className="hover:text-text-1">피드</a>
             <a href="#cars" className="hover:text-text-1">차종</a>
           </nav>
-          <a
-            href="#download"
+          <InstallButton
+            qrSvg={qrSvg}
             className="flex h-10 items-center rounded-lg bg-surface-2 px-4 text-[15px] font-semibold text-text-1 hover:bg-surface-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
-            출시 소식
-          </a>
+            설치하기
+          </InstallButton>
         </div>
       </header>
 
@@ -51,16 +56,16 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-col items-center gap-6 md:items-start">
-                <a
-                  href="#capsule"
+                <InstallButton
+                  qrSvg={qrSvg}
                   className="relative inline-flex h-[52px] w-full items-center justify-center overflow-hidden rounded-xl bg-accent-strong px-8 text-xl font-semibold text-text-1 transition-[filter] hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:w-auto"
                 >
                   <span
                     aria-hidden
                     className="absolute -bottom-6 left-1/2 h-12 w-[200px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(140,175,255,0.9),transparent)] blur-md"
                   />
-                  <span className="relative">어떻게 보이는지 보기</span>
-                </a>
+                  <span className="relative">앱 설치하기</span>
+                </InstallButton>
                 <p className="text-[15px] text-text-2">Android 먼저 나오고, iOS는 그다음이에요</p>
               </div>
             </div>
@@ -108,19 +113,26 @@ export default function Home() {
 
         {/* 출시 안내 */}
         <section id="download" className="scroll-mt-16 bg-bg-deep">
-          <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-5 py-24 md:flex-row md:items-end md:justify-between md:px-8 md:py-28">
-            <div className="flex flex-col gap-4">
-              <h2 className="text-[28px] leading-snug font-semibold md:text-[40px]">곧 Google Play에서 만나요</h2>
-              <p className="max-w-md text-[17px] text-text-2">
-                지금은 출시를 준비하고 있어요. 앱이 나오면 이 페이지에 바로 올려 둘게요.
-              </p>
+          <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-24 md:grid-cols-[1fr_auto] md:px-8 md:py-28">
+            <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-4">
+                <h2 className="text-[28px] leading-snug font-semibold md:text-[40px]">이지리 받기</h2>
+                <p className="max-w-md text-[17px] text-text-2">
+                  Android 먼저 나오고, iOS는 그다음이에요. 출시된 스토어부터 버튼이 열려요.
+                </p>
+              </div>
+              <StoreButtons />
             </div>
-            <span
-              aria-disabled="true"
-              className="inline-flex h-[52px] cursor-not-allowed items-center rounded-xl bg-surface-3 px-8 text-lg font-semibold text-text-2"
-            >
-              Google Play 출시 준비 중
-            </span>
+            {/* PC에서는 QR을 바로 보여준다 */}
+            <div className="hidden flex-col items-center gap-3 md:flex">
+              <div
+                role="img"
+                aria-label="이지리 설치 페이지 QR 코드"
+                className="size-[180px] rounded-2xl bg-white p-3 [&>svg]:size-full"
+                dangerouslySetInnerHTML={{ __html: qrSvg }}
+              />
+              <span className="text-[13px] text-text-3">폰 카메라로 찍으면 맞는 스토어로 이동해요</span>
+            </div>
           </div>
         </section>
       </main>
