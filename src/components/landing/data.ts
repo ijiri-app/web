@@ -51,7 +51,7 @@ export const stageParts: { label: string; category: PartCategory; x: number; y: 
   { label: "카본 보닛", category: "ext", x: 44, y: 38 },
   { label: "프론트 립", category: "ext", x: 30, y: 72 },
   { label: "단조 휠", category: "und", x: 70, y: 70 },
-  { label: "차고 조절식 서스펜션", category: "und", x: 76, y: 50 },
+  { label: "코일오버", category: "und", x: 74, y: 50 },
   { label: "흡기 킷", category: "pwr", x: 20, y: 46 },
   { label: "버킷 시트", category: "int", x: 58, y: 26 },
 ];
