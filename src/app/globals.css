@@ -69,6 +69,47 @@ body {
   word-break: keep-all;
 }
 
+/* 뒷면 탭 캡슐: 스르륵 올라오기 + 캡슐 안에서만 보이는 파란 파동 */
+.capsule {
+  animation: capsule-rise 3.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+.capsule-wave {
+  background: radial-gradient(circle at 50% 50%, rgba(45, 98, 255, 0.55) 0%, rgba(45, 98, 255, 0) 60%);
+  animation: capsule-wave 3.2s ease-out infinite;
+  animation-delay: inherit;
+}
+@keyframes capsule-rise {
+  0%,
+  8% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  20%,
+  85% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+@keyframes capsule-wave {
+  0%,
+  12% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  60%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
