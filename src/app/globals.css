@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+/* Freesentation (눈누 CDN) — Figma 본문 서체 */
+@font-face {
+  font-family: "Freesentation";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-4Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Freesentation";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Freesentation";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-6SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Freesentation";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* Figma 디자인 토큰 (이지리 App 페이지) */
+@theme {
+  --color-bg: #111418;
+  --color-bg-deep: #0b0d10;
+  --color-surface-1: #1b1f26;
+  --color-surface-2: #1e222a;
+  --color-surface-3: #23272f;
+  --color-surface-4: #2a2f38;
+  --color-line-strong: #3a404c;
+
+  --color-text-1: #f2f3f5;
+  --color-text-body: #d5d8de;
+  --color-text-2: #c9cdd4;
+  --color-text-3: #969ca8;
+  --color-icon-off: #8a909c;
+  --color-muted: #6b7180;
+
+  --color-accent: #2d62ff;
+  --color-accent-strong: #1c45f8;
+
+  --color-part-ext: #2e4a6e;
+  --color-part-int: #6b4f2a;
+  --color-part-pwr: #5a2e4e;
+  --color-part-und: #2b5641;
+
+  --font-sans: "Freesentation", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-logo: var(--font-fugaz), sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text-1);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
