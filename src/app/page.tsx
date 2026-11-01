@@ -1,7 +1,6 @@
-import { FeedShowcase } from "@/components/landing/FeedShowcase";
 import { HeroPhoto } from "@/components/landing/HeroPhoto";
 import { InstallButton } from "@/components/landing/InstallButton";
-import { QrStickerSection, UploadSection, WishlistSection } from "@/components/landing/Sections";
+import { FeatureSections, QrBand } from "@/components/landing/Sections";
 import { SiteFooter } from "@/components/landing/SiteFooter";
 import { StoreButtons } from "@/components/landing/StoreButtons";
 import { installQrSvg } from "@/lib/qr";
@@ -55,14 +54,8 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Feed */}
-        <section id="feed" className="bg-[#161a20]">
-          <FeedShowcase />
-        </section>
-
-        <UploadSection />
-        <WishlistSection />
-        <QrStickerSection qrSvg={qrSvg} />
+        <FeatureSections />
+        <QrBand qrSvg={qrSvg} />
 
         {/* Download */}
         <section id="download" className="scroll-mt-4 bg-bg-deep">
