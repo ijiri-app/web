@@ -36,12 +36,12 @@ export default async function Home() {
           </div>
           <div className="pointer-events-none relative mx-auto flex max-w-[1160px] flex-col gap-10 px-5 pt-2 pb-16 md:h-full md:justify-center md:px-0 md:pt-0 md:pb-0">
             <div className="flex flex-col gap-[22px]">
-              <h1 className="text-[40px] leading-[1.16] font-bold tracking-[-0.03em] md:text-[68px]">
-                <span className="whitespace-nowrap">등업 없이 바로 보는</span>
+              <h1 className="text-[34px] leading-[1.16] font-bold tracking-[-0.03em] md:text-[68px]">
+                <span className="text-[#5b8bff]">“휠 정보 좀요”</span>
                 <br />
-                튜닝 레퍼런스
+                <span className="whitespace-nowrap">이제 안 물어봐도 돼요</span>
               </h1>
-              <p className="text-[17px] text-text-2 md:text-[19px]">오너들이 실제로 단 부품을 차종별로 모았어요</p>
+              <p className="text-[17px] text-text-2 md:text-[19px]">오너들이 실제로 단 부품이 사진 위에 다 나와 있어요</p>
             </div>
             <div className="pointer-events-auto">
               <InstallButton
