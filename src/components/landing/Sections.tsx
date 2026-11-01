@@ -7,13 +7,12 @@ import { unsplash } from "./data";
 
 const h2 = "text-[30px] leading-[1.25] font-bold tracking-[-0.02em] md:text-[48px]";
 
-function Points({ items }: { items: [string, string][] }) {
+function Points({ items }: { items: string[] }) {
   return (
     <ul className="flex flex-col gap-4 md:gap-5">
-      {items.map(([title, body]) => (
-        <li key={title} className="flex flex-col gap-1 border-t border-surface-4 pt-4 md:pt-5">
-          <span className="text-base font-bold md:text-lg">{title}</span>
-          <span className="text-sm text-text-3 md:text-base">{body}</span>
+      {items.map((title) => (
+        <li key={title} className="border-t border-surface-4 pt-4 text-base font-bold md:pt-5 md:text-lg">
+          {title}
         </li>
       ))}
     </ul>
@@ -22,7 +21,7 @@ function Points({ items }: { items: [string, string][] }) {
 
 export function UploadSection() {
   return (
-    <section className="bg-bg-deep">
+    <section id="upload" className="bg-bg-deep">
       <div className="mx-auto grid max-w-[1160px] items-center gap-10 px-5 py-20 md:grid-cols-[1fr_auto] md:gap-[120px] md:px-0 md:py-32">
         <div className="flex flex-col gap-7 max-md:contents md:gap-10">
           <h2 className={`${h2} max-md:order-1`}>
@@ -33,9 +32,9 @@ export function UploadSection() {
           <div className="max-md:order-3">
             <Points
               items={[
-                ["사진 위를 눌러 부품 태그", "익스테리어, 인테리어, 파워트레인, 하체로 나눠 달아요"],
-                ["번호판은 폰에서 가려요", "자동으로 찾고, 직접 고칠 수도 있어요"],
-                ["위치 정보는 올리기 전에 지워요", "사진에 남은 GPS 기록이 밖으로 나가지 않아요"],
+                "사진 위를 눌러 부품 태그",
+                "번호판은 폰에서 가려요",
+                "위치 정보는 올리기 전에 지워요",
               ]}
             />
           </div>
@@ -56,7 +55,7 @@ const alerts = [
 
 export function WishlistSection() {
   return (
-    <section className="bg-[#161a20]">
+    <section id="wishlist" className="bg-[#161a20]">
       <div className="mx-auto flex max-w-[1160px] flex-col gap-7 px-5 py-20 md:items-center md:gap-14 md:px-0 md:py-32 md:text-center">
         <h2 className={`${h2} max-md:text-[26px]`}>
           <span className="whitespace-nowrap">마음에 든 부품은 담아 두고,</span>
@@ -77,7 +76,6 @@ export function WishlistSection() {
             </li>
           ))}
         </ul>
-        <p className="text-sm text-text-3 md:text-base">누가 담았는지는 보이지 않고 숫자만 알려줘요</p>
       </div>
     </section>
   );
@@ -85,7 +83,7 @@ export function WishlistSection() {
 
 export function QrStickerSection({ qrSvg }: { qrSvg: string }) {
   return (
-    <section className="bg-bg-deep">
+    <section id="qr" className="bg-bg-deep">
       <div className="mx-auto grid max-w-[1160px] items-center gap-7 px-5 py-20 md:grid-cols-[520px_1fr] md:gap-[120px] md:px-0 md:py-32">
         <div className="flex flex-col gap-3 md:order-2 md:gap-4 md:self-end">
           <span className="text-sm font-bold text-[#5b8bff] md:text-[15px]">곧 나와요</span>
@@ -115,9 +113,9 @@ export function QrStickerSection({ qrSvg }: { qrSvg: string }) {
         <div className="md:order-3 md:self-start">
           <Points
             items={[
-              ["차마다 프로필과 @ID", "게시물과 단 부품이 한곳에 모여요"],
-              ["앱이 없어도 열려요", "찍으면 웹에서 바로 보고, 설치하면 그 차로 이어져요"],
-              ["스티커는 무료로 보내 드려요", "게시물이 하나 이상인 차에 한 장씩"],
+              "차마다 프로필과 @ID",
+              "앱이 없어도 열려요",
+              "스티커는 무료로 보내 드려요",
             ]}
           />
         </div>

@@ -33,3 +33,9 @@ export function liveUrl(key: StoreKey) {
   const s = stores[key];
   return s.live && s.url ? s.url : null;
 }
+
+/** 고객 문의와 SNS. 인스타그램 주소가 정해지면 instagram에 넣는다(null이면 링크 없이 표시). */
+export const contact = {
+  email: "help@ijiri.net",
+  instagram: null as string | null,
+};
