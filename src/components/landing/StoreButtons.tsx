@@ -34,7 +34,7 @@ export function StoreButtons({ className = "" }: { className?: string }) {
           <>
             {icon}
             <span className="flex flex-col items-start leading-tight">
-              <span className="text-[12px] text-text-3">{url ? sub : `${sub} · 출시 예정`}</span>
+              <span className="text-[12px] text-text-3">{url ? sub : `${sub} 출시 예정`}</span>
               <span className="text-[19px] font-bold">{stores[key].name}</span>
             </span>
           </>

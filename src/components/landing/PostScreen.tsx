@@ -26,7 +26,7 @@ export function PostScreen() {
         <span className="size-9 rounded-full bg-surface-4" />
         <div className="flex flex-col">
           <span className="text-[15px] font-semibold">m4.owner</span>
-          <span className="text-[13px] text-text-3">M4 CS · 2023 · 서킷</span>
+          <span className="text-[13px] text-text-3">M4 CS 2023년식 서킷</span>
         </div>
       </div>
       <p className="mt-3 px-5 text-xl font-semibold">주말 트랙데이 셋업</p>

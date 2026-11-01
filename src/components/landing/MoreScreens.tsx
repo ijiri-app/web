@@ -75,9 +75,9 @@ export function InterestScreen() {
 /** Figma App `09 Search / Home` */
 export function SearchScreen() {
   const recent = [
-    ["avante.n.blue", "아반떼 N · 2022 · 데일리", feedItems[3].photoId],
-    ["cn7.daily", "아반떼 N · 2023 · 스탠스", feedItems[0].photoId],
-    ["avante_ad_sport", "아반떼 스포츠 · 2016 · 서킷", feedItems[5].photoId],
+    ["avante.n.blue", "아반떼 N 2022년식 데일리", feedItems[3].photoId],
+    ["cn7.daily", "아반떼 N 2023년식 스탠스", feedItems[0].photoId],
+    ["avante_ad_sport", "아반떼 스포츠 2016년식 서킷", feedItems[5].photoId],
   ];
   const popular = [
     ["RAYS TE37", "휠"],
