@@ -77,7 +77,7 @@ export function FeedScreen({ active = "전체" }: { active?: Build }) {
             />
             <div className="mt-1 flex items-center justify-between text-[13px]">
               <span className="text-text-body">
-                {item.year}·{item.model}
+                {item.year} {item.model}
               </span>
               <span className="text-text-3">
                 부품 <span className="font-mono text-[11px]">{item.parts}</span>

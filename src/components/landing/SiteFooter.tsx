@@ -2,7 +2,7 @@ import { Mail } from "lucide-react";
 import { siInstagram } from "simple-icons";
 import { contact, liveUrl } from "@/lib/stores";
 
-/* Figma: Landing / Desktop 1440·Mobile 390 > Footer */
+/* Figma: Landing / Desktop 1440, Mobile 390 > Footer */
 
 type Link = { label: string; href: string | null };
 

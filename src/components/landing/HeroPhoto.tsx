@@ -28,7 +28,7 @@ export function HeroPhoto() {
         <CarPhoto src={unsplash(heroPhotoId, 1600)} alt="튜닝된 BMW M4 CS 오너 사진" className="size-full" />
       </button>
 
-      {/* 글자 쪽과 위·아래를 배경색으로 덮는다 */}
+      {/* 글자 쪽과 위아래를 배경색으로 덮는다 */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#0b0d10_0%,rgba(11,13,16,0.35)_35%,rgba(11,13,16,0)_60%)] max-md:bg-none"
