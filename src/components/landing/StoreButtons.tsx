@@ -35,11 +35,11 @@ export function StoreButtons({ className = "" }: { className?: string }) {
             {icon}
             <span className="flex flex-col items-start leading-tight">
               <span className="text-[12px] text-text-3">{url ? sub : `${sub} · 출시 예정`}</span>
-              <span className="text-[17px] font-semibold">{stores[key].name}</span>
+              <span className="text-[19px] font-bold">{stores[key].name}</span>
             </span>
           </>
         );
-        const base = "flex h-14 min-w-[172px] items-center gap-3 rounded-xl border px-4";
+        const base = "flex h-[60px] items-center gap-3 rounded-[14px] border pr-6 pl-[18px]";
         return (
           <li key={key}>
             {url ? (
@@ -47,12 +47,12 @@ export function StoreButtons({ className = "" }: { className?: string }) {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${base} border-line-strong bg-bg-deep text-text-1 hover:border-text-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
+                className={`${base} border-line-strong bg-black text-text-1 hover:border-text-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
               >
                 {inner}
               </a>
             ) : (
-              <span aria-disabled="true" className={`${base} cursor-not-allowed border-surface-3 bg-surface-1 text-text-2`}>
+              <span aria-disabled="true" className={`${base} cursor-not-allowed border-line-strong bg-black text-text-1 opacity-75`}>
                 {inner}
               </span>
             )}

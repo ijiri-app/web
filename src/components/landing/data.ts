@@ -46,19 +46,32 @@ export const partColor: Record<PartCategory, string> = {
   und: "bg-part-und",
 };
 
-/** 캡슐 무대 사진(BMW M4 CS) 위에 띄울 부품. x, y는 사진 기준 % 위치 */
-export const stageParts: { label: string; category: PartCategory; x: number; y: number }[] = [
-  { label: "카본 보닛", category: "ext", x: 44, y: 38 },
-  { label: "프론트 립", category: "ext", x: 30, y: 72 },
-  { label: "단조 휠", category: "und", x: 70, y: 70 },
-  { label: "코일오버", category: "und", x: 74, y: 50 },
-  { label: "흡기 킷", category: "pwr", x: 20, y: 46 },
-  { label: "버킷 시트", category: "int", x: 58, y: 26 },
-];
+export const partRing: Record<PartCategory, string> = {
+  ext: "ring-part-ext",
+  int: "ring-part-int",
+  pwr: "ring-part-pwr",
+  und: "ring-part-und",
+};
 
-export const carLines = [
-  { brand: "현대", name: "아반떼 N", note: "게시물을 가장 먼저 채우는 차종이에요" },
-  { brand: "BMW", name: "3·4시리즈, M3·M4", note: "320i와 M3처럼 트림까지 나눠 보여줘요" },
-  { brand: "현대", name: "제네시스 쿠페", note: "오래 타 온 오너들의 빌드가 많아요" },
-  { brand: "제네시스, 기아", name: "G70, 스팅어", note: "같은 뼈대에서 갈라진 셋업을 비교해요" },
+/**
+ * 히어로 사진과 부품 태그. 좌표는 사진 영역 기준 %.
+ * a = 부품 위의 점, l = 라벨이 붙는 지점(side가 left면 라벨이 그 지점의 왼쪽으로 놓임).
+ * 지금 사진은 Unsplash 임시 사진이라 실제 부품 위치와 맞는지 화면에서 확인 후 조정해야 한다.
+ */
+export const heroPhotoId = "dveDkZQJVjQ";
+
+export const heroTags: {
+  label: string;
+  category: PartCategory;
+  ax: number;
+  ay: number;
+  lx: number;
+  ly: number;
+  side: "left" | "right";
+}[] = [
+  { label: "버킷 시트", category: "int", ax: 60, ay: 42, lx: 66, ly: 22, side: "right" },
+  { label: "카본 보닛", category: "ext", ax: 50, ay: 52, lx: 44, ly: 32, side: "left" },
+  { label: "코일오버", category: "und", ax: 78, ay: 62, lx: 74, ly: 48, side: "left" },
+  { label: "단조 휠", category: "und", ax: 76, ay: 74, lx: 72, ly: 90, side: "left" },
+  { label: "프론트 립", category: "ext", ax: 42, ay: 79, lx: 30, ly: 90, side: "left" },
 ];

@@ -1,35 +1,27 @@
-import { CapsuleStage } from "@/components/landing/CapsuleStage";
-import { FeedScreen } from "@/components/landing/FeedScreen";
 import { FeedShowcase } from "@/components/landing/FeedShowcase";
-import { Glow } from "@/components/landing/Glow";
+import { HeroPhoto } from "@/components/landing/HeroPhoto";
 import { InstallButton } from "@/components/landing/InstallButton";
-import { Phone } from "@/components/landing/Phone";
+import { SiteFooter } from "@/components/landing/SiteFooter";
 import { StoreButtons } from "@/components/landing/StoreButtons";
-import { carLines } from "@/components/landing/data";
 import { installQrSvg } from "@/lib/qr";
 
-function Logo({ className = "" }: { className?: string }) {
-  return <span className={`font-logo leading-none text-text-1 ${className}`}>IJIRI</span>;
-}
+/* Figma: 이지리 > ETC > Landing / Desktop 1440 (node 502:678) */
+
+const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent";
 
 export default async function Home() {
   const qrSvg = await installQrSvg();
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-bg/60 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8">
-          <a href="#top" aria-label="이지리 홈" className="rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">
-            <Logo className="text-2xl" />
+      <header className="absolute inset-x-0 top-0 z-20">
+        <div className="mx-auto flex h-[72px] max-w-[1160px] items-center justify-between px-5 md:px-0">
+          <a href="#top" aria-label="이지리 홈" className={`rounded font-logo text-2xl leading-none ${focusRing}`}>
+            IJIRI
           </a>
-          <nav aria-label="주 메뉴" className="hidden items-center gap-8 text-[15px] text-text-2 md:flex">
-            <a href="#capsule" className="hover:text-text-1">부품 캡슐</a>
-            <a href="#feed" className="hover:text-text-1">피드</a>
-            <a href="#cars" className="hover:text-text-1">차종</a>
-          </nav>
           <InstallButton
             qrSvg={qrSvg}
-            className="flex h-10 items-center rounded-lg bg-surface-2 px-4 text-[15px] font-semibold text-text-1 hover:bg-surface-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className={`flex h-10 items-center rounded-[10px] bg-white/10 px-[18px] text-[15px] font-bold backdrop-blur-md hover:bg-white/15 ${focusRing}`}
           >
             설치하기
           </InstallButton>
@@ -37,120 +29,60 @@ export default async function Home() {
       </header>
 
       <main id="top">
-        {/* 히어로: Figma 01 Landing */}
-        <section className="relative overflow-hidden pt-16">
-          <Glow />
-          <div className="relative mx-auto grid max-w-6xl items-center gap-6 px-5 pt-[30vh] pb-16 md:grid-cols-[1.1fr_1fr] md:px-8 md:pt-16 md:pb-8">
-            <div className="flex flex-col gap-14">
-              <div className="flex flex-col gap-6">
-                <Logo className="text-2xl" />
-                <div className="flex flex-col gap-4">
-                  <h1 className="text-[36px] leading-[1.15] font-normal text-text-1 md:text-[52px] lg:text-[60px]">
-                    <span className="whitespace-nowrap">등업 없이 바로 보는</span>
-                    <br />
-                    <span className="whitespace-nowrap">
-                      튜닝 레퍼런스 <span className="text-accent">이지리</span>
-                    </span>
-                  </h1>
-                  <p className="text-[15px] text-text-2 md:text-lg">오너들이 실제로 단 부품을 차종별로 모았어요</p>
-                </div>
-              </div>
-              <div className="flex flex-col items-center gap-6 md:items-start">
-                <InstallButton
-                  qrSvg={qrSvg}
-                  className="relative inline-flex h-[52px] w-full items-center justify-center overflow-hidden rounded-xl bg-accent-strong px-8 text-xl font-semibold text-text-1 transition-[filter] hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:w-auto"
-                >
-                  <span
-                    aria-hidden
-                    className="absolute -bottom-6 left-1/2 h-12 w-[200px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(140,175,255,0.9),transparent)] blur-md"
-                  />
-                  <span className="relative">앱 설치하기</span>
-                </InstallButton>
-                <p className="text-[15px] text-text-2">Android 먼저 나오고, iOS는 그다음이에요</p>
-              </div>
+        {/* Hero */}
+        <section className="relative overflow-hidden bg-bg-deep md:h-[900px]">
+          <div className="relative aspect-[4/5] w-full md:absolute md:inset-y-0 md:right-0 md:aspect-auto md:w-[68%]">
+            <HeroPhoto />
+          </div>
+          <div className="pointer-events-none relative mx-auto flex max-w-[1160px] flex-col gap-10 px-5 pt-2 pb-16 md:h-full md:justify-center md:px-0 md:pt-0 md:pb-0">
+            <div className="flex flex-col gap-[22px]">
+              <h1 className="text-[40px] leading-[1.16] font-bold tracking-[-0.03em] md:text-[68px]">
+                <span className="whitespace-nowrap">등업 없이 바로 보는</span>
+                <br />
+                튜닝 레퍼런스
+              </h1>
+              <p className="text-[17px] text-text-2 md:text-[19px]">오너들이 실제로 단 부품을 차종별로 모았어요</p>
             </div>
-            <Phone label="이지리 앱 피드 화면" className="mx-auto hidden md:block">
-              <FeedScreen />
-            </Phone>
+            <div className="pointer-events-auto">
+              <InstallButton
+                qrSvg={qrSvg}
+                className={`inline-flex h-14 w-full items-center justify-center rounded-xl bg-accent-strong text-[19px] font-bold hover:brightness-110 md:w-[220px] ${focusRing}`}
+              >
+                앱 설치하기
+              </InstallButton>
+            </div>
           </div>
         </section>
 
-        {/* 부품 캡슐: 이 페이지에서 가장 힘을 준 곳 */}
-        <section id="capsule" className="scroll-mt-16 bg-bg-deep">
-          <CapsuleStage />
-        </section>
-
-        {/* 피드: Figma 07 Feed */}
-        <section id="feed" className="scroll-mt-16 bg-bg">
+        {/* Feed */}
+        <section id="feed" className="bg-[#161a20]">
           <FeedShowcase />
         </section>
 
-        {/* 관심 차종: Figma 02 Interest */}
-        <section id="cars" className="scroll-mt-16 border-t border-surface-3 bg-bg">
-          <div className="mx-auto grid max-w-6xl gap-12 px-5 py-24 md:grid-cols-[1fr_2fr] md:px-8 md:py-32">
-            <div className="flex flex-col gap-5">
-              <h2 className="text-[32px] leading-tight font-semibold md:text-[44px]">이 차종부터 시작해요</h2>
-              <p className="max-w-[360px] text-[17px] leading-relaxed text-text-2">
-                처음에는 네 계열에 집중하고, 차종은 게시물이 쌓이는 대로 넓혀 갈게요.
-              </p>
-            </div>
-            <ul className="flex flex-col">
-              {carLines.map((car) => (
-                <li
-                  key={car.name}
-                  className="grid gap-1 border-b border-surface-3 py-6 first:pt-0 md:grid-cols-[1fr_auto] md:items-baseline md:gap-8"
-                >
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[13px] text-text-3">{car.brand}</span>
-                    <span className="text-[28px] leading-tight font-semibold text-text-1 md:text-[36px]">{car.name}</span>
-                  </div>
-                  <span className="text-[15px] text-text-2 md:text-right">{car.note}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* 출시 안내 */}
-        <section id="download" className="scroll-mt-16 bg-bg-deep">
-          <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-24 md:grid-cols-[1fr_auto] md:px-8 md:py-28">
+        {/* Download */}
+        <section id="download" className="scroll-mt-4 bg-bg-deep">
+          <div className="mx-auto flex max-w-[1160px] flex-col gap-12 px-5 py-24 md:flex-row md:items-center md:justify-between md:px-0 md:py-32">
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-4">
-                <h2 className="text-[28px] leading-snug font-semibold md:text-[40px]">이지리 받기</h2>
-                <p className="max-w-md text-[17px] text-text-2">
-                  Android 먼저 나오고, iOS는 그다음이에요. 출시된 스토어부터 버튼이 열려요.
-                </p>
+                <h2 className="text-[36px] leading-[1.25] font-bold tracking-[-0.02em] md:text-[48px]">이지리 받기</h2>
+                <p className="text-[17px] text-text-2 md:text-lg">Android 먼저 나와요</p>
               </div>
               <StoreButtons />
             </div>
-            {/* PC에서는 QR을 바로 보여준다 */}
-            <div className="hidden flex-col items-center gap-3 md:flex">
+            <div className="hidden flex-col items-center gap-3.5 md:flex">
               <div
                 role="img"
                 aria-label="이지리 설치 페이지 QR 코드"
-                className="size-[180px] rounded-2xl bg-white p-3 [&>svg]:size-full"
+                className="size-[184px] rounded-[20px] bg-white p-4 [&>svg]:size-full"
                 dangerouslySetInnerHTML={{ __html: qrSvg }}
               />
-              <span className="text-[13px] text-text-3">폰 카메라로 찍으면 맞는 스토어로 이동해요</span>
+              <span className="text-sm text-text-3">폰 카메라로 찍으면 맞는 스토어로 이동해요</span>
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="border-t border-surface-3 bg-bg-deep">
-        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 text-[13px] text-text-3 md:flex-row md:items-center md:justify-between md:px-8">
-          <div className="flex flex-col gap-2">
-            <Logo className="text-lg" />
-            <span>오너들이 실제로 단 튜닝 부품을 차종별로 모은 레퍼런스</span>
-          </div>
-          <ul className="flex flex-wrap gap-x-5 gap-y-2" aria-label="정책 안내(준비 중)">
-            <li>이용약관</li>
-            <li>개인정보처리방침</li>
-            <li>계정 삭제 안내</li>
-          </ul>
-          <span>© 2026 IJIRI</span>
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   );
 }
