@@ -68,7 +68,7 @@ export function SiteFooter() {
                   <path d={siInstagram.path} />
                 </svg>
               }
-              label="Instagram"
+              label="@ijiri.car"
             />
           </div>
         </div>
