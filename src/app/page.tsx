@@ -81,7 +81,7 @@ export default async function Home() {
                 className="size-[184px] rounded-[20px] bg-white p-4 [&>svg]:size-full"
                 dangerouslySetInnerHTML={{ __html: qrSvg }}
               />
-              <span className="text-sm text-text-3">폰 카메라로 찍으면 맞는 스토어로 이동해요</span>
+              <span className="text-sm text-text-3">찍으면 맞는 스토어로 가요</span>
             </div>
           </div>
         </section>
