@@ -1,11 +1,12 @@
 import { FeedShowcase } from "@/components/landing/FeedShowcase";
 import { HeroPhoto } from "@/components/landing/HeroPhoto";
 import { InstallButton } from "@/components/landing/InstallButton";
+import { QrStickerSection, UploadSection, WishlistSection } from "@/components/landing/Sections";
 import { SiteFooter } from "@/components/landing/SiteFooter";
 import { StoreButtons } from "@/components/landing/StoreButtons";
 import { installQrSvg } from "@/lib/qr";
 
-/* Figma: 이지리 > ETC > Landing / Desktop 1440 (node 502:678) */
+/* Figma: 이지리 > Web > Landing / Desktop 1440 (node 502:678), Landing / Mobile 390 (node 526:218) */
 
 const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent";
 
@@ -58,6 +59,10 @@ export default async function Home() {
         <section id="feed" className="bg-[#161a20]">
           <FeedShowcase />
         </section>
+
+        <UploadSection />
+        <WishlistSection />
+        <QrStickerSection qrSvg={qrSvg} />
 
         {/* Download */}
         <section id="download" className="scroll-mt-4 bg-bg-deep">
