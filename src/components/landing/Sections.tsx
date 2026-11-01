@@ -65,8 +65,8 @@ export function WishlistSection() {
         <ul aria-label="담기 알림 예시" className="flex w-full flex-col gap-2.5 md:w-[520px] md:gap-3">
           {alerts.map((a) => (
             <li key={a.body} className={`flex items-center gap-3 rounded-[20px] bg-surface-3 px-3.5 py-3.5 text-left md:gap-3.5 md:rounded-[22px] md:px-[18px] md:py-4 ${a.fade}`}>
-              <span aria-hidden className="flex size-[38px] shrink-0 items-center justify-center rounded-[10px] bg-accent font-logo text-[13px] md:size-11 md:text-[15px]">
-                IJ
+              <span aria-hidden className="flex size-[38px] shrink-0 items-center justify-center rounded-[10px] bg-white font-logo text-[11px] leading-none text-black md:size-11 md:text-[13px]">
+                IJIRI
               </span>
               <span className="flex min-w-0 flex-1 flex-col">
                 <span className="text-sm font-bold md:text-base">이지리</span>
