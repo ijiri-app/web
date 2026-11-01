@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Figma",
+      "mcp__github",
+      "WebSearch",
+      "WebFetch"
+    ]
+  }
+}
