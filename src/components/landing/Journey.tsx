@@ -1,6 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+
+const IPhone3D = dynamic(() => import("./IPhone3D"), { ssr: false });
+const noop = () => () => {};
+const canUseWebGL = () => {
+  try {
+    const c = document.createElement("canvas");
+    return Boolean(c.getContext("webgl2") ?? c.getContext("webgl"));
+  } catch {
+    return false;
+  }
+};
+const prefersReduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export type Step = {
   id: string;
@@ -53,6 +66,8 @@ function Alerts() {
  */
 export function Journey({ steps, titleClass }: { steps: Step[]; titleClass: string }) {
   const [active, setActive] = useState(0);
+  const webgl = useSyncExternalStore(noop, canUseWebGL, () => false);
+  const reduced = useSyncExternalStore(noop, prefersReduced, () => false);
   const refs = useRef<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
@@ -70,7 +85,7 @@ export function Journey({ steps, titleClass }: { steps: Step[]; titleClass: stri
 
   return (
     <section aria-label="이지리 기능" className="bg-bg-deep">
-      <div className="mx-auto max-w-[1160px] md:grid md:grid-cols-[1fr_370px] md:gap-[100px]">
+      <div className="mx-auto max-w-[1160px] md:grid md:grid-cols-[1fr_440px] md:gap-[60px]">
         <ol className="flex flex-col">
           {steps.map((s, i) => (
             <li
@@ -97,10 +112,11 @@ export function Journey({ steps, titleClass }: { steps: Step[]; titleClass: stri
 
         {/* 데스크톱: 고정된 폰 */}
         <div className="hidden md:block">
-          <div className="sticky top-[calc(50vh-385px)] flex h-[770px] items-center justify-center">
-            <div className="relative">
-              <Device>
-                <div className="relative h-[760px] w-[360px]">
+          <div className="sticky top-[calc(50vh-410px)] flex h-[820px] items-center justify-center">
+            <div className="relative h-[820px] w-[440px]">
+              {webgl ? (
+                <IPhone3D reducedMotion={reduced}>
+                  <div className="relative h-[760px] w-[360px]">
                   {steps.map((s, i) => (
                     <div
                       key={s.id}
@@ -111,9 +127,26 @@ export function Journey({ steps, titleClass }: { steps: Step[]; titleClass: stri
                     </div>
                   ))}
                 </div>
-              </Device>
+                </IPhone3D>
+              ) : (
+                <div className="flex size-full items-center justify-center">
+                  <Device>
+                    <div className="relative h-[760px] w-[360px]">
+                  {steps.map((s, i) => (
+                    <div
+                      key={s.id}
+                      aria-hidden={active !== i}
+                      className={`absolute inset-0 transition-opacity duration-300 ${active === i ? "opacity-100" : "opacity-0"}`}
+                    >
+                      {s.screen}
+                    </div>
+                  ))}
+                </div>
+                  </Device>
+                </div>
+              )}
               <div
-                className={`absolute -top-10 -left-[300px] transition-all duration-300 ${steps[active]?.alerts ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"}`}
+                className={`absolute top-28 -left-[360px] z-10 transition-all duration-300 ${steps[active]?.alerts ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"}`}
               >
                 <Alerts />
               </div>
