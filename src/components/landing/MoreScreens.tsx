@@ -154,3 +154,51 @@ export function PickScreen() {
     </Frame>
   );
 }
+
+const lockAlerts = [
+  { title: "단조 휠을 3명이 담아 갔어요", body: "주말 트랙데이 셋업 게시물", time: "지금" },
+  { title: "오늘 내 부품을 12명이 담아 갔어요", body: "버킷 시트 5명, 코일오버 4명, 단조 휠 3명", time: "1시간 전" },
+];
+
+/**
+ * 잠금화면에 이지리 담기 알림이 도착한 장면.
+ * 폰 무대 안에서는 부모의 data-on이 true가 될 때 알림이 위에서 차례로 내려오고(globals.css .notif),
+ * 그 밖(화면 조각, 모바일)에서는 처음부터 보인다.
+ */
+export function NotificationScreen() {
+  return (
+    <Frame>
+      <CarPhoto src={unsplash(feedItems[0].photoId, 720)} alt="" className="absolute inset-0 size-full" />
+      <div aria-hidden className="absolute inset-0 bg-black/55" />
+      {/* 시계는 장식이라 글자 대신 그림으로 */}
+      <svg aria-hidden viewBox="0 0 360 200" className="absolute inset-x-0 top-[60px] w-full fill-white">
+        <text x="180" y="28" textAnchor="middle" fontSize="17" fontWeight="500">
+          11월 2일 월요일
+        </text>
+        <text x="180" y="112" textAnchor="middle" fontSize="84" fontWeight="600" letterSpacing="-1.5">
+          9:41
+        </text>
+      </svg>
+      <ul aria-label="이지리 알림" className="absolute inset-x-3 top-[262px] flex flex-col gap-2">
+        {lockAlerts.map((a) => (
+          <li key={a.title} className="notif flex items-start gap-3 rounded-[22px] bg-surface-3/95 px-3.5 py-3">
+            <span aria-hidden className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-[9px] bg-white font-logo text-[11px] leading-none text-black">
+              IJIRI
+            </span>
+            <span className="flex min-w-0 flex-1 flex-col">
+              <span className="flex items-center justify-between text-[13px]">
+                <span className="font-semibold text-text-1">이지리</span>
+                <span className="text-text-3">{a.time}</span>
+              </span>
+              <span className="text-[15px] leading-snug font-semibold text-text-1">{a.title}</span>
+              <span className="text-[13px] leading-snug text-text-2">{a.body}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+      <div aria-hidden className="absolute inset-x-0 bottom-3 flex justify-center">
+        <span className="h-[5px] w-[130px] rounded-full bg-white/80" />
+      </div>
+    </Frame>
+  );
+}
