@@ -28,10 +28,6 @@ export type Step = {
   lead: string;
   body: string;
   screen: React.ReactNode;
-  /** 문단 아래 근거 조각. 없으면 화면을 잘라서 보여 준다 */
-  evidence?: React.ReactNode;
-  /** 화면을 잘라 보여 줄 때 위에서부터 건너뛸 높이(px) */
-  crop?: number;
 };
 
 /** 모바일용 베젤 폰. 360×760 화면을 scale배로 담는다 */
@@ -54,19 +50,6 @@ const onResize = (cb: () => void) => {
   window.addEventListener("resize", cb);
   return () => window.removeEventListener("resize", cb);
 };
-
-/** 앱 화면(360×760)의 한 부분을 잘라 칼럼 폭 안에 보여 준다 */
-function ScreenCrop({ children, crop = 0 }: { children: React.ReactNode; crop?: number }) {
-  return (
-    <div data-ui className="reveal flex h-[300px] justify-center overflow-hidden rounded-[14px] bg-surface-1 pt-6">
-      <div className="h-fit overflow-hidden rounded-t-[28px]" style={{ height: 276 }}>
-        <div inert style={{ marginTop: -crop }}>
-          {children}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 /**
  * 첫 화면과 기능 설명을 한 판으로 묶은 분할 무대.
@@ -171,7 +154,7 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
         <div data-stage={-1}>{hero}</div>
 
         <section id="how" aria-labelledby="how-title" className="scroll-mt-6 px-5 pt-24 pb-10 md:px-12 lg:px-12 lg:pt-[20svh] xl:px-14">
-          <div className="lg:max-w-[560px]">
+          <div>
             {heading}
             {/* 모바일: 고정된 폰 하나. 아래 문단(ol)이 그 뒤로 지나가며 화면과 설명글을 바꾼다 */}
             <div className="relative mt-8 lg:mt-0">
@@ -194,23 +177,37 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
                   </div>
                 </div>
               )}
-              <ol className="flex flex-col lg:mt-12">
+              {/* 데스크톱: 기능 이름 전체를 고정해 두고, 지금 기능만 밝히고 한 줄 설명을 펼친다 */}
+              {wide && (
+                <div aria-hidden className="absolute inset-0 max-lg:hidden">
+                  <div className="sticky top-0 flex h-svh flex-col justify-center">
+                    <ul className="flex flex-col gap-1">
+                      {steps.map((s, i) => {
+                        const on = (active < 0 ? 0 : active) === i;
+                        return (
+                          <li key={s.id} className={`transition-colors duration-300 ${on ? "text-text-1" : "text-muted"}`}>
+                            <span className="block text-[48px] leading-[1.25] font-bold tracking-[-0.03em] xl:text-[64px]">{s.lead}</span>
+                            <span
+                              className={`grid transition-[grid-template-rows,opacity] duration-300 ${on ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                            >
+                              <span className="overflow-hidden">
+                                <span className="block pt-1 pb-4 text-[22px] leading-[1.5] text-text-2">{s.body}</span>
+                              </span>
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </div>
+              )}
+              <ol className="flex flex-col">
                 {steps.map((s, i) => (
-                  <li
-                    key={s.id}
-                    id={s.id}
-                    data-stage={i}
-                    data-active={active === i}
-                    className="group/step flex flex-col gap-5 max-lg:h-[80svh] lg:min-h-[80svh] lg:snap-center lg:justify-center"
-                  >
-                    {/* 모바일에선 위 고정 폰이 보여 주므로 문단은 읽기 도구용으로만 남긴다 */}
-                    <p className="reveal text-[17px] leading-[1.6] text-text-2 transition-colors duration-300 max-lg:sr-only md:text-lg lg:text-text-3 lg:group-data-[active=true]/step:text-text-2">
-                      <strong className="font-bold text-text-1 transition-colors duration-300 lg:text-text-2 lg:group-data-[active=true]/step:text-text-1">
-                        {s.lead}
-                      </strong>{" "}
-                      {s.body}
+                  <li key={s.id} id={s.id} data-stage={i} className="h-[80svh] lg:snap-center">
+                    {/* 화면에는 고정 영역(폰, 기능 색인)이 보여 주므로 문단은 읽기 도구용으로만 남긴다 */}
+                    <p className="sr-only">
+                      {s.lead}: {s.body}
                     </p>
-                    <div className="max-lg:hidden">{s.evidence ?? <ScreenCrop crop={s.crop}>{s.screen}</ScreenCrop>}</div>
                   </li>
                 ))}
               </ol>
