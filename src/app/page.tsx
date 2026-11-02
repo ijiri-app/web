@@ -41,7 +41,7 @@ export default async function Home() {
       <svg
         aria-hidden
         viewBox="0 0 640 220"
-        className="wordmark pointer-events-none order-first -mt-[11vw] w-full overflow-hidden px-5 text-text-1 select-none md:-mt-[9vw] md:px-12 lg:absolute lg:right-12 lg:bottom-10 lg:mt-0 lg:w-[min(66vw,calc(233svh-1000px))] lg:max-w-[1100px] lg:px-0 xl:right-14"
+        className="wordmark pointer-events-none order-first -mt-[7vw] w-[64%] overflow-hidden px-5 text-text-1 select-none md:-mt-[5vw] md:w-[48%] md:px-12 lg:absolute lg:right-12 lg:bottom-12 lg:mt-0 lg:w-[min(22vw,calc(100svh-520px))] lg:max-w-[360px] lg:px-0 xl:right-14"
       >
         <text x="320" y="206" textAnchor="middle" fontSize="290" fill="currentColor" style={{ fontFamily: "var(--font-fugaz)", letterSpacing: "-0.04em" }}>
           IJIRI
