@@ -1,31 +1,5 @@
 @import "tailwindcss";
 
-/* Freesentation (눈누 CDN) — Figma 본문 서체 */
-@font-face {
-  font-family: "Freesentation";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-4Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Freesentation";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2") format("woff2");
-  font-weight: 500;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Freesentation";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-6SemiBold.woff2") format("woff2");
-  font-weight: 600;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Freesentation";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-display: swap;
-}
-
 /* Figma 디자인 토큰 (이지리 App 페이지) */
 @theme {
   --color-bg: #111418;
@@ -51,8 +25,15 @@
   --color-part-pwr: #5a2e4e;
   --color-part-und: #2b5641;
 
-  --font-sans: "Freesentation", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-sans: var(--font-freesentation), "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --font-logo: var(--font-fugaz), sans-serif;
+}
+
+/* 데스크톱 스크롤 락: 섹션과 기능 문단 근처에서 멈춤 (proximity라 긴 섹션도 자유롭게 읽힘) */
+@media (min-width: 1024px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
 }
 
 html {
