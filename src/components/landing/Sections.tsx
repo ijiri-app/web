@@ -14,52 +14,45 @@ export const button = `inline-flex h-12 items-center justify-center rounded-[14p
 const steps: Step[] = [
   {
     id: "start",
-    lead: "처음 열면",
-    body: "관심 차종만 고르고 바로 구경해요. 가입은 필요 없고, 여러 대를 골라도 되고, 나중에 언제든 바꿀 수 있어요.",
+    lead: "관심 차종",
+    body: "고른 차종의 빌드만 보여 줘요.",
     screen: <InterestScreen />,
-    crop: 186,
   },
   {
     id: "feed",
-    lead: "피드에서는",
-    body: "내 차종 오너들이 뭘 달았는지 2열로 나란히 비교해요. 데일리, 서킷, 스탠스, VIP처럼 빌드 방향으로 한 번 더 걸러 봐요.",
+    lead: "차종별 피드",
+    body: "같은 차 오너들의 튜닝을 나란히 비교해요.",
     screen: <FeedScreen />,
-    crop: 90,
   },
   {
     id: "capsule",
-    lead: "사진을 보다가",
-    body: "폰 뒷면을 가볍게 두 번 두드리면 사진 위에 달린 부품이 한꺼번에 떠요. 사진을 눌러도 똑같이 볼 수 있어요.",
+    lead: "부품 태그",
+    body: "사진 위에 달린 부품이 바로 떠요.",
     screen: <PostScreen />,
-    crop: 0,
   },
   {
     id: "wishlist",
-    lead: "마음에 든 부품은",
-    body: "담아 두면 마이에 모여요. 내 게시물의 부품을 누가 담으면 몇 명이 담았는지 알려 드려요.",
+    lead: "담기 알림",
+    body: "내 부품을 몇 명이 담았는지 알려 줘요.",
     screen: <NotificationScreen />,
-    crop: 300,
   },
   {
     id: "search",
-    lead: "찾을 때는",
-    body: "차종, 부품, 브랜드 어느 쪽으로든 검색해요. 최근 검색과 내 차종 오너들이 많이 찾는 부품도 함께 보여요.",
+    lead: "통합 검색",
+    body: "차종, 부품, 브랜드로 한 번에 찾아요.",
     screen: <SearchScreen />,
-    crop: 330,
   },
   {
     id: "upload",
-    lead: "내 차를 올릴 땐",
-    body: "사진을 누른 순서대로 고르고, 사진 위를 눌러 부품을 단 다음 분류만 고르면 끝이에요. 1분이면 충분해요.",
+    lead: "1분 업로드",
+    body: "사진에 부품 태그만 달면 끝이에요.",
     screen: <PickScreen />,
-    crop: 360,
   },
   {
     id: "safe",
-    lead: "올리기 전에",
-    body: "번호판은 폰 안에서 자동으로 찾아 가리고, 사진에 남은 위치 정보는 지워요.",
+    lead: "번호판 자동 가림",
+    body: "번호판은 가리고 위치 정보는 지워요.",
     screen: <UploadScreen />,
-    crop: 30,
   },
 ];
 
@@ -71,7 +64,7 @@ export function StageSections({ hero }: { hero: React.ReactNode }) {
       steps={steps}
       heading={
         <h2 id="how-title" className={h2}>
-          앱을 열면 이렇게 흘러가요
+          필요한 기능만 담았어요
         </h2>
       }
     />
