@@ -1,16 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Fugaz_One, JetBrains_Mono } from "next/font/google";
+import { Fugaz_One } from "next/font/google";
 import "./globals.css";
 
 const fugaz = Fugaz_One({
   variable: "--font-fugaz",
   weight: "400",
-  subsets: ["latin"],
-});
-
-const jetbrains = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  weight: "500",
   subsets: ["latin"],
 });
 
@@ -34,7 +28,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ko" className={`${fugaz.variable} ${jetbrains.variable} antialiased`}>
+    <html lang="ko" className={`${fugaz.variable} antialiased`}>
       <body className="min-h-dvh">{children}</body>
     </html>
   );

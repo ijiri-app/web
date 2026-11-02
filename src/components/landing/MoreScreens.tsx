@@ -112,7 +112,7 @@ export function SearchScreen() {
         <ol className="mt-1">
           {popular.map(([name, cat], i) => (
             <li key={name} className="flex items-center gap-3 border-b border-surface-3 py-2.5 text-[14px]">
-              <span className={`w-4 font-mono text-[12px] ${i < 3 ? "text-accent" : "text-text-3"}`}>{i + 1}</span>
+              <span className={`w-4 text-[13px] tabular-nums ${i < 3 ? "text-accent" : "text-text-3"}`}>{i + 1}</span>
               <span className="flex-1">{name}</span>
               <span className="text-[12px] text-text-3">{cat}</span>
             </li>

@@ -179,6 +179,7 @@ export default function IPhone3D({ children, ...props }: Props) {
       {/* 앱 화면(HTML). 매 프레임 모델의 Screen 메시 꼭짓점에 맞춰 원근 변환으로 붙인다 */}
       <div
         ref={screen}
+        data-ui
         className="absolute top-0 left-0 origin-top-left overflow-hidden rounded-[52px] bg-black"
         style={{ width: SCREEN_W, height: SCREEN_H, visibility: "hidden" }}
       >
