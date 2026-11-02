@@ -108,11 +108,11 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
   );
 
   return (
-    <div ref={root} className="lg:grid lg:grid-cols-[55%_45%] xl:grid-cols-[61.8%_38.2%]">
+    <div ref={root} className="lg:grid lg:grid-cols-[38.2%_61.8%]">
       {/* 무대 */}
       {/* 데스크톱: 처음엔 여백 없이 꽉 차고, 내리면 가장자리가 안으로 들어오며 작아진다(--shrink 0→1) */}
       <div className="p-3 lg:sticky lg:top-0 lg:h-svh lg:p-0">
-        <div className="relative h-[58svh] overflow-hidden rounded-[14px] bg-surface-1 md:h-[52svh] lg:h-full lg:rounded-none lg:[clip-path:inset(calc(var(--shrink,0)*40px)_calc(var(--shrink,0)*48px)_round_calc(var(--shrink,0)*24px))]">
+        <div className="relative h-[58svh] overflow-hidden rounded-[14px] bg-surface-1 md:h-[52svh] lg:h-full lg:rounded-none lg:[clip-path:inset(calc(var(--shrink,0)*32px)_calc(var(--shrink,0)*24px)_round_calc(var(--shrink,0)*24px))]">
           <div inert={phoneOn} className={`absolute inset-0 transition-opacity duration-500 ${phoneOn ? "pointer-events-none opacity-0" : "opacity-100"}`}>
             <HeroPhoto />
           </div>
@@ -122,11 +122,11 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
               className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${phoneOn ? "opacity-100" : "pointer-events-none opacity-0"}`}
             >
               {webgl ? (
-                <div className="relative aspect-[440/820] h-[min(820px,calc(100svh-80px))]">
+                <div className="relative aspect-[440/820] h-[min(820px,calc(100svh-80px),calc((38.2vw-48px)*1.86))]">
                   <IPhone3D reducedMotion={reduced}>{screens}</IPhone3D>
                 </div>
               ) : (
-                <div data-ui className="relative origin-center scale-[0.85] rounded-[56px] bg-black p-2.5 ring-[3px] ring-surface-4 [@media(min-height:960px)]:scale-100">
+                <div data-ui className="relative origin-center scale-[0.75] rounded-[56px] bg-black p-2.5 ring-[3px] ring-surface-4 [@media(min-height:960px)]:scale-100">
                   <div className="overflow-hidden rounded-[46px]">{screens}</div>
                   <span aria-hidden className="absolute top-[22px] left-1/2 h-[30px] w-[100px] -translate-x-1/2 rounded-full bg-black" />
                 </div>

@@ -21,7 +21,7 @@ export default async function Home() {
   const hero = (
     <section aria-labelledby="hero-title" className="relative flex flex-col lg:min-h-svh lg:snap-start">
       <header className="absolute inset-x-0 -top-[calc(58svh+24px)] z-20 flex h-[72px] items-center justify-end gap-7 px-6 md:-top-[calc(52svh+24px)] lg:static lg:px-12 xl:px-14">
-        <nav aria-label="페이지 안내" className="hidden min-[1400px]:block">
+        <nav aria-label="페이지 안내" className="hidden lg:block">
           <ul className="flex gap-6 text-[15px] whitespace-nowrap text-text-2">
             {nav.map((n) => (
               <li key={n.href}>
@@ -41,7 +41,7 @@ export default async function Home() {
       <svg
         aria-hidden
         viewBox="0 0 640 220"
-        className="wordmark pointer-events-none order-first -mt-[11vw] w-full overflow-hidden px-5 text-text-1 select-none md:-mt-[9vw] md:px-12 lg:absolute lg:right-12 lg:bottom-10 lg:mt-0 lg:w-[min(50vw,calc(233svh-1000px))] lg:max-w-[900px] lg:px-0 xl:right-14"
+        className="wordmark pointer-events-none order-first -mt-[11vw] w-full overflow-hidden px-5 text-text-1 select-none md:-mt-[9vw] md:px-12 lg:absolute lg:right-12 lg:bottom-10 lg:mt-0 lg:w-[min(66vw,calc(233svh-1000px))] lg:max-w-[1100px] lg:px-0 xl:right-14"
       >
         <text x="320" y="206" textAnchor="middle" fontSize="290" fill="currentColor" style={{ fontFamily: "var(--font-fugaz)", letterSpacing: "-0.04em" }}>
           IJIRI
@@ -50,7 +50,7 @@ export default async function Home() {
 
       <div className="flex flex-col gap-8 px-5 pt-8 pb-4 md:px-12 lg:absolute lg:top-[20%] lg:px-12 lg:pt-0 lg:pb-0 xl:px-14">
         <div className="flex flex-col gap-5">
-          <h1 id="hero-title" className="text-[30px] leading-[1.2] font-bold tracking-[-0.03em] md:text-[44px] lg:text-[36px] xl:text-[44px]">
+          <h1 id="hero-title" className="text-[30px] leading-[1.2] font-bold tracking-[-0.03em] md:text-[44px]">
             <span className="whitespace-nowrap">등업 없이 바로 보는</span>
             <br />
             튜닝 레퍼런스
