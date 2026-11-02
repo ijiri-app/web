@@ -59,6 +59,8 @@ export const partRing: Record<PartCategory, string> = {
  * 지금 사진은 Unsplash 임시 사진이라 실제 부품 위치와 맞는지 화면에서 확인 후 조정해야 한다.
  */
 export const heroPhotoId = "dveDkZQJVjQ";
+/** heroTags 좌표를 잡은 화면의 가로/세로 비율 (실제 배포 화면 기준). 다른 비율로 잘려도 같은 부품을 가리키도록 환산한다 */
+export const heroRefAspect = 764 / 1046;
 
 export const heroTags: {
   label: string;
@@ -90,6 +92,8 @@ export type OwnerBuild = {
   saves: number;
   tags: Tag[];
   parts: { cat: PartCategory; items: string[] }[];
+  /** 태그 좌표를 잡은 화면 비율. 있으면 사진 좌표로 환산해 붙인다 */
+  refAspect?: number;
 };
 
 /**
@@ -108,6 +112,7 @@ export const ownerBuilds: OwnerBuild[] = [
     comments: 4,
     saves: 31,
     tags: heroTags,
+    refAspect: heroRefAspect,
     parts: [
       { cat: "ext", items: ["카본 보닛", "프론트 립"] },
       { cat: "int", items: ["버킷 시트"] },

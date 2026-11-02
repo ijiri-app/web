@@ -9,10 +9,12 @@ type Props = {
   className?: string;
   /** 첫 화면 사진처럼 바로 보여야 하면 true */
   priority?: boolean;
+  /** 사진이 열리면 원본 크기를 알려 준다 (태그를 사진 좌표에 맞출 때) */
+  onNatural?: (width: number, height: number) => void;
 };
 
 /** 외부 사진이 안 열리면 차 아이콘 플레이스홀더로 대체한다. */
-export function CarPhoto({ src, alt, className = "", priority = false }: Props) {
+export function CarPhoto({ src, alt, className = "", priority = false, onNatural }: Props) {
   const [failed, setFailed] = useState(false);
   const ref = useRef<HTMLImageElement>(null);
 
@@ -20,6 +22,8 @@ export function CarPhoto({ src, alt, className = "", priority = false }: Props) 
   useEffect(() => {
     const img = ref.current;
     if (img && img.complete && img.naturalWidth === 0) setFailed(true);
+    else if (img && img.complete) onNatural?.(img.naturalWidth, img.naturalHeight);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (failed) {
@@ -46,6 +50,7 @@ export function CarPhoto({ src, alt, className = "", priority = false }: Props) 
       decoding="async"
       referrerPolicy="no-referrer"
       onError={() => setFailed(true)}
+      onLoad={(e) => onNatural?.(e.currentTarget.naturalWidth, e.currentTarget.naturalHeight)}
       className={`bg-surface-3 object-cover ${className}`}
     />
   );

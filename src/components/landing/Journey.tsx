@@ -206,8 +206,8 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
     <div ref={root}>
       <div className="lg:grid lg:grid-cols-[38.2%_61.8%]">
         {/* 무대: 첫 화면 오너 사진. 데스크톱은 처음엔 여백 없이 꽉 차고, 내리면 가장자리가 안으로 들어오며 작아진다(--shrink 0→1) */}
-        <div className="p-3 lg:sticky lg:top-0 lg:h-svh lg:p-0">
-          <div className="relative h-[58svh] overflow-hidden rounded-[14px] bg-surface-1 md:h-[52svh] lg:h-full lg:rounded-none lg:[clip-path:inset(calc(var(--shrink,0)*32px)_calc(var(--shrink,0)*24px)_round_calc(var(--shrink,0)*24px))]">
+        <div className="p-3 pt-[72px] lg:sticky lg:top-0 lg:h-svh lg:p-0">
+          <div className="relative h-[min(54svh,calc(100svh-400px))] overflow-hidden rounded-[14px] bg-surface-1 md:h-[52svh] lg:h-full lg:rounded-none lg:[clip-path:inset(calc(var(--shrink,0)*32px)_calc(var(--shrink,0)*24px)_round_calc(var(--shrink,0)*24px))]">
             <HeroPhoto />
           </div>
         </div>

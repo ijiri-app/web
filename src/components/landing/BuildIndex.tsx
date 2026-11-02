@@ -58,7 +58,7 @@ export function BuildIndex() {
 
         <div key={b.id} className="sheet-in mt-6 grid gap-4 lg:mt-8 lg:grid-cols-[1.618fr_1fr] lg:gap-5">
           <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] bg-surface-1 lg:aspect-auto lg:h-[560px]">
-            <TaggedPhoto photoId={b.photoId} tags={b.tags} alt={`${b.meta} 오너 사진`} width={1400} />
+            <TaggedPhoto photoId={b.photoId} tags={b.tags} alt={`${b.meta} 오너 사진`} width={1400} refAspect={b.refAspect} />
           </div>
 
           <div className="flex flex-col gap-7 rounded-[20px] bg-surface-1 p-6 md:p-8">

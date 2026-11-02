@@ -2,6 +2,17 @@
 
 import { useRef } from "react";
 import { X } from "lucide-react";
+import { liveUrl } from "@/lib/stores";
+
+/** 지금 열린 스토어에 맞춘 QR 안내 문구 */
+const installNote = (() => {
+  const play = liveUrl("googlePlay");
+  const app = liveUrl("appStore");
+  if (play && app) return "Android는 Google Play, iPhone은 App Store로 바로 이동해요";
+  if (play) return "Android는 Google Play로 바로 이동해요. iPhone은 준비 중이에요.";
+  if (app) return "iPhone은 App Store로 바로 이동해요";
+  return "아직 출시 전이에요. 출시되면 이 QR로 바로 받을 수 있어요.";
+})();
 
 type Props = {
   /** 서버에서 만든 /install QR 코드 SVG */
@@ -52,18 +63,14 @@ export function InstallButton({ qrSvg, className = "", children }: Props) {
           <h2 id="install-qr-title" className="text-2xl font-semibold">
             폰 카메라로 찍어 주세요
           </h2>
-          <p className="text-[15px] leading-relaxed text-text-2">
-            Android는 Google Play, iPhone은 App Store로
-            <br />
-            바로 이동해요
-          </p>
+          <p className="text-[15px] leading-relaxed text-balance text-text-2">{installNote}</p>
           <div
             role="img"
             aria-label="이지리 설치 페이지 QR 코드"
             className="size-[220px] rounded-2xl bg-white p-3 [&>svg]:size-full"
             dangerouslySetInnerHTML={{ __html: qrSvg }}
           />
-          <p className="text-[13px] text-text-3">원스토어는 앱에서 이지리를 검색해 주세요</p>
+          {liveUrl("oneStore") && <p className="text-[13px] text-text-3">원스토어는 앱에서 이지리를 검색해 주세요</p>}
         </div>
       </dialog>
     </>

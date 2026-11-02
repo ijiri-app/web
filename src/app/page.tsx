@@ -7,7 +7,6 @@ import { StoreButtons } from "@/components/landing/StoreButtons";
 import { installQrSvg } from "@/lib/qr";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from "@/lib/brand";
 import { contact, SITE_URL } from "@/lib/stores";
-import { heroTags, ownerBuilds, partCategoryLabel, partColor } from "@/components/landing/data";
 
 /* 구성: 분할 무대(첫 화면 + 기능 흐름) → 차종별 빌드 → 차량 QR → 받기 → 푸터 */
 
@@ -68,7 +67,7 @@ export default async function Home() {
 
   const hero = (
     <section aria-labelledby="hero-title" className="relative flex flex-col lg:min-h-svh lg:snap-start">
-      <header className="absolute inset-x-0 -top-[calc(58svh+24px)] z-20 flex h-[72px] items-center justify-between gap-7 px-6 md:-top-[calc(52svh+24px)] lg:static lg:px-12 xl:px-14">
+      <header className="absolute inset-x-0 -top-[calc(min(54svh,100svh-400px)+84px)] z-20 flex h-[72px] items-center justify-between gap-7 px-6 md:-top-[calc(52svh+84px)] lg:static lg:px-12 xl:px-14">
         <a href="#top" aria-label="이지리 홈" className={`rounded font-logo text-[24px] leading-none ${focusRing}`}>
           IJIRI
         </a>
@@ -97,32 +96,19 @@ export default async function Home() {
             <br />
             튜닝 레퍼런스
           </h1>
-          <p className="text-[17px] leading-[1.6] text-text-2 md:text-[22px] md:leading-[1.5] lg:max-w-[28ch]">
-            오너들이 실제로 단 부품을 사진 위 태그로, 차종별로 모았어요.
+          <p className="text-[17px] leading-[1.6] text-balance text-text-2 md:text-[22px] md:leading-[1.5] lg:max-w-[28ch]">
+            오너들이 실제로 단 부품을 <span className="whitespace-nowrap">사진 위 태그로,</span> 차종별로 모았어요.
           </p>
         </div>
-        <div>
-          <InstallButton qrSvg={qrSvg} className={`${button} h-14 px-7 text-[18px]`}>
-            앱 설치하기
-          </InstallButton>
+        <div className="flex flex-col gap-3">
+          <div>
+            <InstallButton qrSvg={qrSvg} className={`${button} h-14 px-7 text-[18px]`}>
+              앱 설치하기
+            </InstallButton>
+          </div>
+          <p className="text-[15px] text-text-3">Android 먼저 나와요. iPhone은 준비 중이에요.</p>
         </div>
       </div>
-
-      {/* 왼쪽 사진의 설명: 이 게시물에 달린 부품 (사진 속 태그와 같은 목록) */}
-      <figure className="hidden px-12 pb-10 lg:block xl:px-14">
-        <figcaption className="text-[15px] text-text-3">
-          {ownerBuilds[0].owner}의 {ownerBuilds[0].meta}, 부품 {heroTags.length}개
-        </figcaption>
-        <ul className="mt-4 grid grid-cols-2 gap-x-10 gap-y-3 xl:max-w-[640px]">
-          {heroTags.map((t) => (
-            <li key={t.label} className="flex items-center gap-3 text-[17px]">
-              <span aria-hidden className={`size-2.5 shrink-0 rounded-full ${partColor[t.category]} ring-2 ring-white/30`} />
-              <span className="font-medium">{t.label}</span>
-              <span className="text-text-3">{partCategoryLabel[t.category]}</span>
-            </li>
-          ))}
-        </ul>
-      </figure>
     </section>
   );
 

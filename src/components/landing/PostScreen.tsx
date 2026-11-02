@@ -13,7 +13,7 @@ export function PostScreen({ build = ownerBuilds[0] }: { build?: OwnerBuild }) {
   return (
     <div className="relative overflow-hidden rounded-[40px] bg-bg text-left select-none" style={{ width: SCREEN_W, height: SCREEN_H }}>
       <div className="relative h-[330px]">
-        <TaggedPhoto photoId={build.photoId} tags={build.tags} alt={`${build.meta} 오너 사진`} width={720} small />
+        <TaggedPhoto photoId={build.photoId} tags={build.tags} alt={`${build.meta} 오너 사진`} width={720} small refAspect={build.refAspect} />
         <ArrowLeft aria-hidden className="pointer-events-none absolute top-12 left-5 size-6" strokeWidth={1.75} />
       </div>
       <div className="mt-3 flex items-center gap-2.5 px-5">
