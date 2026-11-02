@@ -10,7 +10,7 @@ function TabBar() {
   const icons = [Grid2x2, Search, SquarePlus, Gauge, User];
   return (
     <div className="absolute inset-x-4 bottom-5">
-      <div className="flex h-14 items-center justify-center rounded-full bg-surface-3/70 px-3 backdrop-blur-md">
+      <div className="flex h-14 items-center justify-center rounded-full bg-surface-3 px-3">
         {icons.map((Icon, i) => (
           <span
             key={i}
@@ -80,7 +80,7 @@ export function FeedScreen({ active = "전체" }: { active?: Build }) {
                 {item.year} {item.model}
               </span>
               <span className="text-text-3">
-                부품 <span className="font-mono text-[11px]">{item.parts}</span>
+                부품 <span className="tabular-nums">{item.parts}</span>
               </span>
             </div>
           </div>
