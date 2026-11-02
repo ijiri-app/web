@@ -1,7 +1,7 @@
 import { CarPhoto } from "./CarPhoto";
 import { SplitStage, type Step } from "./Journey";
 import { FeedScreen } from "./FeedScreen";
-import { InterestScreen, PickScreen, SearchScreen } from "./MoreScreens";
+import { InterestScreen, NotificationScreen, PickScreen, SearchScreen } from "./MoreScreens";
 import { PostScreen } from "./PostScreen";
 import { UploadScreen } from "./UploadScreen";
 import { unsplash } from "./data";
@@ -10,31 +10,6 @@ import { unsplash } from "./data";
 export const h2 = "text-[30px] leading-[1.2] font-bold tracking-[-0.03em] md:text-[44px]";
 export const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent";
 export const button = `inline-flex h-12 items-center justify-center rounded-[14px] bg-accent-strong px-5 text-[17px] font-bold transition-[filter,scale] hover:brightness-110 active:scale-[0.97] ${focusRing}`;
-
-const alerts = [
-  { body: "RAYS TE37을 3명이 담아 갔어요", time: "지금" },
-  { body: "오늘 내 부품을 12명이 담아 갔어요", time: "어제" },
-];
-
-/** 담기 알림 조각 */
-function Alerts() {
-  return (
-    <ul data-ui aria-label="담기 알림 예시" className="reveal flex flex-col gap-2.5 rounded-[14px] bg-surface-1 p-5">
-      {alerts.map((a, i) => (
-        <li key={a.body} className={`flex items-center gap-3 rounded-[18px] bg-surface-3 px-3.5 py-3.5 ${i ? "opacity-70" : ""}`}>
-          <span aria-hidden className="flex size-10 shrink-0 items-center justify-center rounded-[10px] bg-white font-logo text-[12px] leading-none text-black">
-            IJIRI
-          </span>
-          <span className="flex min-w-0 flex-1 flex-col">
-            <span className="text-sm font-bold">이지리</span>
-            <span className="text-[13px] text-text-2">{a.body}</span>
-          </span>
-          <span className="text-xs text-text-3">{a.time}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 const steps: Step[] = [
   {
@@ -62,8 +37,8 @@ const steps: Step[] = [
     id: "wishlist",
     lead: "마음에 든 부품은",
     body: "담아 두면 마이에 모여요. 내 게시물의 부품을 누가 담으면 몇 명이 담았는지 알려 드려요.",
-    screen: <PostScreen />,
-    evidence: <Alerts />,
+    screen: <NotificationScreen />,
+    crop: 300,
   },
   {
     id: "search",
