@@ -1,4 +1,4 @@
-import { ArrowLeft, Check, Gauge, Grid2x2, Search, SquarePlus, User, X } from "lucide-react";
+import { ArrowLeft, Camera, Check, Flashlight, Gauge, Grid2x2, Lock, Search, SquarePlus, User, X } from "lucide-react";
 import { CarPhoto } from "./CarPhoto";
 import { SCREEN_H, SCREEN_W } from "./FeedScreen";
 import { feedItems, unsplash } from "./data";
@@ -156,8 +156,8 @@ export function PickScreen() {
 }
 
 const lockAlerts = [
-  { title: "단조 휠을 3명이 담아 갔어요", body: "주말 트랙데이 셋업 게시물", time: "지금" },
-  { title: "오늘 내 부품을 12명이 담아 갔어요", body: "버킷 시트 5명, 코일오버 4명, 단조 휠 3명", time: "1시간 전" },
+  { title: "단조 휠을 3명이 담았어요", body: "주말 트랙데이 셋업", time: "지금" },
+  { title: "오늘 12명이 내 부품을 담았어요", body: "버킷 시트 5명, 코일오버 4명", time: "1시간 전" },
 ];
 
 /**
@@ -166,38 +166,47 @@ const lockAlerts = [
  * 그 밖(화면 조각, 모바일)에서는 처음부터 보인다.
  */
 export function NotificationScreen() {
+  // iOS 잠금화면: 위에 자물쇠와 날짜, 큰 시계, 알림은 아래쪽, 손전등과 카메라 버튼
+  const sf = { fontFamily: '-apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif' };
   return (
     <Frame>
       <CarPhoto src={unsplash(feedItems[0].photoId, 720)} alt="" className="absolute inset-0 size-full" />
-      <div aria-hidden className="absolute inset-0 bg-black/55" />
+      <div aria-hidden className="absolute inset-0 bg-black/35" />
+      <Lock aria-hidden className="absolute top-[58px] left-1/2 size-[18px] -translate-x-1/2 text-white" strokeWidth={2.4} />
       {/* 시계는 장식이라 글자 대신 그림으로 */}
-      <svg aria-hidden viewBox="0 0 360 200" className="absolute inset-x-0 top-[60px] w-full fill-white">
-        <text x="180" y="28" textAnchor="middle" fontSize="17" fontWeight="500">
+      <svg aria-hidden viewBox="0 0 360 150" className="absolute inset-x-0 top-[84px] w-full fill-white" style={sf}>
+        <text x="180" y="22" textAnchor="middle" fontSize="19" fontWeight="600">
           11월 2일 월요일
         </text>
-        <text x="180" y="112" textAnchor="middle" fontSize="84" fontWeight="600" letterSpacing="-1.5">
+        <text x="180" y="122" textAnchor="middle" fontSize="104" fontWeight="700" letterSpacing="-3">
           9:41
         </text>
       </svg>
-      <ul aria-label="이지리 알림" className="absolute inset-x-3 top-[262px] flex flex-col gap-2">
+      <ul aria-label="이지리 알림" className="absolute inset-x-2.5 bottom-[120px] flex flex-col gap-2" style={sf}>
         {lockAlerts.map((a) => (
-          <li key={a.title} className="notif flex items-start gap-3 rounded-[22px] bg-surface-3/95 px-3.5 py-3">
-            <span aria-hidden className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-[9px] bg-white font-logo text-[11px] leading-none text-black">
+          <li key={a.title} className="notif flex items-center gap-2.5 rounded-[20px] bg-white/20 px-3 py-2.5 backdrop-blur-xl">
+            <span aria-hidden className="flex size-[38px] shrink-0 items-center justify-center rounded-[9px] bg-white font-logo text-[11px] leading-none text-black">
               IJIRI
             </span>
-            <span className="flex min-w-0 flex-1 flex-col">
-              <span className="flex items-center justify-between text-[13px]">
-                <span className="font-semibold text-text-1">이지리</span>
-                <span className="text-text-3">{a.time}</span>
+            <span className="flex min-w-0 flex-1 flex-col text-white">
+              <span className="flex items-baseline justify-between gap-2">
+                <span className="truncate text-[15px] leading-tight font-semibold">{a.title}</span>
+                <span className="shrink-0 text-[13px] text-white/70">{a.time}</span>
               </span>
-              <span className="text-[15px] leading-snug font-semibold text-text-1">{a.title}</span>
-              <span className="text-[13px] leading-snug text-text-2">{a.body}</span>
+              <span className="truncate text-[15px] leading-tight text-white/90">{a.body}</span>
             </span>
           </li>
         ))}
       </ul>
-      <div aria-hidden className="absolute inset-x-0 bottom-3 flex justify-center">
-        <span className="h-[5px] w-[130px] rounded-full bg-white/80" />
+      <div aria-hidden className="absolute inset-x-[46px] bottom-[42px] flex justify-between">
+        {[Flashlight, Camera].map((Icon, i) => (
+          <span key={i} className="flex size-[50px] items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-xl">
+            <Icon className="size-[22px]" strokeWidth={2} />
+          </span>
+        ))}
+      </div>
+      <div aria-hidden className="absolute inset-x-0 bottom-2 flex justify-center">
+        <span className="h-[5px] w-[134px] rounded-full bg-white" />
       </div>
     </Frame>
   );
