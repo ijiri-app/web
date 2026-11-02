@@ -1,0 +1,7 @@
+Freesentation (프리젠테이션) Version 2.001
+Copyright (c) 2024 PT& (피티앤)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+https://scripts.sil.org/OFL
+
+이 폴더의 woff2 파일은 원본 TTF에서 웹용으로 글자 범위(한글 완성형, 자모, 라틴, 문장부호)만 남겨 변환한 것이다.

@@ -24,7 +24,7 @@ const linkCls = "rounded transition-colors hover:text-text-1 focus-visible:outli
 
 export function SiteFooter() {
   return (
-    <footer className="bg-bg lg:grid lg:min-h-svh lg:grid-cols-2">
+    <footer className="bg-bg lg:snap-end lg:grid lg:min-h-svh lg:grid-cols-2">
       <div className="relative h-[50svh] overflow-hidden lg:h-auto">
         <CarPhoto src={unsplash(heroPhotoId, 1400)} alt="BMW M4 CS 앞바퀴와 휠 가까이" className="absolute inset-0 size-full scale-[1.6] object-[70%_75%]" />
       </div>

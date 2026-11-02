@@ -73,6 +73,29 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
     return () => io.disconnect();
   }, []);
 
+  // 첫 화면을 내리는 동안 무대가 줄어드는 정도. 움직임 줄이기면 고정
+  useEffect(() => {
+    const el = root.current;
+    if (!el || reduced) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const p = Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.9)));
+      el.style.setProperty("--shrink", (1 - (1 - p) ** 3).toFixed(4));
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [reduced]);
+
   const phoneOn = active >= 0;
   const screens = (
     <div className="relative h-[760px] w-[360px]">
@@ -85,10 +108,11 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
   );
 
   return (
-    <div ref={root} className="lg:grid lg:grid-cols-[47%_53%]">
+    <div ref={root} className="lg:grid lg:grid-cols-[55%_45%] xl:grid-cols-[61.8%_38.2%]">
       {/* 무대 */}
-      <div className="p-3 lg:sticky lg:top-0 lg:h-svh lg:p-5">
-        <div className="relative h-[58svh] overflow-hidden rounded-[14px] bg-surface-1 md:h-[52svh] lg:h-full">
+      {/* 데스크톱: 처음엔 여백 없이 꽉 차고, 내리면 가장자리가 안으로 들어오며 작아진다(--shrink 0→1) */}
+      <div className="p-3 lg:sticky lg:top-0 lg:h-svh lg:p-0">
+        <div className="relative h-[58svh] overflow-hidden rounded-[14px] bg-surface-1 md:h-[52svh] lg:h-full lg:rounded-none lg:[clip-path:inset(calc(var(--shrink,0)*40px)_calc(var(--shrink,0)*48px)_round_calc(var(--shrink,0)*24px))]">
           <div inert={phoneOn} className={`absolute inset-0 transition-opacity duration-500 ${phoneOn ? "pointer-events-none opacity-0" : "opacity-100"}`}>
             <HeroPhoto />
           </div>
@@ -102,8 +126,9 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
                   <IPhone3D reducedMotion={reduced}>{screens}</IPhone3D>
                 </div>
               ) : (
-                <div data-ui className="origin-center scale-[0.85] overflow-hidden rounded-[40px] [@media(min-height:960px)]:scale-100">
-                  {screens}
+                <div data-ui className="relative origin-center scale-[0.85] rounded-[56px] bg-black p-2.5 ring-[3px] ring-surface-4 [@media(min-height:960px)]:scale-100">
+                  <div className="overflow-hidden rounded-[46px]">{screens}</div>
+                  <span aria-hidden className="absolute top-[22px] left-1/2 h-[30px] w-[100px] -translate-x-1/2 rounded-full bg-black" />
                 </div>
               )}
             </div>
@@ -115,8 +140,8 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
       <div className="relative z-10">
         <div data-stage={-1}>{hero}</div>
 
-        <section id="how" aria-labelledby="how-title" className="scroll-mt-6 px-5 pt-24 pb-10 md:px-12 lg:px-[72px] lg:pt-[20svh]">
-          <div className="max-w-[560px]">
+        <section id="how" aria-labelledby="how-title" className="scroll-mt-6 px-5 pt-24 pb-10 md:px-12 lg:px-12 lg:pt-[20svh] xl:px-14">
+          <div className="lg:max-w-[560px]">
             {heading}
             <ol className="mt-12 flex flex-col gap-14 lg:gap-0">
               {steps.map((s, i) => (
@@ -125,7 +150,7 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
                   id={s.id}
                   data-stage={i}
                   data-active={active === i}
-                  className="group/step flex flex-col gap-5 lg:min-h-[80svh] lg:justify-center"
+                  className="group/step flex flex-col gap-5 lg:min-h-[80svh] lg:snap-center lg:justify-center"
                 >
                   <p className="reveal text-[17px] leading-[1.6] text-text-2 transition-colors duration-300 md:text-lg lg:text-text-3 lg:group-data-[active=true]/step:text-text-2">
                     <strong className="font-bold text-text-1 transition-colors duration-300 lg:text-text-2 lg:group-data-[active=true]/step:text-text-1">{s.lead}</strong> {s.body}
