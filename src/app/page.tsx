@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import { BuildIndex } from "@/components/landing/BuildIndex";
 import { InstallButton } from "@/components/landing/InstallButton";
 import { Reveal } from "@/components/landing/Reveal";
@@ -7,6 +8,13 @@ import { StoreButtons } from "@/components/landing/StoreButtons";
 import { installQrSvg } from "@/lib/qr";
 
 /* 구성: 분할 무대(첫 화면 + 기능 흐름) → 차종별 빌드 → 차량 QR → 받기 → 푸터 */
+
+const heroFacts = [
+  ["가입 없이", "바로 구경"],
+  ["사진 위", "부품 태그"],
+  ["번호판", "자동 가림"],
+  ["Android", "먼저 출시"],
+];
 
 const nav = [
   { label: "기능", href: "#how" },
@@ -20,51 +28,59 @@ export default async function Home() {
 
   const hero = (
     <section aria-labelledby="hero-title" className="relative flex flex-col lg:min-h-svh lg:snap-start">
-      <header className="absolute inset-x-0 -top-[calc(58svh+24px)] z-20 flex h-[72px] items-center justify-end gap-7 px-6 md:-top-[calc(52svh+24px)] lg:static lg:px-12 xl:px-14">
-        <nav aria-label="페이지 안내" className="hidden lg:block">
-          <ul className="flex gap-6 text-[15px] whitespace-nowrap text-text-2">
-            {nav.map((n) => (
-              <li key={n.href}>
-                <a href={n.href} className={`rounded transition-colors hover:text-text-1 ${focusRing}`}>
-                  {n.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <InstallButton qrSvg={qrSvg} className={`${button} h-10 px-4 text-[15px]`}>
-          설치하기
-        </InstallButton>
+      <header className="absolute inset-x-0 -top-[calc(58svh+24px)] z-20 flex h-[72px] items-center justify-between gap-7 px-6 md:-top-[calc(52svh+24px)] lg:static lg:px-12 xl:px-14">
+        <a href="#top" aria-label="이지리 홈" className={`rounded font-logo text-[24px] leading-none ${focusRing}`}>
+          IJIRI
+        </a>
+        <div className="flex items-center gap-7">
+          <nav aria-label="페이지 안내" className="hidden lg:block">
+            <ul className="flex gap-6 text-[15px] whitespace-nowrap text-text-2">
+              {nav.map((n) => (
+                <li key={n.href}>
+                  <a href={n.href} className={`rounded transition-colors hover:text-text-1 ${focusRing}`}>
+                    {n.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <InstallButton qrSvg={qrSvg} className={`${button} h-10 px-4 text-[15px]`}>
+            설치하기
+          </InstallButton>
+        </div>
       </header>
 
-      {/* 워드마크(로고): 사진 아래쪽을 가로질러 오른쪽 여백에 붙는다 */}
-      <svg
-        aria-hidden
-        viewBox="0 0 640 220"
-        className="wordmark pointer-events-none order-first -mt-[7vw] w-[64%] overflow-hidden px-5 text-text-1 select-none md:-mt-[5vw] md:w-[48%] md:px-12 lg:absolute lg:right-12 lg:bottom-12 lg:mt-0 lg:w-[min(22vw,calc(100svh-520px))] lg:max-w-[360px] lg:px-0 xl:right-14"
-      >
-        <text x="320" y="206" textAnchor="middle" fontSize="290" fill="currentColor" style={{ fontFamily: "var(--font-fugaz)", letterSpacing: "-0.04em" }}>
-          IJIRI
-        </text>
-      </svg>
-
-      <div className="flex flex-col gap-8 px-5 pt-8 pb-4 md:px-12 lg:absolute lg:top-[20%] lg:px-12 lg:pt-0 lg:pb-0 xl:px-14">
-        <div className="flex flex-col gap-5">
-          <h1 id="hero-title" className="text-[30px] leading-[1.2] font-bold tracking-[-0.03em] md:text-[44px]">
+      <div className="flex flex-1 flex-col justify-center gap-10 px-5 pt-10 pb-8 md:px-12 lg:px-12 lg:pt-0 lg:pb-0 xl:px-14">
+        <div className="flex flex-col gap-6">
+          <h1 id="hero-title" className="text-[36px] leading-[1.12] font-bold tracking-[-0.035em] md:text-[56px] xl:text-[64px]">
             <span className="whitespace-nowrap">등업 없이 바로 보는</span>
             <br />
             튜닝 레퍼런스
           </h1>
-          <p className="text-[17px] leading-[1.6] text-text-2 lg:max-w-[26ch] md:text-[22px] md:leading-[1.5]">
+          <p className="text-[17px] leading-[1.6] text-text-2 md:text-[22px] md:leading-[1.5] lg:max-w-[28ch]">
             오너들이 실제로 단 부품을 사진 위 태그로, 차종별로 모았어요.
           </p>
         </div>
-        <div>
-          <InstallButton qrSvg={qrSvg} className={button}>
+        <div className="flex flex-wrap items-center gap-2">
+          <InstallButton qrSvg={qrSvg} className={`${button} h-14 px-7 text-[18px]`}>
             앱 설치하기
           </InstallButton>
+          <a href="#how" className={`group inline-flex h-14 items-center gap-2 rounded-[14px] px-5 text-[17px] text-text-1 hover:bg-white/5 ${focusRing}`}>
+            기능 보기
+            <ArrowRight aria-hidden className="size-[18px] transition-transform group-hover:translate-x-1" />
+          </a>
         </div>
       </div>
+
+      {/* 아래 정보 줄: 이지리가 다른 커뮤니티와 다른 점 */}
+      <ul className="mx-5 mb-5 grid grid-cols-2 gap-y-6 rounded-[20px] bg-surface-1 p-6 md:mx-12 lg:mx-12 lg:mb-8 lg:grid-cols-4 lg:gap-6 lg:p-7 xl:mx-14">
+        {heroFacts.map(([a, b]) => (
+          <li key={a} className="flex flex-col gap-1">
+            <span className="text-[17px] font-bold md:text-[19px]">{a}</span>
+            <span className="text-[15px] text-text-3">{b}</span>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 
