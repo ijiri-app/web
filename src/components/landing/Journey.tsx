@@ -34,12 +34,12 @@ export type Step = {
   crop?: number;
 };
 
-/** 모바일용 베젤 폰. 360×760 화면을 0.9배(좁은 폰은 0.82배)로 담는다 */
-function PhoneMock({ children }: { children: React.ReactNode }) {
+/** 모바일용 베젤 폰. 360×760 화면을 scale배로 담는다 */
+function PhoneMock({ scale, children }: { scale: number; children: React.ReactNode }) {
   return (
-    <div className="relative rounded-[46px] bg-black p-2.5 ring-[3px] ring-surface-4 ring-inset max-[379px]:rounded-[42px]">
-      <div className="relative h-[684px] w-[324px] overflow-hidden rounded-[36px] max-[379px]:h-[623px] max-[379px]:w-[295px]">
-        <div inert className="origin-top-left scale-90 max-[379px]:scale-[0.82]">
+    <div className="relative rounded-[46px] bg-black p-2.5 ring-[3px] ring-surface-4 ring-inset">
+      <div className="relative overflow-hidden rounded-[36px]" style={{ width: 360 * scale, height: 760 * scale }}>
+        <div className="origin-top-left" style={{ transform: `scale(${scale})` }}>
           {children}
         </div>
       </div>
@@ -47,6 +47,13 @@ function PhoneMock({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+
+/** 모바일 폰 크기: 화면 높이와 폭 안에 들어가게, 최대 0.94배 */
+const mobileScale = () => Math.max(0.6, Math.min(0.94, (window.innerHeight - 90) / 780, (window.innerWidth - 24) / 380));
+const onResize = (cb: () => void) => {
+  window.addEventListener("resize", cb);
+  return () => window.removeEventListener("resize", cb);
+};
 
 /** 앱 화면(360×760)의 한 부분을 잘라 칼럼 폭 안에 보여 준다 */
 function ScreenCrop({ children, crop = 0 }: { children: React.ReactNode; crop?: number }) {
@@ -64,7 +71,7 @@ function ScreenCrop({ children, crop = 0 }: { children: React.ReactNode; crop?: 
 /**
  * 첫 화면과 기능 설명을 한 판으로 묶은 분할 무대.
  * 데스크톱: 왼쪽 무대는 화면에 고정되고, 처음엔 태그 달린 오너 사진, 기능 문단이 가운데 오면 3D 폰 속 그 화면으로 바뀐다.
- * 모바일: 무대는 맨 위 사진으로만 쓰고, 문단마다 화면 조각을 붙인다.
+ * 모바일: 무대는 맨 위 사진으로만 쓰고, 기능 구간에서는 폰 목업 하나가 화면에 고정된 채 속 화면과 아래 설명글만 바뀐다.
  */
 export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; heading: React.ReactNode; steps: Step[] }) {
   // -1 = 히어로(사진), 0.. = 기능 문단
@@ -72,6 +79,7 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
   const webgl = useSyncExternalStore(noop, canUseWebGL, () => false);
   const reduced = useSyncExternalStore(noop, prefersReduced, () => false);
   const wide = useSyncExternalStore(onWide, isWide, () => false);
+  const mScale = useSyncExternalStore(onResize, mobileScale, () => 0.9);
   const root = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -114,7 +122,12 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
   const screens = (
     <div className="relative h-[760px] w-[360px]">
       {steps.map((s, i) => (
-        <div key={s.id} inert data-on={active === i} className={`absolute inset-0 transition-opacity duration-300 ${active === i || (active < 0 && i === 0) ? "opacity-100" : "opacity-0"}`}>
+        <div
+          key={s.id}
+          inert
+          data-on={active === i}
+          className={`absolute inset-0 transition-opacity duration-300 ${active === i || (active < 0 && i === 0) ? "opacity-100" : "opacity-0"}`}
+        >
           {s.screen}
         </div>
       ))}
@@ -140,7 +153,10 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
                   <IPhone3D reducedMotion={reduced}>{screens}</IPhone3D>
                 </div>
               ) : (
-                <div data-ui className="relative origin-center scale-[0.75] rounded-[56px] bg-black p-2.5 ring-[3px] ring-surface-4 [@media(min-height:960px)]:scale-100">
+                <div
+                  data-ui
+                  className="relative origin-center scale-[0.75] rounded-[56px] bg-black p-2.5 ring-[3px] ring-surface-4 [@media(min-height:960px)]:scale-100"
+                >
                   <div className="overflow-hidden rounded-[46px]">{screens}</div>
                   <span aria-hidden className="absolute top-[22px] left-1/2 h-[30px] w-[100px] -translate-x-1/2 rounded-full bg-black" />
                 </div>
@@ -157,30 +173,48 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
         <section id="how" aria-labelledby="how-title" className="scroll-mt-6 px-5 pt-24 pb-10 md:px-12 lg:px-12 lg:pt-[20svh] xl:px-14">
           <div className="lg:max-w-[560px]">
             {heading}
-            <ol className="mt-12 flex flex-col gap-14 lg:gap-0">
-              {steps.map((s, i) => (
-                <li
-                  key={s.id}
-                  id={s.id}
-                  data-stage={i}
-                  data-active={active === i}
-                  className="group/step flex flex-col gap-5 lg:min-h-[80svh] lg:snap-center lg:justify-center"
-                >
-                  {/* 모바일: 목업을 꽉 차게, 아래쪽은 그라데이션으로 덮고 그 위에 설명글 */}
-                  <div className="grid max-lg:items-end">
-                    <div data-ui data-on={active === i} className="flex justify-center [grid-area:1/1] lg:hidden">
-                      <PhoneMock>{s.screen}</PhoneMock>
+            {/* 모바일: 고정된 폰 하나. 아래 문단(ol)이 그 뒤로 지나가며 화면과 설명글을 바꾼다 */}
+            <div className="relative mt-8 lg:mt-0">
+              {!wide && (
+                <div aria-hidden className="absolute inset-y-0 -inset-x-5 md:-inset-x-12 lg:hidden">
+                  <div className="sticky top-0 h-svh overflow-hidden">
+                    <div data-ui className="flex justify-center pt-4">
+                      <PhoneMock scale={mScale}>{screens}</PhoneMock>
                     </div>
-                    <div className="relative [grid-area:1/1] max-lg:-mx-5 max-lg:bg-linear-to-b max-lg:from-transparent max-lg:via-bg max-lg:via-45% max-lg:to-bg max-lg:px-5 max-lg:pt-32 max-lg:pb-1 md:max-lg:-mx-12 md:max-lg:px-12">
-                      <p className="reveal text-[17px] leading-[1.6] text-text-2 transition-colors duration-300 md:text-lg lg:text-text-3 lg:group-data-[active=true]/step:text-text-2">
-                        <strong className="font-bold text-text-1 transition-colors duration-300 lg:text-text-2 lg:group-data-[active=true]/step:text-text-1">{s.lead}</strong> {s.body}
-                      </p>
+                    <div className="absolute inset-x-0 bottom-0 grid bg-linear-to-b from-transparent via-bg via-45% to-bg px-5 pt-32 pb-8 md:px-12">
+                      {steps.map((s, i) => (
+                        <p
+                          key={s.id}
+                          className={`text-[17px] leading-[1.6] text-text-2 transition-[opacity,translate] duration-300 [grid-area:1/1] md:text-lg ${(active < 0 ? 0 : active) === i ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+                        >
+                          <strong className="font-bold text-text-1">{s.lead}</strong> {s.body}
+                        </p>
+                      ))}
                     </div>
                   </div>
-                  <div className="max-lg:hidden">{s.evidence ?? <ScreenCrop crop={s.crop}>{s.screen}</ScreenCrop>}</div>
-                </li>
-              ))}
-            </ol>
+                </div>
+              )}
+              <ol className="flex flex-col lg:mt-12">
+                {steps.map((s, i) => (
+                  <li
+                    key={s.id}
+                    id={s.id}
+                    data-stage={i}
+                    data-active={active === i}
+                    className="group/step flex flex-col gap-5 max-lg:h-[80svh] lg:min-h-[80svh] lg:snap-center lg:justify-center"
+                  >
+                    {/* 모바일에선 위 고정 폰이 보여 주므로 문단은 읽기 도구용으로만 남긴다 */}
+                    <p className="reveal text-[17px] leading-[1.6] text-text-2 transition-colors duration-300 max-lg:sr-only md:text-lg lg:text-text-3 lg:group-data-[active=true]/step:text-text-2">
+                      <strong className="font-bold text-text-1 transition-colors duration-300 lg:text-text-2 lg:group-data-[active=true]/step:text-text-1">
+                        {s.lead}
+                      </strong>{" "}
+                      {s.body}
+                    </p>
+                    <div className="max-lg:hidden">{s.evidence ?? <ScreenCrop crop={s.crop}>{s.screen}</ScreenCrop>}</div>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
         </section>
       </div>
