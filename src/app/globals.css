@@ -130,6 +130,71 @@ body {
   transform: translateY(28px);
 }
 
+/* 정책 문서 본문 */
+.legal p,
+.legal li {
+  color: var(--color-text-2);
+  font-size: 17px;
+  line-height: 1.75;
+}
+.legal p + p,
+.legal p + ol,
+.legal p + ul,
+.legal ol + p,
+.legal ul + p,
+.legal table + p {
+  margin-top: 0.9em;
+}
+.legal ol {
+  list-style: decimal;
+  padding-left: 1.4em;
+}
+.legal ol > li,
+.legal ul > li {
+  margin-top: 0.45em;
+}
+.legal ol > li::marker {
+  color: var(--color-text-3);
+}
+.legal strong {
+  color: var(--color-text-1);
+  font-weight: 700;
+}
+.legal a {
+  color: var(--color-text-1);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.legal table {
+  width: 100%;
+  margin-top: 0.9em;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+  font-size: 15px;
+}
+.legal th,
+.legal td {
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.6;
+}
+.legal th {
+  color: var(--color-text-3);
+  font-weight: 500;
+}
+.legal td {
+  background: var(--color-surface-1);
+  color: var(--color-text-2);
+}
+.legal td:first-child {
+  border-radius: 12px 0 0 12px;
+  color: var(--color-text-1);
+}
+.legal td:last-child {
+  border-radius: 0 12px 12px 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

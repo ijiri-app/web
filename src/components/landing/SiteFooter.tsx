@@ -10,10 +10,10 @@ const columns: { title: string; links: Link[] }[] = [
   {
     title: "서비스",
     links: [
-      { label: "기능", href: "#how" },
-      { label: "차종별 빌드", href: "#builds" },
-      { label: "차량 QR", href: "#qr" },
-      { label: "앱 받기", href: "#download" },
+      { label: "기능", href: "/#how" },
+      { label: "차종별 빌드", href: "/#builds" },
+      { label: "차량 QR", href: "/#qr" },
+      { label: "앱 받기", href: "/#download" },
     ],
   },
   {
@@ -33,8 +33,11 @@ const columns: { title: string; links: Link[] }[] = [
   },
 ];
 
-// 페이지가 만들어지면 href를 채운다
-const policies = ["이용약관", "개인정보처리방침", "계정 삭제 안내"];
+const policies = [
+  { label: "이용약관", href: "/terms" },
+  { label: "개인정보처리방침", href: "/privacy" },
+  { label: "계정 삭제 안내", href: "/account-deletion" },
+];
 
 const linkCls = "rounded transition-colors hover:text-text-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
@@ -95,7 +98,11 @@ export function SiteFooter() {
         </div>
         <ul className="flex flex-wrap gap-x-5 gap-y-1">
           {policies.map((p) => (
-            <li key={p}>{p}</li>
+            <li key={p.href}>
+              <a href={p.href} className={linkCls}>
+                {p.label}
+              </a>
+            </li>
           ))}
         </ul>
       </div>
