@@ -69,11 +69,10 @@ export const heroTags: {
   ly: number;
   side: "left" | "right";
 }[] = [
-  { label: "버킷 시트", category: "int", ax: 60, ay: 42, lx: 66, ly: 22, side: "right" },
-  { label: "카본 보닛", category: "ext", ax: 50, ay: 52, lx: 44, ly: 32, side: "left" },
-  { label: "코일오버", category: "und", ax: 78, ay: 62, lx: 74, ly: 48, side: "left" },
-  { label: "단조 휠", category: "und", ax: 76, ay: 74, lx: 72, ly: 90, side: "left" },
-  { label: "프론트 립", category: "ext", ax: 42, ay: 79, lx: 30, ly: 90, side: "left" },
+  { label: "OLED 테일램프", category: "ext", ax: 60, ay: 27, lx: 66, ly: 12, side: "right" },
+  { label: "카본 트렁크 립", category: "ext", ax: 30, ay: 6, lx: 10, ly: 20, side: "right" },
+  { label: "카본 디퓨저", category: "ext", ax: 50, ay: 86, lx: 62, ly: 70, side: "right" },
+  { label: "티타늄 배기", category: "pwr", ax: 14, ay: 94, lx: 10, ly: 78, side: "right" },
 ];
 
 export type Tag = (typeof heroTags)[number];

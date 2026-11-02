@@ -130,21 +130,6 @@ body {
   transform: translateY(28px);
 }
 
-/* 첫 화면이 빠져나갈 때 워드마크가 조금 작아진다. 지원하지 않으면 그대로 */
-@supports (animation-timeline: view()) {
-  .wordmark {
-    transform-origin: 100% 100%;
-    animation: wordmark-out linear both;
-    animation-timeline: view();
-    animation-range: exit 0% exit 100%;
-  }
-}
-@keyframes wordmark-out {
-  to {
-    scale: 0.93;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
