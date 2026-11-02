@@ -1,5 +1,6 @@
 import { Mail } from "lucide-react";
 import { siInstagram } from "simple-icons";
+import { legal } from "@/lib/legal";
 import { contact, liveUrl } from "@/lib/stores";
 
 /* 푸터: 로고와 한 줄 소개, 메뉴 열, 아래 줄에 사업자 정보와 정책 */
@@ -49,7 +50,11 @@ export function SiteFooter() {
           <span className="font-logo text-[32px] leading-none">IJIRI</span>
           <p className="text-[15px] leading-[1.6] text-text-2">등업 없이 바로 보는 튜닝 레퍼런스. 오너들이 실제로 단 부품을 차종별로 모았어요.</p>
           <div className="flex gap-2">
-            <a href={`mailto:${contact.email}`} aria-label="메일 보내기" className={`flex size-11 items-center justify-center rounded-full bg-surface-2 text-text-1 hover:bg-surface-3 ${linkCls}`}>
+            <a
+              href={`mailto:${contact.email}`}
+              aria-label="메일 보내기"
+              className={`flex size-11 items-center justify-center rounded-full bg-surface-2 text-text-1 hover:bg-surface-3 ${linkCls}`}
+            >
               <Mail aria-hidden className="size-[18px]" />
             </a>
             {contact.instagram && (
@@ -92,8 +97,8 @@ export function SiteFooter() {
 
       <div className="flex flex-col gap-3 bg-bg px-5 py-6 text-[13px] text-text-3 md:px-12 lg:flex-row lg:items-center lg:justify-between lg:px-[72px]">
         <div className="flex flex-col gap-1 lg:flex-row lg:gap-6">
-          {/* TODO: 사업자 정보가 정해지면 채운다 */}
-          <span>[사업자 정보]</span>
+          <span>운영자 {legal.operator}</span>
+          <span>문의 {contact.email}</span>
           <span>© 2026 IJIRI. All rights reserved.</span>
         </div>
         <ul className="flex flex-wrap gap-x-5 gap-y-1">

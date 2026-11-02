@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "@/components/legal/LegalPage";
+import { legal } from "@/lib/legal";
 import { contact } from "@/lib/stores";
 
 export const metadata: Metadata = {
@@ -69,10 +70,6 @@ const sections: LegalSection[] = [
             <td>보유 차량, 관심 차종, 위시리스트, 좋아요</td>
             <td>탈퇴 즉시 비공개. 30일 뒤 삭제</td>
           </tr>
-          <tr>
-            <td>알림 기기 토큰</td>
-            <td>탈퇴 즉시 삭제</td>
-          </tr>
         </tbody>
       </table>
     ),
@@ -109,10 +106,10 @@ export default function AccountDeletionPage() {
     <LegalPage
       current="/account-deletion"
       title="계정 삭제 안내"
-      effective="[시행일]"
+      effective={legal.effective}
       intro={
         <p className="!text-text-1">
-          이지리(개발자: [플레이스토어 개발자 이름]) 계정은 앱 안에서 바로 삭제하거나, 앱 없이 메일로 삭제를 요청할 수 있어요. 탈퇴하면 바로 비공개로 바뀌고,{" "}
+          이지리(개발자: {legal.playDeveloper}) 계정은 앱 안에서 바로 삭제하거나, 앱 없이 메일로 삭제를 요청할 수 있어요. 탈퇴하면 바로 비공개로 바뀌고,{" "}
           <strong>30일 뒤 모든 데이터가 완전히 지워져요.</strong>
         </p>
       }

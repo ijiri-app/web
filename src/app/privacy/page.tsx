@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "@/components/legal/LegalPage";
+import { legal } from "@/lib/legal";
 import { contact } from "@/lib/stores";
 
 export const metadata: Metadata = {
@@ -31,7 +32,7 @@ const sections: LegalSection[] = [
           </tr>
           <tr>
             <td>자동으로 수집</td>
-            <td>기기 정보(기기 종류, 운영체제, 앱 버전), 접속 기록(IP 주소, 접속 일시), 푸시 알림 토큰</td>
+            <td>기기 정보(기기 종류, 운영체제, 앱 버전), 접속 기록(IP 주소, 접속 일시)</td>
           </tr>
         </tbody>
       </table>
@@ -58,7 +59,7 @@ const sections: LegalSection[] = [
     body: (
       <ol>
         <li>회원 관리: 가입, 로그인, 본인 확인, 탈퇴 처리</li>
-        <li>서비스 제공: 게시물 올리기와 보여 주기, 차종별 피드, 검색, 위시리스트, 알림</li>
+        <li>서비스 제공: 게시물 올리기와 보여 주기, 차종별 피드, 검색, 위시리스트</li>
         <li>부정 이용 방지: 신고 처리, 이용 제한, 탈퇴 후 재가입 제한</li>
         <li>공지 발송: 약관과 방침 변경, 서비스 운영에 관한 안내</li>
       </ol>
@@ -120,10 +121,6 @@ const sections: LegalSection[] = [
               <td>사진 저장 (Cloudflare R2)</td>
             </tr>
             <tr>
-              <td>650 Industries, Inc. (Expo)</td>
-              <td>푸시 알림 발송</td>
-            </tr>
-            <tr>
               <td>Amazon Web Services, Inc.</td>
               <td>인증 메일 발송 (Amazon SES)</td>
             </tr>
@@ -149,7 +146,7 @@ const sections: LegalSection[] = [
             <tr>
               <td>Cloudflare, Inc.</td>
               <td>
-                국가: [R2 버킷 지역 확인 후 기입]
+                국가: {legal.r2Region}
                 <br />
                 항목: 게시물 사진, 프로필 사진
                 <br />
@@ -159,27 +156,15 @@ const sections: LegalSection[] = [
               </td>
             </tr>
             <tr>
-              <td>650 Industries, Inc. (Expo)</td>
-              <td>
-                국가: 미국
-                <br />
-                항목: 푸시 알림 토큰, 알림 내용
-                <br />
-                목적: 푸시 알림 발송
-                <br />
-                기간: 알림을 끄거나 탈퇴할 때까지
-              </td>
-            </tr>
-            <tr>
               <td>Amazon Web Services, Inc.</td>
               <td>
-                국가: [SES 리전 확인 후 기입]
+                국가: {legal.sesRegion}
                 <br />
                 항목: 이메일
                 <br />
                 목적: 가입 인증, 비밀번호 재설정 메일 발송
                 <br />
-                기간: 발송 후 [업체 보관 기간 확인 후 기입]
+                기간: 발송 후 {legal.sesRetention}
               </td>
             </tr>
           </tbody>
@@ -204,8 +189,8 @@ const sections: LegalSection[] = [
         <ol>
           <li>열람과 정정: 앱의 마이에서 프로필과 닉네임을 바로 확인하고 고칠 수 있어요.</li>
           <li>삭제: 게시물은 각 게시물에서, 계정은 마이, 설정, 회원 탈퇴에서 지울 수 있어요.</li>
-          <li>처리 정지: 알림은 앱 설정에서 종류별로 끌 수 있어요.</li>
-          <li>그 밖의 요구: {contact.email}로 메일을 보내면 지체 없이 처리하고 결과를 알려 드려요.</li>
+
+          <li>처리 정지와 그 밖의 요구: {contact.email}로 메일을 보내면 지체 없이 처리하고 결과를 알려 드려요.</li>
         </ol>
       </>
     ),
@@ -232,7 +217,7 @@ const sections: LegalSection[] = [
     body: (
       <>
         <ol>
-          <li>보호책임자: [이름 또는 직책]</li>
+          <li>보호책임자: 운영자 {legal.operator}</li>
           <li>
             연락처: <a href={`mailto:${contact.email}`}>{contact.email}</a>
           </li>
@@ -246,7 +231,7 @@ const sections: LegalSection[] = [
     title: "13. 시행일과 변경 이력",
     body: (
       <>
-        <p>이 방침은 [시행일]부터 시행해요. 내용이 바뀌면 시행 7일 전부터, 이용자에게 불리한 변경은 30일 전부터 앱과 웹사이트에 알려요.</p>
+        <p>이 방침은 {legal.effective}부터 시행해요. 내용이 바뀌면 시행 7일 전부터, 이용자에게 불리한 변경은 30일 전부터 앱과 웹사이트에 알려요.</p>
         <table>
           <thead>
             <tr>
@@ -256,7 +241,7 @@ const sections: LegalSection[] = [
           </thead>
           <tbody>
             <tr>
-              <td>[시행일]</td>
+              <td>{legal.effective}</td>
               <td>최초 제정</td>
             </tr>
           </tbody>
@@ -271,10 +256,10 @@ export default function PrivacyPage() {
     <LegalPage
       current="/privacy"
       title="개인정보처리방침"
-      effective="[시행일]"
+      effective={legal.effective}
       intro={
         <p className="!text-text-1">
-          [서비스 제공자 명칭](이하 이지리)은 이지리 앱과 ijiri.net에서 필요한 개인정보만 받고, 받은 목적에만 써요. 사진의 위치 정보는 폰에서 지우고 올리고,
+          운영자 {legal.operator}(이하 이지리)은 이지리 앱과 ijiri.net에서 필요한 개인정보만 받고, 받은 목적에만 써요. 사진의 위치 정보는 폰에서 지우고 올리고,
           번호판은 폰 안에서 가려요.
         </p>
       }
