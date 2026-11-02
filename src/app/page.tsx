@@ -5,6 +5,8 @@ import { QrBand, StageSections, button, focusRing } from "@/components/landing/S
 import { SiteFooter } from "@/components/landing/SiteFooter";
 import { StoreButtons } from "@/components/landing/StoreButtons";
 import { installQrSvg } from "@/lib/qr";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from "@/lib/brand";
+import { contact, SITE_URL } from "@/lib/stores";
 import { heroTags, ownerBuilds, partCategoryLabel, partColor } from "@/components/landing/data";
 
 /* 구성: 분할 무대(첫 화면 + 기능 흐름) → 차종별 빌드 → 차량 QR → 받기 → 푸터 */
@@ -15,6 +17,51 @@ const nav = [
   { label: "차량 QR", href: "#qr" },
   { label: "받기", href: "#download" },
 ];
+
+/* 검색엔진과 생성형 AI 검색이 읽는 구조화 데이터 */
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#org`,
+      name: SITE_NAME,
+      alternateName: "IJIRI",
+      url: SITE_URL,
+      logo: `${SITE_URL}/apple-icon.png`,
+      email: contact.email,
+      sameAs: contact.instagram ? [contact.instagram] : [],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: SITE_NAME,
+      inLanguage: "ko-KR",
+      publisher: { "@id": `${SITE_URL}/#org` },
+    },
+    {
+      "@type": "MobileApplication",
+      name: SITE_NAME,
+      alternateName: "IJIRI",
+      description: SITE_DESCRIPTION,
+      slogan: SITE_TAGLINE,
+      operatingSystem: "Android",
+      applicationCategory: "LifestyleApplication",
+      inLanguage: "ko-KR",
+      offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
+      publisher: { "@id": `${SITE_URL}/#org` },
+      featureList: [
+        "차종별 튜닝 피드",
+        "사진 위 부품 태그",
+        "부품 담기와 담기 알림",
+        "차종, 부품, 브랜드 통합 검색",
+        "사진 위치 정보 자동 삭제",
+        "번호판 자동 가림",
+      ],
+    },
+  ],
+};
 
 export default async function Home() {
   const qrSvg = await installQrSvg();
@@ -81,6 +128,7 @@ export default async function Home() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <main id="top">
         <StageSections hero={hero} />
         <BuildIndex />
