@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react";
 import { BuildIndex } from "@/components/landing/BuildIndex";
 import { InstallButton } from "@/components/landing/InstallButton";
 import { Reveal } from "@/components/landing/Reveal";
@@ -6,15 +5,9 @@ import { QrBand, StageSections, button, focusRing } from "@/components/landing/S
 import { SiteFooter } from "@/components/landing/SiteFooter";
 import { StoreButtons } from "@/components/landing/StoreButtons";
 import { installQrSvg } from "@/lib/qr";
+import { heroTags, ownerBuilds, partCategoryLabel, partColor } from "@/components/landing/data";
 
 /* 구성: 분할 무대(첫 화면 + 기능 흐름) → 차종별 빌드 → 차량 QR → 받기 → 푸터 */
-
-const heroFacts = [
-  ["가입 없이", "바로 구경"],
-  ["사진 위", "부품 태그"],
-  ["번호판", "자동 가림"],
-  ["Android", "먼저 출시"],
-];
 
 const nav = [
   { label: "기능", href: "#how" },
@@ -61,26 +54,28 @@ export default async function Home() {
             오너들이 실제로 단 부품을 사진 위 태그로, 차종별로 모았어요.
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div>
           <InstallButton qrSvg={qrSvg} className={`${button} h-14 px-7 text-[18px]`}>
             앱 설치하기
           </InstallButton>
-          <a href="#how" className={`group inline-flex h-14 items-center gap-2 rounded-[14px] px-5 text-[17px] text-text-1 hover:bg-white/5 ${focusRing}`}>
-            기능 보기
-            <ArrowRight aria-hidden className="size-[18px] transition-transform group-hover:translate-x-1" />
-          </a>
         </div>
       </div>
 
-      {/* 아래 정보 줄: 이지리가 다른 커뮤니티와 다른 점 */}
-      <ul className="mx-5 mb-5 grid grid-cols-2 gap-y-6 rounded-[20px] bg-surface-1 p-6 md:mx-12 lg:mx-12 lg:mb-8 lg:grid-cols-4 lg:gap-6 lg:p-7 xl:mx-14">
-        {heroFacts.map(([a, b]) => (
-          <li key={a} className="flex flex-col gap-1">
-            <span className="text-[17px] font-bold md:text-[19px]">{a}</span>
-            <span className="text-[15px] text-text-3">{b}</span>
-          </li>
-        ))}
-      </ul>
+      {/* 왼쪽 사진의 설명: 이 게시물에 달린 부품 (사진 속 태그와 같은 목록) */}
+      <figure className="hidden px-12 pb-10 lg:block xl:px-14">
+        <figcaption className="text-[15px] text-text-3">
+          {ownerBuilds[0].owner}의 {ownerBuilds[0].meta}, 부품 {heroTags.length}개
+        </figcaption>
+        <ul className="mt-4 grid grid-cols-2 gap-x-10 gap-y-3 xl:max-w-[640px]">
+          {heroTags.map((t) => (
+            <li key={t.label} className="flex items-center gap-3 text-[17px]">
+              <span aria-hidden className={`size-2.5 shrink-0 rounded-full ${partColor[t.category]} ring-2 ring-white/30`} />
+              <span className="font-medium">{t.label}</span>
+              <span className="text-text-3">{partCategoryLabel[t.category]}</span>
+            </li>
+          ))}
+        </ul>
+      </figure>
     </section>
   );
 
