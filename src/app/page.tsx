@@ -75,31 +75,24 @@ export default async function Home() {
         <BuildIndex />
         <QrBand qrSvg={qrSvg} />
 
-        {/* 받기: 거의 빈 화면에 한 문장과 버튼 하나 */}
-        <section id="download" aria-labelledby="download-title" className="scroll-mt-6 bg-bg-deep lg:snap-start">
-          <div className="flex flex-col px-5 pt-[20svh] pb-[14svh] md:px-12 lg:flex-row lg:items-end lg:justify-between lg:px-[72px] lg:pt-[28svh] lg:pb-[20svh]">
-            <div className="flex flex-col">
-              <h2 id="download-title" className="reveal max-w-[34ch] text-[18px] leading-[1.5] font-normal text-text-1 md:text-[22px]">
-                Android부터 먼저 나와요. 설치하기를 누르면 내 폰에 맞는 스토어로 바로 데려다 드려요.
-              </h2>
-              <div className="reveal mt-6 flex flex-col gap-8">
-                <div>
-                  <InstallButton qrSvg={qrSvg} className={button}>
-                    설치하기
-                  </InstallButton>
-                </div>
-                <StoreButtons />
-              </div>
+        {/* 받기: 이지리 블루 면 위에 큰 제목 하나와 버튼 */}
+        <section id="download" aria-labelledby="download-title" className="scroll-mt-6 bg-bg-deep px-3 pb-3 md:px-6 md:pb-6 lg:snap-start">
+          <div className="flex flex-col items-center gap-8 rounded-[28px] bg-accent px-5 py-24 text-center md:px-12 lg:py-36">
+            <h2 id="download-title" className="reveal text-[40px] leading-[1.1] font-bold tracking-[-0.04em] text-white md:text-[72px]">
+              등업 없이,
+              <br />
+              지금 바로.
+            </h2>
+            <p className="reveal text-[17px] leading-[1.6] text-white md:text-[22px]">Android부터 먼저 나와요.</p>
+            <div className="reveal flex flex-col items-center gap-6">
+              <InstallButton
+                qrSvg={qrSvg}
+                className={`inline-flex h-14 items-center justify-center rounded-full bg-white px-8 text-[17px] font-bold text-black transition-[scale,filter] hover:brightness-95 active:scale-[0.97] ${focusRing}`}
+              >
+                앱 설치하기
+              </InstallButton>
+              <StoreButtons className="justify-center" />
             </div>
-            <figure className="reveal hidden flex-col items-center gap-4 lg:flex">
-              <div
-                role="img"
-                aria-label="이지리 설치 페이지 QR 코드"
-                className="size-[220px] rounded-[14px] bg-white p-4 [&>svg]:size-full"
-                dangerouslySetInnerHTML={{ __html: qrSvg }}
-              />
-              <figcaption className="text-[15px] text-text-2">폰 카메라로 찍으면 맞는 스토어로 가요</figcaption>
-            </figure>
           </div>
         </section>
       </main>
