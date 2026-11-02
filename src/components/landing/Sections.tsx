@@ -5,7 +5,7 @@ import { InterestScreen, NotificationScreen, PickScreen, SearchScreen } from "./
 import { PostScreen } from "./PostScreen";
 import { UploadScreen } from "./UploadScreen";
 import { TaggedPhoto } from "./HeroPhoto";
-import { heroPhotoId, heroTags, unsplash } from "./data";
+import { heroPhotoId, heroRefAspect, heroTags, unsplash } from "./data";
 
 /* 타입 단계: 13 / 17·18 / 22·24 / 30·44 / 워드마크 */
 export const h2 = "text-[30px] leading-[1.2] font-bold tracking-[-0.03em] md:text-[44px]";
@@ -32,7 +32,7 @@ const steps: Step[] = [
     focus: [180, 165, 1],
     visual: (
       <div className="relative h-[460px] overflow-hidden rounded-[20px]">
-        <TaggedPhoto photoId={heroPhotoId} tags={heroTags} alt="튜닝된 BMW M4 CS 오너 사진" width={1400} />
+        <TaggedPhoto photoId={heroPhotoId} tags={heroTags} alt="튜닝된 BMW M4 CS 오너 사진" width={1400} refAspect={heroRefAspect} />
       </div>
     ),
     lead: "부품 태그",
