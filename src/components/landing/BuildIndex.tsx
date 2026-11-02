@@ -15,7 +15,7 @@ export function BuildIndex() {
   const build = ownerBuilds[sel];
 
   return (
-    <section id="builds" aria-labelledby="builds-title" className="scroll-mt-6 bg-bg-deep">
+    <section id="builds" aria-labelledby="builds-title" className="scroll-mt-6 bg-bg-deep lg:snap-start">
       <div className="grid gap-8 px-5 py-20 md:px-12 lg:grid-cols-12 lg:gap-6 lg:px-[72px] lg:py-32">
         <div className="flex min-w-0 flex-col gap-8 lg:col-span-5 lg:pt-[72px]">
           <h2 id="builds-title" className="reveal text-[22px] leading-[1.4] font-bold md:text-2xl">

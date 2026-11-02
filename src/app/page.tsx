@@ -19,10 +19,10 @@ export default async function Home() {
   const qrSvg = await installQrSvg();
 
   const hero = (
-    <section aria-labelledby="hero-title" className="relative flex flex-col lg:min-h-svh">
-      <header className="absolute inset-x-0 -top-[calc(58svh+24px)] z-20 flex h-[72px] items-center justify-end gap-7 px-6 md:-top-[calc(52svh+24px)] lg:static lg:px-[72px]">
-        <nav aria-label="페이지 안내" className="hidden xl:block">
-          <ul className="flex gap-7 text-[15px] whitespace-nowrap text-text-2">
+    <section aria-labelledby="hero-title" className="relative flex flex-col lg:min-h-svh lg:snap-start">
+      <header className="absolute inset-x-0 -top-[calc(58svh+24px)] z-20 flex h-[72px] items-center justify-end gap-7 px-6 md:-top-[calc(52svh+24px)] lg:static lg:px-12 xl:px-14">
+        <nav aria-label="페이지 안내" className="hidden min-[1400px]:block">
+          <ul className="flex gap-6 text-[15px] whitespace-nowrap text-text-2">
             {nav.map((n) => (
               <li key={n.href}>
                 <a href={n.href} className={`rounded transition-colors hover:text-text-1 ${focusRing}`}>
@@ -41,21 +41,21 @@ export default async function Home() {
       <svg
         aria-hidden
         viewBox="0 0 640 220"
-        className="wordmark pointer-events-none order-first -mt-[11vw] w-full overflow-hidden px-5 text-text-1 select-none md:-mt-[9vw] md:px-12 lg:absolute lg:right-[72px] lg:bottom-10 lg:mt-0 lg:w-[min(60vw,calc(233svh-1000px))] lg:max-w-[1000px] lg:px-0"
+        className="wordmark pointer-events-none order-first -mt-[11vw] w-full overflow-hidden px-5 text-text-1 select-none md:-mt-[9vw] md:px-12 lg:absolute lg:right-12 lg:bottom-10 lg:mt-0 lg:w-[min(50vw,calc(233svh-1000px))] lg:max-w-[900px] lg:px-0 xl:right-14"
       >
         <text x="320" y="206" textAnchor="middle" fontSize="290" fill="currentColor" style={{ fontFamily: "var(--font-fugaz)", letterSpacing: "-0.04em" }}>
           IJIRI
         </text>
       </svg>
 
-      <div className="flex flex-col gap-8 px-5 pt-8 pb-4 md:px-12 lg:absolute lg:top-[20%] lg:px-[72px] lg:pt-0 lg:pb-0">
+      <div className="flex flex-col gap-8 px-5 pt-8 pb-4 md:px-12 lg:absolute lg:top-[20%] lg:px-12 lg:pt-0 lg:pb-0 xl:px-14">
         <div className="flex flex-col gap-5">
-          <h1 id="hero-title" className="text-[30px] leading-[1.2] font-bold tracking-[-0.03em] md:text-[44px]">
+          <h1 id="hero-title" className="text-[30px] leading-[1.2] font-bold tracking-[-0.03em] md:text-[44px] lg:text-[36px] xl:text-[44px]">
             <span className="whitespace-nowrap">등업 없이 바로 보는</span>
             <br />
             튜닝 레퍼런스
           </h1>
-          <p className="text-[17px] leading-[1.6] text-text-2 md:max-w-[26ch] md:text-[22px] md:leading-[1.5]">
+          <p className="text-[17px] leading-[1.6] text-text-2 lg:max-w-[26ch] md:text-[22px] md:leading-[1.5]">
             오너들이 실제로 단 부품을 사진 위 태그로, 차종별로 모았어요.
           </p>
         </div>
@@ -76,7 +76,7 @@ export default async function Home() {
         <QrBand qrSvg={qrSvg} />
 
         {/* 받기: 거의 빈 화면에 한 문장과 버튼 하나 */}
-        <section id="download" aria-labelledby="download-title" className="scroll-mt-6 bg-bg-deep">
+        <section id="download" aria-labelledby="download-title" className="scroll-mt-6 bg-bg-deep lg:snap-start">
           <div className="flex flex-col px-5 pt-[20svh] pb-[14svh] md:px-12 lg:flex-row lg:items-end lg:justify-between lg:px-[72px] lg:pt-[28svh] lg:pb-[20svh]">
             <div className="flex flex-col">
               <h2 id="download-title" className="reveal max-w-[34ch] text-[18px] leading-[1.5] font-normal text-text-1 md:text-[22px]">

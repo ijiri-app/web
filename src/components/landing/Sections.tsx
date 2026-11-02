@@ -105,7 +105,7 @@ export function StageSections({ hero }: { hero: React.ReactNode }) {
 
 export function QrBand({ qrSvg }: { qrSvg: string }) {
   return (
-    <section id="qr" aria-labelledby="qr-title" className="scroll-mt-6 bg-accent">
+    <section id="qr" aria-labelledby="qr-title" className="scroll-mt-6 bg-accent lg:snap-center">
       <div className="grid items-center gap-8 px-5 py-20 md:px-12 lg:grid-cols-[1fr_560px] lg:gap-[96px] lg:px-[72px] lg:py-32">
         <div className="flex flex-col gap-6">
           <h2 id="qr-title" className={`${h2} reveal text-white`}>
