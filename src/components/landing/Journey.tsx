@@ -28,7 +28,32 @@ export type Step = {
   lead: string;
   body: string;
   screen: React.ReactNode;
+  /** 데스크톱 오른쪽 확대 화면: 화면(360×760) 안의 중심점 x, y와 배율 */
+  focus: [number, number, number];
 };
+
+/** 앱 화면의 한 부분(중심점 x, y)을 키워 칸 폭 전체에 보여 준다. 배율은 최소 z, 칸 폭을 꽉 채울 만큼 */
+function ScreenZoom({ focus: [x, y, z], children }: { focus: [number, number, number]; children: React.ReactNode }) {
+  const box = useRef<HTMLDivElement>(null);
+  const [w, setW] = useState(0);
+  useEffect(() => {
+    const el = box.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => setW(e.contentRect.width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const k = Math.max(z, w / 360);
+  // 화면 가장자리가 칸 안으로 들어오지 않게 중심점을 안쪽으로 당긴다
+  const cx = Math.min(Math.max(x, w / k / 2), 360 - w / k / 2);
+  return (
+    <div ref={box} data-ui className="relative h-[min(460px,46svh)] w-full overflow-hidden rounded-[14px] bg-bg">
+      <div inert className="absolute top-1/2 left-1/2 h-[760px] w-[360px] origin-top-left" style={{ transform: `scale(${k}) translate(${-cx}px, ${-y}px)` }}>
+        {children}
+      </div>
+    </div>
+  );
+}
 
 /** 모바일용 베젤 폰. 360×760 화면을 scale배로 담는다 */
 function PhoneMock({ scale, children }: { scale: number; children: React.ReactNode }) {
@@ -100,25 +125,6 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
       window.removeEventListener("resize", onScroll);
     };
   }, [reduced]);
-
-  // 데스크톱 기능 이름: 칸 폭에 꽉 차도록 글자 크기를 실제 폭으로 맞춘다
-  const fitBox = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const box = fitBox.current;
-    if (!box) return;
-    const fit = () => {
-      const W = box.clientWidth;
-      box.querySelectorAll<HTMLElement>("[data-fit]").forEach((el) => {
-        el.style.fontSize = "100px";
-        el.style.fontSize = `${Math.min(320, (100 * W) / el.offsetWidth).toFixed(1)}px`;
-      });
-    };
-    fit();
-    const ro = new ResizeObserver(fit);
-    ro.observe(box);
-    document.fonts?.ready.then(fit);
-    return () => ro.disconnect();
-  }, [wide]);
 
   const phoneOn = active >= 0;
   const cur = active < 0 ? 0 : active;
@@ -197,10 +203,10 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
                   </div>
                 </div>
               )}
-              {/* 데스크톱: 위에는 기능 목록을 작게, 가운데에는 지금 기능 이름을 칸 폭에 꽉 차게 */}
+              {/* 데스크톱: 기능 목록, 지금 기능 이름과 설명, 그 기능 부분을 확대한 앱 화면을 칸 폭 전체로 */}
               {wide && (
                 <div aria-hidden className="absolute inset-0 max-lg:hidden">
-                  <div ref={fitBox} className="sticky top-0 flex h-svh flex-col justify-center gap-12">
+                  <div className="sticky top-0 flex h-svh flex-col justify-center gap-8">
                     <ul className="flex flex-wrap gap-x-7 gap-y-2 text-[19px] font-medium">
                       {steps.map((s, i) => (
                         <li key={s.id} className={`transition-colors duration-300 ${cur === i ? "text-text-1" : "text-muted"}`}>
@@ -212,12 +218,13 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
                       {steps.map((s, i) => (
                         <div
                           key={s.id}
-                          className={`transition-[opacity,translate,visibility] duration-500 [grid-area:1/1] ${cur === i ? "visible translate-y-0 opacity-100" : "invisible translate-y-4 opacity-0"}`}
+                          className={`flex flex-col gap-8 transition-[opacity,translate,visibility] duration-500 [grid-area:1/1] ${cur === i ? "visible translate-y-0 opacity-100" : "invisible translate-y-4 opacity-0"}`}
                         >
-                          <p data-fit className="inline-block text-[120px] leading-[1.05] font-bold tracking-[-0.04em] whitespace-nowrap text-text-1">
-                            {s.lead}
-                          </p>
-                          <p className="mt-8 text-[26px] leading-[1.5] text-text-2">{s.body}</p>
+                          <div className="flex flex-col gap-3">
+                            <p className="text-[44px] leading-[1.2] font-bold tracking-[-0.03em] text-text-1">{s.lead}</p>
+                            <p className="text-[22px] leading-[1.5] text-text-2">{s.body}</p>
+                          </div>
+                          <ScreenZoom focus={s.focus}>{s.screen}</ScreenZoom>
                         </div>
                       ))}
                     </div>
