@@ -84,28 +84,33 @@ export function StageSections({ hero }: { hero: React.ReactNode }) {
   );
 }
 
+/** 차량 QR: 큰 사진 위에 글을 얹은 카드, 오른쪽에 스티커 */
 export function QrBand({ qrSvg }: { qrSvg: string }) {
   return (
-    <section id="qr" aria-labelledby="qr-title" className="scroll-mt-6 bg-accent lg:snap-center">
-      <div className="grid items-center gap-8 px-5 py-20 md:px-12 lg:grid-cols-[1fr_560px] lg:gap-[96px] lg:px-[72px] lg:py-32">
-        <div className="flex flex-col gap-6">
-          <h2 id="qr-title" className={`${h2} reveal text-white`}>
-            내 차에 QR을 붙이면
-            <br />
-            찍은 사람이 내 차를 봐요
-          </h2>
-          <p className="reveal max-w-[460px] text-[17px] leading-[1.6] text-white md:text-lg">
-            차마다 프로필과 @ID가 생겨요. 스티커를 찍으면 앱이 없어도 웹에서 열리고, 스티커는 무료로 보내 드려요. 차량 QR은 곧 열려요.
-          </p>
-        </div>
-
-        <div className="reveal relative aspect-[350/270] overflow-hidden rounded-[14px] lg:aspect-[560/420]">
-          <CarPhoto src={unsplash("qEXp4K4Y8t4", 1120)} alt="QR 스티커를 붙인 차" className="size-full" />
-          <div data-ui className="absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 -rotate-4 items-center gap-3 rounded-2xl bg-text-1 py-3 pr-5 pl-3 md:gap-4 md:py-4 md:pr-7 md:pl-4">
-            <div aria-hidden className="size-[76px] md:size-[120px] [&>svg]:size-full" dangerouslySetInnerHTML={{ __html: qrSvg }} />
+    <section id="qr" aria-labelledby="qr-title" className="scroll-mt-6 bg-bg-deep px-3 pb-3 md:px-6 md:pb-6 lg:snap-center">
+      <div className="relative overflow-hidden rounded-[28px] bg-surface-1">
+        <CarPhoto src={unsplash("qEXp4K4Y8t4", 1800)} alt="QR 스티커를 붙인 차" className="absolute inset-0 size-full" />
+        <div aria-hidden className="absolute inset-0 bg-linear-to-r from-bg-deep via-bg-deep/80 to-bg-deep/10 max-lg:bg-linear-to-t" />
+        <div className="relative grid min-h-[640px] items-end gap-10 px-5 py-14 md:px-12 lg:min-h-[720px] lg:grid-cols-[1fr_auto] lg:items-center lg:px-16 lg:py-20">
+          <div className="flex max-w-[520px] flex-col gap-6">
+            <h2 id="qr-title" className={`${h2} reveal`}>
+              내 차에 QR을 붙이면
+              <br />
+              찍은 사람이 내 차를 봐요
+            </h2>
+            <p className="reveal text-[17px] leading-[1.6] text-text-1 md:text-lg">
+              차마다 프로필과 @ID가 생겨요. 앱이 없어도 웹에서 열리고, 스티커는 무료로 보내 드려요.
+            </p>
+            <span className="reveal w-fit rounded-full bg-white/10 px-4 py-2 text-[15px] text-text-1">곧 열려요</span>
+          </div>
+          <div
+            data-ui
+            className="reveal flex w-fit -rotate-4 items-center gap-4 rounded-[20px] bg-text-1 py-4 pr-7 pl-4 max-lg:order-first max-lg:self-start lg:gap-5 lg:py-5 lg:pr-9 lg:pl-5"
+          >
+            <div aria-hidden className="size-[96px] md:size-[140px] [&>svg]:size-full" dangerouslySetInnerHTML={{ __html: qrSvg }} />
             <span className="flex flex-col gap-1">
-              <span className="text-lg font-bold text-bg md:text-[27px]">@m4.owner</span>
-              <span className="font-logo text-[15px] text-accent-strong md:text-[22px]">IJIRI</span>
+              <span className="text-[20px] font-bold text-bg md:text-[30px]">@m4.owner</span>
+              <span className="font-logo text-[16px] text-accent-strong md:text-[24px]">IJIRI</span>
             </span>
           </div>
         </div>
