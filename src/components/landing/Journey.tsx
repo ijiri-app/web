@@ -30,10 +30,20 @@ export type Step = {
   screen: React.ReactNode;
   /** 데스크톱 오른쪽 확대 화면: 화면(360×760) 안의 중심점 x, y와 배율 */
   focus: [number, number, number];
+  /** 데스크톱 기능 칸에 화면 확대 대신 보여 줄 그림 */
+  visual?: React.ReactNode;
 };
 
 /** 앱 화면의 한 부분(중심점 x, y)을 키워 칸 폭 전체에 보여 준다. 배율은 최소 z, 칸 폭을 꽉 채울 만큼 */
-function ScreenZoom({ focus: [x, y, z], children }: { focus: [number, number, number]; children: React.ReactNode }) {
+function ScreenZoom({
+  focus: [x, y, z],
+  className = "h-[300px]",
+  children,
+}: {
+  focus: [number, number, number];
+  className?: string;
+  children: React.ReactNode;
+}) {
   const box = useRef<HTMLDivElement>(null);
   const [w, setW] = useState(0);
   useEffect(() => {
@@ -47,7 +57,7 @@ function ScreenZoom({ focus: [x, y, z], children }: { focus: [number, number, nu
   // 화면 가장자리가 칸 안으로 들어오지 않게 중심점을 안쪽으로 당긴다
   const cx = Math.min(Math.max(x, w / k / 2), 360 - w / k / 2);
   return (
-    <div ref={box} data-ui className="relative h-[min(460px,46svh)] w-full overflow-hidden rounded-[14px] bg-bg">
+    <div ref={box} data-ui className={`relative w-full overflow-hidden rounded-[20px] bg-bg ${className}`}>
       <div inert className="absolute top-1/2 left-1/2 h-[760px] w-[360px] origin-top-left" style={{ transform: `scale(${k}) translate(${-cx}px, ${-y}px)` }}>
         {children}
       </div>
@@ -77,8 +87,8 @@ const onResize = (cb: () => void) => {
 };
 
 /**
- * 첫 화면과 기능 설명을 한 판으로 묶은 분할 무대.
- * 데스크톱: 왼쪽 무대는 화면에 고정되고, 처음엔 태그 달린 오너 사진, 기능 문단이 가운데 오면 3D 폰 속 그 화면으로 바뀐다.
+ * 첫 화면(분할 무대)과 기능 구간.
+ * 데스크톱: 첫 화면은 왼쪽 오너 사진과 오른쪽 글. 기능 구간은 가운데 3D 폰과 기능마다 한 칸씩 놓은 그리드.
  * 모바일: 무대는 맨 위 사진으로만 쓰고, 기능 구간에서는 폰 목업 하나가 화면에 고정된 채 속 화면과 아래 설명글만 바뀐다.
  */
 export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; heading: React.ReactNode; steps: Step[] }) {
@@ -126,8 +136,6 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
     };
   }, [reduced]);
 
-  const phoneOn = active >= 0;
-  const cur = active < 0 ? 0 : active;
   const screens = (
     <div className="relative h-[760px] w-[360px]">
       {steps.map((s, i) => (
@@ -142,109 +150,97 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
       ))}
     </div>
   );
+  // 데스크톱 가운데 폰에 띄울 대표 화면(차종별 피드)
+  const showcase = steps.find((s) => s.id === "feed") ?? steps[0];
 
   return (
-    <div ref={root} className="lg:grid lg:grid-cols-[38.2%_61.8%]">
-      {/* 무대 */}
-      {/* 데스크톱: 처음엔 여백 없이 꽉 차고, 내리면 가장자리가 안으로 들어오며 작아진다(--shrink 0→1) */}
-      <div className="p-3 lg:sticky lg:top-0 lg:h-svh lg:p-0">
-        <div className="relative h-[58svh] overflow-hidden rounded-[14px] bg-surface-1 md:h-[52svh] lg:h-full lg:rounded-none lg:[clip-path:inset(calc(var(--shrink,0)*32px)_calc(var(--shrink,0)*24px)_round_calc(var(--shrink,0)*24px))]">
-          <div inert={phoneOn} className={`absolute inset-0 transition-opacity duration-500 ${phoneOn ? "pointer-events-none opacity-0" : "opacity-100"}`}>
+    <div ref={root}>
+      <div className="lg:grid lg:grid-cols-[38.2%_61.8%]">
+        {/* 무대: 첫 화면 오너 사진. 데스크톱은 처음엔 여백 없이 꽉 차고, 내리면 가장자리가 안으로 들어오며 작아진다(--shrink 0→1) */}
+        <div className="p-3 lg:sticky lg:top-0 lg:h-svh lg:p-0">
+          <div className="relative h-[58svh] overflow-hidden rounded-[14px] bg-surface-1 md:h-[52svh] lg:h-full lg:rounded-none lg:[clip-path:inset(calc(var(--shrink,0)*32px)_calc(var(--shrink,0)*24px)_round_calc(var(--shrink,0)*24px))]">
             <HeroPhoto />
           </div>
-          {wide && (
-            <div
-              aria-hidden
-              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${phoneOn ? "opacity-100" : "pointer-events-none opacity-0"}`}
-            >
-              {webgl ? (
-                <div className="relative aspect-[440/820] h-[min(820px,calc(100svh-80px),calc((38.2vw-48px)*1.86))]">
-                  <IPhone3D reducedMotion={reduced}>{screens}</IPhone3D>
-                </div>
-              ) : (
-                <div
-                  data-ui
-                  className="relative origin-center scale-[0.75] rounded-[56px] bg-black p-2.5 ring-[3px] ring-surface-4 [@media(min-height:960px)]:scale-100"
-                >
-                  <div className="overflow-hidden rounded-[46px]">{screens}</div>
-                  <span aria-hidden className="absolute top-[22px] left-1/2 h-[30px] w-[100px] -translate-x-1/2 rounded-full bg-black" />
-                </div>
-              )}
-            </div>
-          )}
+        </div>
+        <div className="relative z-10" data-stage={-1}>
+          {hero}
         </div>
       </div>
 
-      {/* 스크롤 칼럼 */}
-      <div className="relative z-10">
-        <div data-stage={-1}>{hero}</div>
+      <section id="how" aria-labelledby="how-title" className="scroll-mt-6 px-5 pt-24 pb-10 md:px-12 lg:px-[72px] lg:pt-32 lg:pb-32">
+        <div className="lg:text-center">{heading}</div>
 
-        <section id="how" aria-labelledby="how-title" className="scroll-mt-6 px-5 pt-24 pb-10 md:px-12 lg:px-12 lg:pt-[20svh] xl:px-14">
-          <div>
-            {heading}
-            {/* 모바일: 고정된 폰 하나. 아래 문단(ol)이 그 뒤로 지나가며 화면과 설명글을 바꾼다 */}
-            <div className="relative mt-8 lg:mt-0">
-              {!wide && (
-                <div aria-hidden className="absolute inset-y-0 -inset-x-5 md:-inset-x-12 lg:hidden">
-                  <div className="sticky top-0 h-svh overflow-hidden">
-                    <div data-ui className="flex justify-center pt-4">
-                      <PhoneMock scale={mScale}>{screens}</PhoneMock>
-                    </div>
-                    <div className="absolute inset-x-0 bottom-0 grid bg-linear-to-b from-transparent via-bg via-45% to-bg px-5 pt-32 pb-8 md:px-12">
-                      {steps.map((s, i) => (
-                        <p
-                          key={s.id}
-                          className={`text-[17px] leading-[1.6] text-text-2 transition-[opacity,translate] duration-300 [grid-area:1/1] md:text-lg ${(active < 0 ? 0 : active) === i ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
-                        >
-                          <strong className="font-bold text-text-1">{s.lead}</strong> {s.body}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
+        {/* 모바일: 고정된 폰 하나. 아래 빈 단계(ol)가 그 뒤로 지나가며 화면과 설명글을 바꾼다 */}
+        <div className="relative mt-8 lg:hidden">
+          {!wide && (
+            <div aria-hidden className="absolute inset-y-0 -inset-x-5 md:-inset-x-12">
+              <div className="sticky top-0 h-svh overflow-hidden">
+                <div data-ui className="flex justify-center pt-4">
+                  <PhoneMock scale={mScale}>{screens}</PhoneMock>
                 </div>
-              )}
-              {/* 데스크톱: 기능 목록, 지금 기능 이름과 설명, 그 기능 부분을 확대한 앱 화면을 칸 폭 전체로 */}
-              {wide && (
-                <div aria-hidden className="absolute inset-0 max-lg:hidden">
-                  <div className="sticky top-0 flex h-svh flex-col justify-center gap-8">
-                    <ul className="flex flex-wrap gap-x-7 gap-y-2 text-[19px] font-medium">
-                      {steps.map((s, i) => (
-                        <li key={s.id} className={`transition-colors duration-300 ${cur === i ? "text-text-1" : "text-muted"}`}>
-                          {s.lead}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="grid">
-                      {steps.map((s, i) => (
-                        <div
-                          key={s.id}
-                          className={`flex flex-col gap-8 transition-[opacity,translate,visibility] duration-500 [grid-area:1/1] ${cur === i ? "visible translate-y-0 opacity-100" : "invisible translate-y-4 opacity-0"}`}
-                        >
-                          <div className="flex flex-col gap-3">
-                            <p className="text-[44px] leading-[1.2] font-bold tracking-[-0.03em] text-text-1">{s.lead}</p>
-                            <p className="text-[22px] leading-[1.5] text-text-2">{s.body}</p>
-                          </div>
-                          <ScreenZoom focus={s.focus}>{s.screen}</ScreenZoom>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-              <ol className="flex flex-col">
-                {steps.map((s, i) => (
-                  <li key={s.id} id={s.id} data-stage={i} className="h-[80svh] lg:snap-center">
-                    {/* 화면에는 고정 영역(폰, 기능 색인)이 보여 주므로 문단은 읽기 도구용으로만 남긴다 */}
-                    <p className="sr-only">
-                      {s.lead}: {s.body}
+                <div className="absolute inset-x-0 bottom-0 grid bg-linear-to-b from-transparent via-bg via-45% to-bg px-5 pt-32 pb-8 md:px-12">
+                  {steps.map((s, i) => (
+                    <p
+                      key={s.id}
+                      className={`text-[17px] leading-[1.6] text-text-2 transition-[opacity,translate] duration-300 [grid-area:1/1] md:text-lg ${(active < 0 ? 0 : active) === i ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+                    >
+                      <strong className="font-bold text-text-1">{s.lead}</strong> {s.body}
                     </p>
-                  </li>
-                ))}
-              </ol>
+                  ))}
+                </div>
+              </div>
             </div>
+          )}
+          <ol className="flex flex-col">
+            {steps.map((s, i) => (
+              <li key={s.id} id={s.id} data-stage={i} className="h-[80svh]">
+                <p className="sr-only">
+                  {s.lead}: {s.body}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        {/* 데스크톱: 가운데 3D 폰 하나, 아래에 기능마다 한 칸씩 (짧은 한 줄 + 그 기능 부분 화면) */}
+        <div className="mx-auto hidden max-w-[1200px] lg:block">
+          <div className="relative mx-auto mt-4 aspect-[440/820] h-[min(760px,82svh)]">
+            {wide &&
+              (webgl ? (
+                <IPhone3D reducedMotion={reduced}>
+                  <div className="relative h-[760px] w-[360px]">{showcase.screen}</div>
+                </IPhone3D>
+              ) : (
+                <div className="flex size-full items-center justify-center">
+                  <div data-ui className="relative origin-center scale-[0.8] rounded-[56px] bg-black p-2.5 ring-[3px] ring-surface-4">
+                    <div inert className="overflow-hidden rounded-[46px]">
+                      {showcase.screen}
+                    </div>
+                    <span aria-hidden className="absolute top-[22px] left-1/2 h-[30px] w-[100px] -translate-x-1/2 rounded-full bg-black" />
+                  </div>
+                </div>
+              ))}
           </div>
-        </section>
-      </div>
+          <ul className="mt-10 grid grid-cols-2 gap-5">
+            {steps.map((s) => {
+              const wideCard = s.id === "capsule";
+              return (
+                <li key={s.id} className={`reveal flex flex-col gap-7 overflow-hidden rounded-[28px] bg-surface-1 p-8 ${wideCard ? "col-span-2" : ""}`}>
+                  <div className="text-center">
+                    <h3 className="text-[24px] leading-[1.3] font-bold">{s.lead}</h3>
+                    <p className="mt-2 text-[17px] leading-[1.5] text-text-2">{s.body}</p>
+                  </div>
+                  {s.visual ?? (
+                    <ScreenZoom focus={s.focus} className={wideCard ? "h-[420px]" : "h-[300px]"}>
+                      {s.screen}
+                    </ScreenZoom>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
     </div>
   );
 }
