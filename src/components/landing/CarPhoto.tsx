@@ -7,10 +7,12 @@ type Props = {
   src: string;
   alt: string;
   className?: string;
+  /** 첫 화면 사진처럼 바로 보여야 하면 true */
+  priority?: boolean;
 };
 
 /** 외부 사진이 안 열리면 차 아이콘 플레이스홀더로 대체한다. */
-export function CarPhoto({ src, alt, className = "" }: Props) {
+export function CarPhoto({ src, alt, className = "", priority = false }: Props) {
   const [failed, setFailed] = useState(false);
   const ref = useRef<HTMLImageElement>(null);
 
@@ -39,7 +41,8 @@ export function CarPhoto({ src, alt, className = "" }: Props) {
       ref={ref}
       src={src}
       alt={alt}
-      loading="lazy"
+      loading={priority ? "eager" : "lazy"}
+      fetchPriority={priority ? "high" : "auto"}
       decoding="async"
       referrerPolicy="no-referrer"
       onError={() => setFailed(true)}

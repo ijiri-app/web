@@ -23,7 +23,7 @@ export function BuildIndex() {
           </h2>
           <ul
             aria-label="차종별 빌드"
-            className="flex flex-wrap gap-x-6 gap-y-2 lg:flex-col lg:gap-3"
+            className="flex flex-wrap gap-x-6 lg:flex-col lg:gap-1"
           >
             {ownerBuilds.map((b, i) => (
               <li key={b.id}>
@@ -31,7 +31,7 @@ export function BuildIndex() {
                   type="button"
                   aria-pressed={sel === i}
                   onClick={() => setSel(i)}
-                  className={`rounded text-left text-[22px] leading-[1.15] font-bold tracking-[-0.03em] whitespace-nowrap transition-[color,translate] duration-200 md:text-[30px] lg:text-[44px] lg:hover:translate-x-2 ${sel === i ? "text-text-1" : "text-muted hover:text-text-2"} ${focusRing}`}
+                  className={`rounded py-1.5 text-left text-[22px] leading-[1.15] font-bold tracking-[-0.03em] whitespace-nowrap transition-[color,translate] duration-200 md:text-[30px] lg:text-[44px] lg:hover:translate-x-2 ${sel === i ? "text-text-1" : "text-muted hover:text-text-2"} ${focusRing}`}
                 >
                   {b.name}
                 </button>

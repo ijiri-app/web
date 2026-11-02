@@ -11,13 +11,14 @@ type Props = {
   /** 사진 안의 라벨 크기. 앱 화면 안에서는 작게 */
   small?: boolean;
   width?: number;
+  priority?: boolean;
 };
 
 /**
  * 오너 사진 위 부품마다 점(앵커), 지시선, 분류색 라벨.
  * 처음 한 번 올라오고(CSS 애니메이션), 사진을 누르면 숨기거나 다시 띄운다(앱의 뒷면 탭과 같은 동작).
  */
-export function TaggedPhoto({ photoId, tags, alt, small = false, width = 1600 }: Props) {
+export function TaggedPhoto({ photoId, tags, alt, small = false, width = 1600, priority = false }: Props) {
   const [shown, setShown] = useState(true);
 
   return (
@@ -26,10 +27,10 @@ export function TaggedPhoto({ photoId, tags, alt, small = false, width = 1600 }:
         type="button"
         onClick={() => setShown((v) => !v)}
         aria-pressed={shown}
-        aria-label={shown ? "부품 태그 숨기기" : "부품 태그 보기"}
+        aria-label={`${alt}, 부품 태그 보기`}
         className="absolute inset-0 cursor-pointer focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-accent"
       >
-        <CarPhoto src={unsplash(photoId, width)} alt={alt} className="size-full" />
+        <CarPhoto src={unsplash(photoId, width)} alt={alt} className="size-full" priority={priority} />
       </button>
 
       <svg aria-hidden className="tag-lines pointer-events-none absolute inset-0 size-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -65,5 +66,5 @@ export function TaggedPhoto({ photoId, tags, alt, small = false, width = 1600 }:
 
 /** 히어로의 오너 사진 */
 export function HeroPhoto() {
-  return <TaggedPhoto photoId={heroPhotoId} tags={heroTags} alt="튜닝된 BMW M4 CS 오너 사진" />;
+  return <TaggedPhoto photoId={heroPhotoId} tags={heroTags} alt="튜닝된 BMW M4 CS 오너 사진" priority />;
 }
