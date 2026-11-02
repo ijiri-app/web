@@ -34,6 +34,20 @@ export type Step = {
   crop?: number;
 };
 
+/** 모바일용 베젤 폰. 360×760 화면을 0.9배(좁은 폰은 0.82배)로 담는다 */
+function PhoneMock({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative rounded-[46px] bg-black p-2.5 ring-[3px] ring-surface-4 ring-inset max-[379px]:rounded-[42px]">
+      <div className="relative h-[684px] w-[324px] overflow-hidden rounded-[36px] max-[379px]:h-[623px] max-[379px]:w-[295px]">
+        <div inert className="origin-top-left scale-90 max-[379px]:scale-[0.82]">
+          {children}
+        </div>
+      </div>
+      <span aria-hidden className="absolute top-[20px] left-1/2 h-[26px] w-[88px] -translate-x-1/2 rounded-full bg-black" />
+    </div>
+  );
+}
+
 /** 앱 화면(360×760)의 한 부분을 잘라 칼럼 폭 안에 보여 준다 */
 function ScreenCrop({ children, crop = 0 }: { children: React.ReactNode; crop?: number }) {
   return (
@@ -100,7 +114,7 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
   const screens = (
     <div className="relative h-[760px] w-[360px]">
       {steps.map((s, i) => (
-        <div key={s.id} inert className={`absolute inset-0 transition-opacity duration-300 ${active === i || (active < 0 && i === 0) ? "opacity-100" : "opacity-0"}`}>
+        <div key={s.id} inert data-on={active === i} className={`absolute inset-0 transition-opacity duration-300 ${active === i || (active < 0 && i === 0) ? "opacity-100" : "opacity-0"}`}>
           {s.screen}
         </div>
       ))}
@@ -152,10 +166,18 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
                   data-active={active === i}
                   className="group/step flex flex-col gap-5 lg:min-h-[80svh] lg:snap-center lg:justify-center"
                 >
-                  <p className="reveal text-[17px] leading-[1.6] text-text-2 transition-colors duration-300 md:text-lg lg:text-text-3 lg:group-data-[active=true]/step:text-text-2">
-                    <strong className="font-bold text-text-1 transition-colors duration-300 lg:text-text-2 lg:group-data-[active=true]/step:text-text-1">{s.lead}</strong> {s.body}
-                  </p>
-                  {s.evidence ?? <ScreenCrop crop={s.crop}>{s.screen}</ScreenCrop>}
+                  {/* 모바일: 목업을 꽉 차게, 아래쪽은 그라데이션으로 덮고 그 위에 설명글 */}
+                  <div className="grid max-lg:items-end">
+                    <div data-ui data-on={active === i} className="flex justify-center [grid-area:1/1] lg:hidden">
+                      <PhoneMock>{s.screen}</PhoneMock>
+                    </div>
+                    <div className="relative [grid-area:1/1] max-lg:-mx-5 max-lg:bg-linear-to-b max-lg:from-transparent max-lg:via-bg max-lg:via-45% max-lg:to-bg max-lg:px-5 max-lg:pt-32 max-lg:pb-1 md:max-lg:-mx-12 md:max-lg:px-12">
+                      <p className="reveal text-[17px] leading-[1.6] text-text-2 transition-colors duration-300 md:text-lg lg:text-text-3 lg:group-data-[active=true]/step:text-text-2">
+                        <strong className="font-bold text-text-1 transition-colors duration-300 lg:text-text-2 lg:group-data-[active=true]/step:text-text-1">{s.lead}</strong> {s.body}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="max-lg:hidden">{s.evidence ?? <ScreenCrop crop={s.crop}>{s.screen}</ScreenCrop>}</div>
                 </li>
               ))}
             </ol>
