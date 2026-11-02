@@ -72,10 +72,12 @@ function screenCorners(mesh: Mesh) {
 type Props = {
   children: React.ReactNode;
   baseYaw?: number;
+  /** 밖에서(스크롤 연출 등) 더하는 회전량. 매 프레임 읽는다 */
+  extraYaw?: RefObject<number>;
   reducedMotion: boolean;
 };
 
-function Model({ baseYaw = -0.22, reducedMotion, screenRef }: Omit<Props, "children"> & { screenRef: RefObject<HTMLDivElement | null> }) {
+function Model({ baseYaw = -0.22, extraYaw, reducedMotion, screenRef }: Omit<Props, "children"> & { screenRef: RefObject<HTMLDivElement | null> }) {
   const { scene } = useGLTF(MODEL_URL, false, true);
   const model = useMemo(() => scene.clone(true), [scene]);
   const group = useRef<Group>(null);
@@ -101,7 +103,7 @@ function Model({ baseYaw = -0.22, reducedMotion, screenRef }: Omit<Props, "child
       g.rotation.set(0.06, baseYaw, 0);
     } else {
       const k = 1 - Math.exp(-delta * 4);
-      g.rotation.y += (baseYaw + state.pointer.x * 0.25 - g.rotation.y) * k;
+      g.rotation.y += (baseYaw + (extraYaw?.current ?? 0) + state.pointer.x * 0.25 - g.rotation.y) * k;
       g.rotation.x += (0.06 - state.pointer.y * 0.12 - g.rotation.x) * k;
       g.position.y = Math.sin(performance.now() / 1250) * 0.06;
     }

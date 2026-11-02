@@ -150,6 +150,55 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
       ))}
     </div>
   );
+  // 데스크톱 기능 구간 GSAP 연출: 제목 글자가 올라오고, 폰이 커지며 바로 서고, 기능 칸이 차례로 떠오른다
+  const bento = useRef<HTMLDivElement>(null);
+  const headBox = useRef<HTMLDivElement>(null);
+  const spin = useRef(0);
+  useEffect(() => {
+    if (!wide || reduced || !bento.current || !headBox.current) return;
+    let ctx: { revert: () => void } | undefined;
+    let cancelled = false;
+    (async () => {
+      const [{ gsap }, { ScrollTrigger }, { SplitText }] = await Promise.all([import("gsap"), import("gsap/ScrollTrigger"), import("gsap/SplitText")]);
+      if (cancelled || !bento.current || !headBox.current) return;
+      gsap.registerPlugin(ScrollTrigger, SplitText);
+      const box = bento.current;
+      const title = headBox.current.querySelector("h2");
+      ctx = gsap.context(() => {
+        if (title) {
+          const split = SplitText.create(title, { type: "chars", mask: "chars" });
+          gsap.from(split.chars, {
+            yPercent: 110,
+            stagger: 0.035,
+            ease: "power3.out",
+            scrollTrigger: { trigger: title, start: "top 88%", end: "top 55%", scrub: 0.6 },
+          });
+        }
+        // 폰: 아래에서 올라오며 옆으로 돌아 있던 3D 폰이 정면으로 돈다 (크기 변환은 3D 화면 계산을 흐트러뜨려 쓰지 않음)
+        const phone = box.querySelector('[data-gsap="phone"]');
+        const st = { trigger: phone, start: "top 100%", end: "center 55%", scrub: 0.8 };
+        gsap.fromTo(phone, { y: 160, opacity: 0.2 }, { y: 0, opacity: 1, ease: "none", scrollTrigger: st });
+        const yaw = { v: -1.4 };
+        gsap.to(yaw, { v: 0, ease: "none", scrollTrigger: st, onUpdate: () => void (spin.current = yaw.v) });
+        spin.current = yaw.v;
+        const cards = gsap.utils.toArray<HTMLElement>('[data-gsap="card"]', box);
+        gsap.set(cards, { y: 90, opacity: 0, scale: 0.94 });
+        ScrollTrigger.batch(cards, {
+          start: "top 88%",
+          once: true,
+          onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, scale: 1, duration: 0.9, ease: "power3.out", stagger: 0.12 }),
+        });
+        for (const v of gsap.utils.toArray<HTMLElement>('[data-gsap="visual"]', box)) {
+          gsap.fromTo(v, { y: 36 }, { y: -12, ease: "none", scrollTrigger: { trigger: v, start: "top bottom", end: "bottom top", scrub: true } });
+        }
+      }, box);
+    })();
+    return () => {
+      cancelled = true;
+      ctx?.revert();
+    };
+  }, [wide, reduced]);
+
   // 데스크톱 가운데 폰에 띄울 대표 화면(차종별 피드)
   const showcase = steps.find((s) => s.id === "feed") ?? steps[0];
 
@@ -168,7 +217,9 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
       </div>
 
       <section id="how" aria-labelledby="how-title" className="scroll-mt-6 px-5 pt-24 pb-10 md:px-12 lg:px-[72px] lg:pt-32 lg:pb-32">
-        <div className="lg:text-center">{heading}</div>
+        <div ref={headBox} className="lg:text-center">
+          {heading}
+        </div>
 
         {/* 모바일: 고정된 폰 하나. 아래 빈 단계(ol)가 그 뒤로 지나가며 화면과 설명글을 바꾼다 */}
         <div className="relative mt-8 lg:hidden">
@@ -203,11 +254,11 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
         </div>
 
         {/* 데스크톱: 가운데 3D 폰 하나, 아래에 기능마다 한 칸씩 (짧은 한 줄 + 그 기능 부분 화면) */}
-        <div className="mx-auto hidden max-w-[1200px] lg:block">
-          <div className="relative mx-auto mt-4 aspect-[440/820] h-[min(760px,82svh)]">
+        <div ref={bento} className="mx-auto hidden max-w-[1200px] lg:block">
+          <div data-gsap="phone" className="relative mx-auto mt-4 aspect-[440/820] h-[min(760px,82svh)]">
             {wide &&
               (webgl ? (
-                <IPhone3D reducedMotion={reduced}>
+                <IPhone3D reducedMotion={reduced} extraYaw={spin}>
                   <div className="relative h-[760px] w-[360px]">{showcase.screen}</div>
                 </IPhone3D>
               ) : (
@@ -225,16 +276,22 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
             {steps.map((s) => {
               const wideCard = s.id === "capsule";
               return (
-                <li key={s.id} className={`reveal flex flex-col gap-7 overflow-hidden rounded-[28px] bg-surface-1 p-8 ${wideCard ? "col-span-2" : ""}`}>
+                <li
+                  key={s.id}
+                  data-gsap="card"
+                  className={`flex flex-col gap-7 overflow-hidden rounded-[28px] bg-surface-1 p-8 ${wideCard ? "col-span-2" : ""}`}
+                >
                   <div className="text-center">
                     <h3 className="text-[24px] leading-[1.3] font-bold">{s.lead}</h3>
                     <p className="mt-2 text-[17px] leading-[1.5] text-text-2">{s.body}</p>
                   </div>
-                  {s.visual ?? (
-                    <ScreenZoom focus={s.focus} className={wideCard ? "h-[420px]" : "h-[300px]"}>
-                      {s.screen}
-                    </ScreenZoom>
-                  )}
+                  <div data-gsap="visual">
+                    {s.visual ?? (
+                      <ScreenZoom focus={s.focus} className={wideCard ? "h-[420px]" : "h-[300px]"}>
+                        {s.screen}
+                      </ScreenZoom>
+                    )}
+                  </div>
                 </li>
               );
             })}
