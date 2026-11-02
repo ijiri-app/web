@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Fugaz_One } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from "@/lib/brand";
+import { SITE_URL } from "@/lib/stores";
 
 const fugaz = Fugaz_One({
   variable: "--font-fugaz",
@@ -24,18 +26,20 @@ const freesentation = localFont({
   fallback: ["Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "sans-serif"],
 });
 
+const title = `${SITE_NAME}, ${SITE_TAGLINE}`;
+
 export const metadata: Metadata = {
-  title: "이지리 — 등업 없이 바로 보는 튜닝 레퍼런스",
-  description: "오너들이 실제로 단 튜닝 부품을 차종별로 모았어요.",
-  metadataBase: new URL("https://ijiri.net"),
-  openGraph: {
-    title: "이지리 — 등업 없이 바로 보는 튜닝 레퍼런스",
-    description: "오너들이 실제로 단 튜닝 부품을 차종별로 모았어요.",
-    url: "https://ijiri.net",
-    siteName: "이지리",
-    locale: "ko_KR",
-    type: "website",
-  },
+  metadataBase: new URL(SITE_URL),
+  title: { default: title, template: `%s | ${SITE_NAME}` },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: ["튜닝", "자동차 튜닝", "튜닝 레퍼런스", "튜닝 부품", "차종별 튜닝", "튜닝카", "휠", "코일오버", "배기", "에어서스", "이지리", "IJIRI"],
+  alternates: { canonical: "/" },
+  openGraph: { type: "website", locale: "ko_KR", url: "/", siteName: SITE_NAME, title, description: SITE_DESCRIPTION },
+  twitter: { card: "summary_large_image", title, description: SITE_DESCRIPTION },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
+  category: "automotive",
+  formatDetection: { telephone: false, email: false, address: false },
 };
 
 export const viewport: Viewport = {
