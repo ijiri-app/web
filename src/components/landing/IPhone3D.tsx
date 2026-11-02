@@ -8,6 +8,8 @@ import { Box3, Color, Mesh, MeshStandardMaterial, Vector3, type Group, type Obje
 export const SCREEN_W = 360;
 export const SCREEN_H = 760;
 const MODEL_URL = "/models/iphone16.glb";
+/** 화면 가장자리 검은 베젤 두께(px, 360×760 기준) */
+const BEZEL = 10;
 
 /** 사각형 (0,0)-(w,h)를 사각형 quad(좌상, 우상, 우하, 좌하)로 옮기는 CSS matrix3d */
 function rectToQuad(w: number, h: number, quad: [number, number][]) {
@@ -183,8 +185,20 @@ export default function IPhone3D({ children, ...props }: Props) {
         className="absolute top-0 left-0 origin-top-left overflow-hidden rounded-[52px] bg-black"
         style={{ width: SCREEN_W, height: SCREEN_H, visibility: "hidden" }}
       >
-        {children}
-        <span aria-hidden className="pointer-events-none absolute top-3 left-1/2 h-[30px] w-[100px] -translate-x-1/2 rounded-full bg-black" />
+        {/* 화면 둘레의 검은 베젤. 앱 화면(360×760)은 베젤 안쪽에 맞춰 줄여 넣는다 */}
+        <div className="absolute overflow-hidden bg-bg" style={{ inset: BEZEL, borderRadius: 52 - BEZEL }}>
+          <div
+            style={{
+              width: SCREEN_W,
+              height: SCREEN_H,
+              transform: `scale(${(SCREEN_W - BEZEL * 2) / SCREEN_W}, ${(SCREEN_H - BEZEL * 2) / SCREEN_H})`,
+              transformOrigin: "0 0",
+            }}
+          >
+            {children}
+          </div>
+        </div>
+        <span aria-hidden className="pointer-events-none absolute top-[19px] left-1/2 h-[30px] w-[100px] -translate-x-1/2 rounded-full bg-black" />
       </div>
     </div>
   );
