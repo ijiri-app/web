@@ -101,7 +101,27 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
     };
   }, [reduced]);
 
+  // 데스크톱 기능 이름: 칸 폭에 꽉 차도록 글자 크기를 실제 폭으로 맞춘다
+  const fitBox = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const box = fitBox.current;
+    if (!box) return;
+    const fit = () => {
+      const W = box.clientWidth;
+      box.querySelectorAll<HTMLElement>("[data-fit]").forEach((el) => {
+        el.style.fontSize = "100px";
+        el.style.fontSize = `${Math.min(320, (100 * W) / el.offsetWidth).toFixed(1)}px`;
+      });
+    };
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(box);
+    document.fonts?.ready.then(fit);
+    return () => ro.disconnect();
+  }, [wide]);
+
   const phoneOn = active >= 0;
+  const cur = active < 0 ? 0 : active;
   const screens = (
     <div className="relative h-[760px] w-[360px]">
       {steps.map((s, i) => (
@@ -177,27 +197,30 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
                   </div>
                 </div>
               )}
-              {/* 데스크톱: 기능 이름 전체를 고정해 두고, 지금 기능만 밝히고 한 줄 설명을 펼친다 */}
+              {/* 데스크톱: 위에는 기능 목록을 작게, 가운데에는 지금 기능 이름을 칸 폭에 꽉 차게 */}
               {wide && (
                 <div aria-hidden className="absolute inset-0 max-lg:hidden">
-                  <div className="sticky top-0 flex h-svh flex-col justify-center">
-                    <ul className="flex flex-col gap-1">
-                      {steps.map((s, i) => {
-                        const on = (active < 0 ? 0 : active) === i;
-                        return (
-                          <li key={s.id} className={`transition-colors duration-300 ${on ? "text-text-1" : "text-muted"}`}>
-                            <span className="block text-[48px] leading-[1.25] font-bold tracking-[-0.03em] xl:text-[64px]">{s.lead}</span>
-                            <span
-                              className={`grid transition-[grid-template-rows,opacity] duration-300 ${on ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
-                            >
-                              <span className="overflow-hidden">
-                                <span className="block pt-1 pb-4 text-[22px] leading-[1.5] text-text-2">{s.body}</span>
-                              </span>
-                            </span>
-                          </li>
-                        );
-                      })}
+                  <div ref={fitBox} className="sticky top-0 flex h-svh flex-col justify-center gap-12">
+                    <ul className="flex flex-wrap gap-x-7 gap-y-2 text-[19px] font-medium">
+                      {steps.map((s, i) => (
+                        <li key={s.id} className={`transition-colors duration-300 ${cur === i ? "text-text-1" : "text-muted"}`}>
+                          {s.lead}
+                        </li>
+                      ))}
                     </ul>
+                    <div className="grid">
+                      {steps.map((s, i) => (
+                        <div
+                          key={s.id}
+                          className={`transition-[opacity,translate,visibility] duration-500 [grid-area:1/1] ${cur === i ? "visible translate-y-0 opacity-100" : "invisible translate-y-4 opacity-0"}`}
+                        >
+                          <p data-fit className="inline-block text-[120px] leading-[1.05] font-bold tracking-[-0.04em] whitespace-nowrap text-text-1">
+                            {s.lead}
+                          </p>
+                          <p className="mt-8 text-[26px] leading-[1.5] text-text-2">{s.body}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
