@@ -89,7 +89,7 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
       {/* 무대 */}
       <div className="p-3 lg:sticky lg:top-0 lg:h-svh lg:p-5">
         <div className="relative h-[58svh] overflow-hidden rounded-[14px] bg-surface-1 md:h-[52svh] lg:h-full">
-          <div className={`absolute inset-0 transition-opacity duration-500 ${phoneOn ? "pointer-events-none opacity-0" : "opacity-100"}`}>
+          <div inert={phoneOn} className={`absolute inset-0 transition-opacity duration-500 ${phoneOn ? "pointer-events-none opacity-0" : "opacity-100"}`}>
             <HeroPhoto />
           </div>
           {wide && (
@@ -124,10 +124,11 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
                   key={s.id}
                   id={s.id}
                   data-stage={i}
-                  className={`flex flex-col gap-5 transition-opacity duration-300 lg:min-h-[80svh] lg:justify-center ${active === i ? "" : "lg:opacity-40"}`}
+                  data-active={active === i}
+                  className="group/step flex flex-col gap-5 lg:min-h-[80svh] lg:justify-center"
                 >
-                  <p className="reveal text-[17px] leading-[1.6] text-text-2 md:text-lg">
-                    <strong className="font-bold text-text-1">{s.lead}</strong> {s.body}
+                  <p className="reveal text-[17px] leading-[1.6] text-text-2 transition-colors duration-300 md:text-lg lg:text-text-3 lg:group-data-[active=true]/step:text-text-2">
+                    <strong className="font-bold text-text-1 transition-colors duration-300 lg:text-text-2 lg:group-data-[active=true]/step:text-text-1">{s.lead}</strong> {s.body}
                   </p>
                   {s.evidence ?? <ScreenCrop crop={s.crop}>{s.screen}</ScreenCrop>}
                 </li>

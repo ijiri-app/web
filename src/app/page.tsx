@@ -21,8 +21,8 @@ export default async function Home() {
   const hero = (
     <section aria-labelledby="hero-title" className="relative flex flex-col lg:min-h-svh">
       <header className="absolute inset-x-0 -top-[calc(58svh+24px)] z-20 flex h-[72px] items-center justify-end gap-7 px-6 md:-top-[calc(52svh+24px)] lg:static lg:px-[72px]">
-        <nav aria-label="페이지 안내" className="hidden lg:block">
-          <ul className="flex gap-7 text-[15px] text-text-2">
+        <nav aria-label="페이지 안내" className="hidden xl:block">
+          <ul className="flex gap-7 text-[15px] whitespace-nowrap text-text-2">
             {nav.map((n) => (
               <li key={n.href}>
                 <a href={n.href} className={`rounded transition-colors hover:text-text-1 ${focusRing}`}>
@@ -41,7 +41,7 @@ export default async function Home() {
       <svg
         aria-hidden
         viewBox="0 0 640 220"
-        className="wordmark pointer-events-none order-first -mt-[11vw] w-full overflow-hidden px-5 text-text-1 select-none md:-mt-[9vw] md:px-12 lg:absolute lg:right-[72px] lg:bottom-10 lg:mt-0 lg:w-[60vw] lg:max-w-[1000px] lg:px-0"
+        className="wordmark pointer-events-none order-first -mt-[11vw] w-full overflow-hidden px-5 text-text-1 select-none md:-mt-[9vw] md:px-12 lg:absolute lg:right-[72px] lg:bottom-10 lg:mt-0 lg:w-[min(60vw,calc(233svh-1000px))] lg:max-w-[1000px] lg:px-0"
       >
         <text x="320" y="206" textAnchor="middle" fontSize="290" fill="currentColor" style={{ fontFamily: "var(--font-fugaz)", letterSpacing: "-0.04em" }}>
           IJIRI
