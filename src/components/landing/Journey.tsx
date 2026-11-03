@@ -57,7 +57,7 @@ function ScreenZoom({
   // 화면 가장자리가 칸 안으로 들어오지 않게 중심점을 안쪽으로 당긴다
   const cx = Math.min(Math.max(x, w / k / 2), 360 - w / k / 2);
   return (
-    <div ref={box} data-ui className={`relative w-full overflow-hidden rounded-[20px] bg-bg ${className}`}>
+    <div ref={box} data-ui data-nosnippet className={`relative w-full overflow-hidden rounded-[20px] bg-bg ${className}`}>
       <div inert className="absolute top-1/2 left-1/2 h-[760px] w-[360px] origin-top-left" style={{ transform: `scale(${k}) translate(${-cx}px, ${-y}px)` }}>
         {children}
       </div>
@@ -226,7 +226,7 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
           {!wide && (
             <div aria-hidden className="absolute inset-y-0 -inset-x-5 md:-inset-x-12">
               <div className="sticky top-0 h-svh overflow-hidden">
-                <div data-ui className="flex justify-center pt-4">
+                <div data-ui data-nosnippet className="flex justify-center pt-4">
                   <PhoneMock scale={mScale}>{screens}</PhoneMock>
                 </div>
                 <div className="absolute inset-x-0 bottom-0 grid bg-linear-to-b from-transparent via-bg via-45% to-bg px-5 pt-32 pb-8 md:px-12">
@@ -255,7 +255,7 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
 
         {/* 데스크톱: 가운데 3D 폰 하나, 아래에 기능마다 한 칸씩 (짧은 한 줄 + 그 기능 부분 화면) */}
         <div ref={bento} className="mx-auto hidden max-w-[1200px] lg:block">
-          <div data-gsap="phone" className="relative mx-auto mt-4 aspect-[440/820] h-[min(760px,82svh)]">
+          <div data-gsap="phone" data-nosnippet className="relative mx-auto mt-4 aspect-[440/820] h-[min(760px,82svh)]">
             {wide &&
               (webgl ? (
                 <IPhone3D reducedMotion={reduced} extraYaw={spin}>
@@ -263,7 +263,7 @@ export function SplitStage({ hero, heading, steps }: { hero: React.ReactNode; he
                 </IPhone3D>
               ) : (
                 <div className="flex size-full items-center justify-center">
-                  <div data-ui className="relative origin-center scale-[0.8] rounded-[56px] bg-black p-2.5 ring-[3px] ring-surface-4">
+                  <div data-ui data-nosnippet className="relative origin-center scale-[0.8] rounded-[56px] bg-black p-2.5 ring-[3px] ring-surface-4">
                     <div inert className="overflow-hidden rounded-[46px]">
                       {showcase.screen}
                     </div>
