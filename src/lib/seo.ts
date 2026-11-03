@@ -15,12 +15,16 @@ export function pageMetadata({ path, title, description }: { path: string; title
   };
 }
 
-/** 검색 등록 확인 코드. 배포 환경 변수에 넣으면 메타 태그가 생긴다 */
+/** 검색 등록 확인 코드(Google, 네이버, Bing). 배포 환경 변수에 넣으면 메타 태그가 생긴다 */
 export function verification(): Metadata["verification"] {
   const google = process.env.GOOGLE_SITE_VERIFICATION;
   const naver = process.env.NAVER_SITE_VERIFICATION;
+  const bing = process.env.BING_SITE_VERIFICATION;
+  const other: Record<string, string> = {};
+  if (naver) other["naver-site-verification"] = naver;
+  if (bing) other["msvalidate.01"] = bing;
   return {
     ...(google ? { google } : {}),
-    ...(naver ? { other: { "naver-site-verification": naver } } : {}),
+    ...(Object.keys(other).length ? { other } : {}),
   };
 }
