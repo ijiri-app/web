@@ -50,7 +50,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ko" className={`${fugaz.variable} ${freesentation.variable} antialiased`}>
+    <html lang="ko" suppressHydrationWarning className={`${fugaz.variable} ${freesentation.variable} antialiased`}>
       <body className="min-h-dvh">{children}</body>
     </html>
   );
