@@ -207,3 +207,17 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* 첫 진입 로고 모션: data-intro는 첫 그리기 전 스크립트가 켠다. 1 = 재생 중, 2 = 헤더 로고로 바꿔 끼는 중 */
+html[data-intro] {
+  overflow: hidden;
+}
+html[data-intro] [data-intro-overlay] {
+  display: flex;
+}
+[data-logo] {
+  transition: opacity 0.2s;
+}
+html[data-intro="1"] [data-logo] {
+  opacity: 0;
+}

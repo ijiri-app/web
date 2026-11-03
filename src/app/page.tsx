@@ -1,9 +1,11 @@
 import { BuildIndex } from "@/components/landing/BuildIndex";
 import { InstallButton } from "@/components/landing/InstallButton";
+import { LogoIntro } from "@/components/landing/LogoIntro";
 import { Reveal } from "@/components/landing/Reveal";
 import { StageSections, button, focusRing } from "@/components/landing/Sections";
 import { SiteFooter } from "@/components/landing/SiteFooter";
 import { StoreButtons } from "@/components/landing/StoreButtons";
+import { introBootScript } from "@/lib/intro";
 import { installQrSvg } from "@/lib/qr";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from "@/lib/brand";
 import { contact, SITE_URL } from "@/lib/stores";
@@ -67,7 +69,7 @@ export default async function Home() {
   const hero = (
     <section aria-labelledby="hero-title" className="relative flex flex-col lg:min-h-svh lg:snap-start">
       <header className="absolute inset-x-0 -top-[calc(min(54svh,100svh-400px)+84px)] z-20 flex h-[72px] items-center justify-between gap-7 px-6 md:-top-[calc(52svh+84px)] lg:static lg:px-12 xl:px-14">
-        <a href="#top" aria-label="이지리 홈" className={`rounded font-logo text-[24px] leading-none ${focusRing}`}>
+        <a href="#top" data-logo aria-label="이지리 홈" className={`rounded font-logo text-[24px] leading-none ${focusRing}`}>
           IJIRI
         </a>
         <div className="flex items-center gap-7">
@@ -113,6 +115,8 @@ export default async function Home() {
 
   return (
     <>
+      <script dangerouslySetInnerHTML={{ __html: introBootScript }} />
+      <LogoIntro />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <main id="top">
         <StageSections hero={hero} />
