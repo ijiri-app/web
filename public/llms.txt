@@ -1,6 +1,6 @@
 # 이지리 (IJIRI)
 
-> 이지리는 튜닝카 오너들이 실제로 단 부품을 사진 위 태그로 보여 주는 차종별 튜닝 레퍼런스 앱이다. 카페 등업 없이 바로 구경할 수 있다. 사이트: https://ijiri.net
+> 이지리는 튜닝카 오너들이 실제로 단 부품을 사진 위 태그로 보여 주는 차종별 튜닝 레퍼런스 앱이다. 카페 등업 없이 바로 구경할 수 있다. 사이트: https://www.ijiri.net
 
 ## 무엇을 하는 서비스인가
 
@@ -40,9 +40,9 @@
 
 ## 문서
 
-- [이용약관](https://ijiri.net/terms)
-- [개인정보처리방침](https://ijiri.net/privacy)
-- [계정 삭제 안내](https://ijiri.net/account-deletion)
+- [이용약관](https://www.ijiri.net/terms)
+- [개인정보처리방침](https://www.ijiri.net/privacy)
+- [계정 삭제 안내](https://www.ijiri.net/account-deletion)
 
 ## 연락처
 
