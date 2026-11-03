@@ -3,6 +3,7 @@ import { Fugaz_One } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from "@/lib/brand";
+import { verification } from "@/lib/seo";
 import { SITE_URL } from "@/lib/stores";
 
 const fugaz = Fugaz_One({
@@ -39,6 +40,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title, description: SITE_DESCRIPTION },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
   category: "automotive",
+  verification: verification(),
   formatDetection: { telephone: false, email: false, address: false },
 };
 

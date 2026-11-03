@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { LegalPage, type LegalSection } from "@/components/legal/LegalPage";
 import { legal } from "@/lib/legal";
 import { contact } from "@/lib/stores";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/privacy",
   title: "개인정보처리방침",
   description: "이지리가 수집하는 개인정보, 이용 목적, 보관 기간, 위탁, 이용자 권리와 행사 방법을 안내합니다.",
-  alternates: { canonical: "/privacy" },
-};
+});
 
 const sections: LegalSection[] = [
   {
@@ -32,7 +33,7 @@ const sections: LegalSection[] = [
           </tr>
           <tr>
             <td>자동으로 수집</td>
-            <td>기기 정보(기기 종류, 운영체제, 앱 버전), 접속 기록(IP 주소, 접속 일시)</td>
+            <td>기기 정보(기기 종류, 운영체제, 앱 버전), 접속 기록(IP 주소, 접속 일시), 푸시 알림 토큰</td>
           </tr>
         </tbody>
       </table>
@@ -59,7 +60,7 @@ const sections: LegalSection[] = [
     body: (
       <ol>
         <li>회원 관리: 가입, 로그인, 본인 확인, 탈퇴 처리</li>
-        <li>서비스 제공: 게시물 올리기와 보여 주기, 차종별 피드, 검색, 위시리스트</li>
+        <li>서비스 제공: 게시물 올리기와 보여 주기, 차종별 피드, 검색, 위시리스트, 알림</li>
         <li>부정 이용 방지: 신고 처리, 이용 제한, 탈퇴 후 재가입 제한</li>
         <li>공지 발송: 약관과 방침 변경, 서비스 운영에 관한 안내</li>
       </ol>
@@ -121,6 +122,10 @@ const sections: LegalSection[] = [
               <td>사진 저장 (Cloudflare R2)</td>
             </tr>
             <tr>
+              <td>650 Industries, Inc. (Expo)</td>
+              <td>푸시 알림 발송</td>
+            </tr>
+            <tr>
               <td>Amazon Web Services, Inc.</td>
               <td>인증 메일 발송 (Amazon SES)</td>
             </tr>
@@ -153,6 +158,18 @@ const sections: LegalSection[] = [
                 목적: 사진 저장과 전송
                 <br />
                 기간: 게시물 삭제 또는 탈퇴 후 30일까지
+              </td>
+            </tr>
+            <tr>
+              <td>650 Industries, Inc. (Expo)</td>
+              <td>
+                국가: 미국
+                <br />
+                항목: 푸시 알림 토큰, 알림 내용
+                <br />
+                목적: 푸시 알림 발송
+                <br />
+                기간: 알림을 끄거나 탈퇴할 때까지
               </td>
             </tr>
             <tr>
@@ -190,7 +207,8 @@ const sections: LegalSection[] = [
           <li>열람과 정정: 앱의 마이에서 프로필과 닉네임을 바로 확인하고 고칠 수 있어요.</li>
           <li>삭제: 게시물은 각 게시물에서, 계정은 마이, 설정, 회원 탈퇴에서 지울 수 있어요.</li>
 
-          <li>처리 정지와 그 밖의 요구: {contact.email}로 메일을 보내면 지체 없이 처리하고 결과를 알려 드려요.</li>
+          <li>처리 정지: 알림은 앱 설정에서 종류별로 끌 수 있어요.</li>
+          <li>그 밖의 요구: {contact.email}로 메일을 보내면 지체 없이 처리하고 결과를 알려 드려요.</li>
         </ol>
       </>
     ),

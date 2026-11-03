@@ -1,11 +1,10 @@
-import { CarPhoto } from "./CarPhoto";
 import { SplitStage, type Step } from "./Journey";
 import { FeedScreen } from "./FeedScreen";
 import { InterestScreen, NotificationScreen, PickScreen, SearchScreen } from "./MoreScreens";
 import { PostScreen } from "./PostScreen";
 import { UploadScreen } from "./UploadScreen";
 import { TaggedPhoto } from "./HeroPhoto";
-import { heroPhotoId, heroRefAspect, heroTags, unsplash } from "./data";
+import { heroPhotoId, heroRefAspect, heroTags } from "./data";
 
 /* 타입 단계: 13 / 17·18 / 22·24 / 30·44 / 워드마크 */
 export const h2 = "text-[30px] leading-[1.2] font-bold tracking-[-0.03em] md:text-[44px]";
@@ -81,40 +80,5 @@ export function StageSections({ hero }: { hero: React.ReactNode }) {
         </h2>
       }
     />
-  );
-}
-
-/** 차량 QR: 큰 사진 위에 글을 얹은 카드, 오른쪽에 스티커 */
-export function QrBand({ qrSvg }: { qrSvg: string }) {
-  return (
-    <section id="qr" aria-labelledby="qr-title" className="scroll-mt-6 bg-bg-deep px-3 pb-3 md:px-6 md:pb-6 lg:snap-center">
-      <div className="relative overflow-hidden rounded-[28px] bg-surface-1">
-        <CarPhoto src={unsplash("qEXp4K4Y8t4", 1800)} alt="QR 스티커를 붙인 차" className="absolute inset-0 size-full" />
-        <div aria-hidden className="absolute inset-0 bg-linear-to-r from-bg-deep via-bg-deep/80 to-bg-deep/10 max-lg:bg-linear-to-t" />
-        <div className="relative grid min-h-[640px] items-end gap-10 px-5 py-14 md:px-12 lg:min-h-[720px] lg:grid-cols-[1fr_auto] lg:items-center lg:px-16 lg:py-20">
-          <div className="flex max-w-[520px] flex-col gap-6">
-            <h2 id="qr-title" className={`${h2} reveal`}>
-              내 차에 QR을 붙이면
-              <br />
-              찍은 사람이 내 차를 봐요
-            </h2>
-            <p className="reveal text-[17px] leading-[1.6] text-text-1 md:text-lg">
-              차마다 프로필과 @ID가 생겨요. 앱이 없어도 웹에서 열리고, 스티커는 무료로 보내 드려요.
-            </p>
-            <span className="reveal w-fit rounded-full bg-white/10 px-4 py-2 text-[15px] text-text-1">곧 열려요</span>
-          </div>
-          <div
-            data-ui
-            className="reveal flex w-fit -rotate-4 items-center gap-4 rounded-[20px] bg-text-1 py-4 pr-7 pl-4 max-lg:order-first max-lg:self-start lg:gap-5 lg:py-5 lg:pr-9 lg:pl-5"
-          >
-            <div aria-hidden className="size-[96px] md:size-[140px] [&>svg]:size-full" dangerouslySetInnerHTML={{ __html: qrSvg }} />
-            <span className="flex flex-col gap-1">
-              <span className="text-[20px] font-bold text-bg md:text-[30px]">@m4.owner</span>
-              <span className="font-logo text-[16px] text-accent-strong md:text-[24px]">IJIRI</span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }

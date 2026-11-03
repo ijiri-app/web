@@ -1,19 +1,18 @@
 import { BuildIndex } from "@/components/landing/BuildIndex";
 import { InstallButton } from "@/components/landing/InstallButton";
 import { Reveal } from "@/components/landing/Reveal";
-import { QrBand, StageSections, button, focusRing } from "@/components/landing/Sections";
+import { StageSections, button, focusRing } from "@/components/landing/Sections";
 import { SiteFooter } from "@/components/landing/SiteFooter";
 import { StoreButtons } from "@/components/landing/StoreButtons";
 import { installQrSvg } from "@/lib/qr";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from "@/lib/brand";
 import { contact, SITE_URL } from "@/lib/stores";
 
-/* 구성: 분할 무대(첫 화면 + 기능 흐름) → 차종별 빌드 → 차량 QR → 받기 → 푸터 */
+/* 구성: 분할 무대(첫 화면 + 기능 흐름) → 차종별 빌드 → 받기 → 푸터 */
 
 const nav = [
   { label: "기능", href: "#how" },
   { label: "차종별 빌드", href: "#builds" },
-  { label: "차량 QR", href: "#qr" },
   { label: "받기", href: "#download" },
 ];
 
@@ -118,7 +117,6 @@ export default async function Home() {
       <main id="top">
         <StageSections hero={hero} />
         <BuildIndex />
-        <QrBand qrSvg={qrSvg} />
 
         {/* 받기: 이지리 블루 면 위에 큰 제목 하나와 버튼 */}
         <section id="download" aria-labelledby="download-title" className="scroll-mt-6 bg-bg-deep px-3 pb-3 md:px-6 md:pb-6 lg:snap-start">
