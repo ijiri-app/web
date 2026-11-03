@@ -26,7 +26,7 @@ export const stores: Record<StoreKey, { name: string; url: string | null; live: 
   },
 };
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ijiri.net";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ijiri.net";
 export const INSTALL_URL = `${SITE_URL}/install`;
 
 export function liveUrl(key: StoreKey) {
