@@ -1,4 +1,5 @@
 import { BuildIndex } from "@/components/landing/BuildIndex";
+import { Faq, faqs } from "@/components/landing/Faq";
 import { InstallButton } from "@/components/landing/InstallButton";
 import { LogoIntro } from "@/components/landing/LogoIntro";
 import { Reveal } from "@/components/landing/Reveal";
@@ -8,9 +9,10 @@ import { StoreButtons } from "@/components/landing/StoreButtons";
 import { introBootScript } from "@/lib/intro";
 import { installQrSvg } from "@/lib/qr";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from "@/lib/brand";
+import { legal } from "@/lib/legal";
 import { contact, SITE_URL } from "@/lib/stores";
 
-/* 구성: 분할 무대(첫 화면 + 기능 흐름) → 차종별 빌드 → 받기 → 푸터 */
+/* 구성: 분할 무대(첫 화면 + 기능 흐름) → 차종별 빌드 → 자주 묻는 질문 → 받기 → 푸터 */
 
 const nav = [
   { label: "기능", href: "#how" },
@@ -41,7 +43,22 @@ const jsonLd = {
       publisher: { "@id": `${SITE_URL}/#org` },
     },
     {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/#webpage`,
+      url: SITE_URL,
+      name: `${SITE_NAME}, ${SITE_TAGLINE}`,
+      description: SITE_DESCRIPTION,
+      inLanguage: "ko-KR",
+      dateModified: legal.updated,
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: { "@id": `${SITE_URL}/#app` },
+      primaryImageOfPage: `${SITE_URL}/opengraph-image`,
+    },
+    {
       "@type": "MobileApplication",
+      "@id": `${SITE_URL}/#app`,
+      url: SITE_URL,
+      image: `${SITE_URL}/opengraph-image`,
       name: SITE_NAME,
       alternateName: "IJIRI",
       description: SITE_DESCRIPTION,
@@ -59,6 +76,12 @@ const jsonLd = {
         "사진 위치 정보 자동 삭제",
         "번호판 자동 가림",
       ],
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE_URL}/#faq`,
+      inLanguage: "ko-KR",
+      mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
     },
   ],
 };
@@ -121,6 +144,7 @@ export default async function Home() {
       <main id="top">
         <StageSections hero={hero} />
         <BuildIndex />
+        <Faq />
 
         {/* 받기: 이지리 블루 면 위에 큰 제목 하나와 버튼 */}
         <section id="download" aria-labelledby="download-title" className="scroll-mt-6 bg-bg-deep px-3 pb-3 md:px-6 md:pb-6 lg:snap-start">

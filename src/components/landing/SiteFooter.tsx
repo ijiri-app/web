@@ -13,6 +13,7 @@ const columns: { title: string; links: Link[] }[] = [
     links: [
       { label: "기능", href: "/#how" },
       { label: "차종별 빌드", href: "/#builds" },
+      { label: "자주 묻는 질문", href: "/#faq" },
       { label: "앱 받기", href: "/#download" },
     ],
   },
