@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { SiteFooter } from "@/components/landing/SiteFooter";
+import { SITE_NAME } from "@/lib/brand";
+import { legal } from "@/lib/legal";
+import { SITE_URL } from "@/lib/stores";
 
 /* 이용약관, 개인정보처리방침, 계정 삭제 안내가 함께 쓰는 문서 화면 */
 
@@ -26,8 +29,34 @@ export function LegalPage({
   intro: React.ReactNode;
   sections: LegalSection[];
 }) {
+  const url = `${SITE_URL}${current}`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": url,
+        url,
+        name: title,
+        inLanguage: "ko-KR",
+        dateModified: legal.updated,
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        breadcrumb: { "@id": `${url}#breadcrumb` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: SITE_NAME, item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: title, item: url },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <header className="sticky top-0 z-20 bg-bg-deep/95 backdrop-blur-md">
         <div className="flex h-16 items-center justify-between gap-6 px-5 md:px-12 lg:px-[72px]">
           <Link href="/" aria-label="이지리 홈" className={`rounded font-logo text-[22px] leading-none ${focusRing}`}>

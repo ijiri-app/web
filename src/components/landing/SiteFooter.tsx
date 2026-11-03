@@ -13,7 +13,6 @@ const columns: { title: string; links: Link[] }[] = [
     links: [
       { label: "기능", href: "/#how" },
       { label: "차종별 빌드", href: "/#builds" },
-      { label: "차량 QR", href: "/#qr" },
       { label: "앱 받기", href: "/#download" },
     ],
   },

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { LegalPage, type LegalSection } from "@/components/legal/LegalPage";
 import { legal } from "@/lib/legal";
 import { contact } from "@/lib/stores";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/account-deletion",
   title: "계정 삭제 안내",
   description: "이지리 계정과 데이터를 삭제하는 방법, 삭제되는 데이터와 보관 기간(30일)을 안내합니다.",
-  alternates: { canonical: "/account-deletion" },
-};
+});
 
 const sections: LegalSection[] = [
   {
@@ -69,6 +70,10 @@ const sections: LegalSection[] = [
           <tr>
             <td>보유 차량, 관심 차종, 위시리스트, 좋아요</td>
             <td>탈퇴 즉시 비공개. 30일 뒤 삭제</td>
+          </tr>
+          <tr>
+            <td>알림 기기 토큰</td>
+            <td>탈퇴 즉시 삭제</td>
           </tr>
         </tbody>
       </table>

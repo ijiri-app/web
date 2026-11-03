@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { LegalPage, type LegalSection } from "@/components/legal/LegalPage";
 import { legal } from "@/lib/legal";
 import { contact } from "@/lib/stores";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/terms",
   title: "이용약관",
   description: "이지리 서비스 이용 조건, 회원과 게시물에 관한 권리와 의무, 이용 제한, 탈퇴를 정한 약관입니다.",
-  alternates: { canonical: "/terms" },
-};
+});
 
 const sections: LegalSection[] = [
   {
@@ -66,7 +67,7 @@ const sections: LegalSection[] = [
         <ol>
           <li>차종별 피드와 검색: 오너들이 올린 튜닝 게시물을 차종, 부품, 브랜드로 보여 줘요.</li>
           <li>게시물과 부품 태그: 회원이 사진을 올리고 사진 위에 부품을 달아요.</li>
-          <li>담기: 마음에 든 부품을 내 목록에 담아요.</li>
+          <li>담기와 알림: 마음에 든 부품을 담고, 내 부품이 담기면 알림을 받아요.</li>
         </ol>
         <p>운영자는 운영상, 기술상 필요하면 서비스 일부를 바꾸거나 멈출 수 있고, 미리 알려요. 피할 수 없는 사정이 있으면 사후에 알릴 수 있어요.</p>
       </>

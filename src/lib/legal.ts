@@ -9,4 +9,6 @@ export const legal = {
   r2Region: "[R2 버킷 지역]",
   sesRegion: "[SES 리전]",
   sesRetention: "[SES 보관 기간]",
+  /** 문서를 마지막으로 고친 날. 사이트맵과 구조화 데이터에 쓴다 */
+  updated: "2026-11-03",
 };
