@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SiteFooter } from "@/components/landing/SiteFooter";
+import { LegalToc } from "@/components/legal/LegalToc";
 import { SITE_NAME } from "@/lib/brand";
 import { legal } from "@/lib/legal";
 import { SITE_URL } from "@/lib/stores";
@@ -85,17 +86,7 @@ export function LegalPage({
           <aside className="lg:sticky lg:top-28 lg:self-start">
             <h1 className="text-[32px] leading-[1.2] font-bold tracking-[-0.03em] md:text-[40px]">{title}</h1>
             <p className="mt-3 text-[15px] text-text-3">시행일 {effective}</p>
-            <nav aria-label="목차" className="mt-8 hidden lg:block">
-              <ol className="flex flex-col gap-2.5 text-[15px] text-text-3">
-                {sections.map((s) => (
-                  <li key={s.id}>
-                    <a href={`#${s.id}`} className={`rounded transition-colors hover:text-text-1 ${focusRing}`}>
-                      {s.title}
-                    </a>
-                  </li>
-                ))}
-              </ol>
-            </nav>
+            <LegalToc items={sections.map(({ id, title }) => ({ id, title }))} />
           </aside>
 
           <article className="legal max-w-[720px]">
