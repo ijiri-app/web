@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Bookmark, Heart, MessageSquare } from "lucide-react";
 import { CarPhoto } from "./CarPhoto";
 import { TaggedPhoto } from "./HeroPhoto";
 import { ownerBuilds, partCategoryLabel, partColor, unsplash } from "./data";
@@ -26,7 +25,9 @@ export function BuildIndex() {
             <br />
             직접 열어 보세요
           </h2>
-          <p className="reveal max-w-[360px] text-[17px] leading-[1.6] text-text-2 md:text-lg">사진을 누르면 부품 태그를 숨기거나 다시 띄워요.</p>
+          <p className="reveal max-w-[360px] text-[17px] leading-[1.6] text-text-2 md:text-lg">
+            출시 전 예시 빌드예요. 사진을 누르면 부품 태그를 숨기거나 다시 띄워요.
+          </p>
         </div>
 
         <ul aria-label="차종별 빌드" className="mt-10 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4 lg:gap-5">
@@ -47,9 +48,7 @@ export function BuildIndex() {
                 </span>
                 <span className="flex flex-col gap-0.5 px-1 pb-1">
                   <span className={`text-[19px] leading-tight font-bold md:text-[22px] ${sel === i ? "text-text-1" : "text-text-2"}`}>{o.name}</span>
-                  <span className="text-[15px] text-text-3">
-                    부품 {partCount(o)}개, 담기 {o.saves}
-                  </span>
+                  <span className="text-[15px] text-text-3">부품 {partCount(o)}개</span>
                 </span>
               </button>
             </li>
@@ -58,7 +57,7 @@ export function BuildIndex() {
 
         <div key={b.id} className="sheet-in mt-6 grid gap-4 lg:mt-8 lg:grid-cols-[1.618fr_1fr] lg:gap-5">
           <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] bg-surface-1 lg:aspect-auto lg:h-[560px]">
-            <TaggedPhoto photoId={b.photoId} tags={b.tags} alt={`${b.meta} 오너 사진`} width={1400} refAspect={b.refAspect} />
+            <TaggedPhoto photoId={b.photoId} tags={b.tags} alt={`${b.meta} 예시 사진`} width={1400} refAspect={b.refAspect} />
           </div>
 
           <div className="flex flex-col gap-7 rounded-[20px] bg-surface-1 p-6 md:p-8">
@@ -68,19 +67,6 @@ export function BuildIndex() {
                 {b.owner}, {b.meta}
               </span>
             </div>
-            <ul className="flex gap-2 text-[15px] text-text-2">
-              {[
-                { Icon: Heart, n: b.likes, label: "좋아요" },
-                { Icon: MessageSquare, n: b.comments, label: "댓글" },
-                { Icon: Bookmark, n: b.saves, label: "담기" },
-              ].map(({ Icon, n, label }) => (
-                <li key={label} className="flex h-10 items-center gap-2 rounded-full bg-surface-2 px-4">
-                  <Icon aria-hidden className="size-4" strokeWidth={1.75} />
-                  <span className="sr-only">{label}</span>
-                  <span className="tabular-nums">{n}</span>
-                </li>
-              ))}
-            </ul>
             <div className="flex flex-col gap-5">
               <span className="text-[17px] font-bold">튜닝 목록 {partCount(b)}개</span>
               {b.parts.map((p) => (

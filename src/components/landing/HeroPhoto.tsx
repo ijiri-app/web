@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { CarPhoto } from "./CarPhoto";
-import { heroPhotoId, heroRefAspect, heroTags, ownerBuilds, partColor, partRing, unsplash, type Tag } from "./data";
+import { heroPhotoId, heroRefAspect, heroTags, partColor, partRing, unsplash, type Tag } from "./data";
 
 type Props = {
   photoId: string;
@@ -119,8 +119,5 @@ export function TaggedPhoto({ photoId, tags, alt, small = false, width = 1600, p
 
 /** 히어로의 오너 사진 */
 export function HeroPhoto() {
-  const b = ownerBuilds[0];
-  return (
-    <TaggedPhoto photoId={heroPhotoId} tags={heroTags} alt="튜닝된 BMW M4 CS 오너 사진" priority refAspect={heroRefAspect} caption={`${b.owner}, ${b.meta}`} />
-  );
+  return <TaggedPhoto photoId={heroPhotoId} tags={heroTags} alt="부품 태그를 단 튜닝카 예시 사진" priority refAspect={heroRefAspect} />;
 }

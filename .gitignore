@@ -42,3 +42,4 @@ next-env.d.ts
 
 # taste-skill 작업 파일
 .taste-skill/
+!.env.example

@@ -12,3 +12,6 @@ export const legal = {
   /** 문서를 마지막으로 고친 날. 사이트맵과 구조화 데이터에 쓴다 */
   updated: "2026-11-03",
 };
+
+/** 대괄호 칸이 아직 채워지지 않았는지 */
+export const isBlank = (v: string) => v.startsWith("[");

@@ -34,6 +34,9 @@ export function liveUrl(key: StoreKey) {
   return s.live && s.url ? s.url : null;
 }
 
+/** 스토어가 하나라도 열렸는지. 출시 전에는 설치 버튼이 인스타그램 팔로우로 바뀐다 */
+export const launched = (Object.keys(stores) as StoreKey[]).some((k) => liveUrl(k));
+
 /** 고객 문의와 SNS. 인스타그램 주소가 정해지면 instagram에 넣는다(null이면 링크 없이 표시). */
 export const contact = {
   email: "help@ijiri.net",

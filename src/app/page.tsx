@@ -107,7 +107,7 @@ export default async function Home() {
               ))}
             </ul>
           </nav>
-          <InstallButton qrSvg={qrSvg} className={`${button} h-10 px-4 text-[15px]`}>
+          <InstallButton qrSvg={qrSvg} prelaunch="출시 소식 받기" className={`${button} h-10 px-4 text-[15px]`}>
             설치하기
           </InstallButton>
         </div>
@@ -126,11 +126,11 @@ export default async function Home() {
         </div>
         <div className="flex flex-col gap-3">
           <div>
-            <InstallButton qrSvg={qrSvg} className={`${button} h-14 px-7 text-[18px]`}>
+            <InstallButton qrSvg={qrSvg} prelaunch="인스타 팔로우하고 출시 소식 받기" className={`${button} h-14 px-7 text-[18px]`}>
               앱 설치하기
             </InstallButton>
           </div>
-          <p className="text-[15px] text-text-3">Android 먼저 나와요. iPhone은 준비 중이에요.</p>
+          <p className="text-[15px] text-text-3">Android 먼저 나와요. 출시 소식은 인스타그램에서 가장 먼저 알려 드려요.</p>
         </div>
       </div>
     </section>
@@ -158,6 +158,7 @@ export default async function Home() {
             <div className="reveal flex flex-col items-center gap-6">
               <InstallButton
                 qrSvg={qrSvg}
+                prelaunch="인스타 팔로우하고 출시 소식 받기"
                 className={`inline-flex h-14 items-center justify-center rounded-full bg-white px-8 text-[17px] font-bold text-black transition-[scale,filter] hover:brightness-95 active:scale-[0.97] ${focusRing}`}
               >
                 앱 설치하기

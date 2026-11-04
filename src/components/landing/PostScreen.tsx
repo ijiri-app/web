@@ -1,4 +1,4 @@
-import { ArrowLeft, Bookmark, Heart, MessageSquare } from "lucide-react";
+import { ArrowLeft, Bookmark, Heart } from "lucide-react";
 import { SCREEN_H, SCREEN_W } from "./FeedScreen";
 import { TaggedPhoto } from "./HeroPhoto";
 import { ownerBuilds, partCategoryLabel, partColor, type OwnerBuild } from "./data";
@@ -7,13 +7,12 @@ import { ownerBuilds, partCategoryLabel, partColor, type OwnerBuild } from "./da
 export function PostScreen({ build = ownerBuilds[0] }: { build?: OwnerBuild }) {
   const stats = [
     { Icon: Heart, n: build.likes, label: "좋아요" },
-    { Icon: MessageSquare, n: build.comments, label: "댓글" },
     { Icon: Bookmark, n: build.saves, label: "담기" },
   ];
   return (
     <div className="relative overflow-hidden rounded-[40px] bg-bg text-left select-none" style={{ width: SCREEN_W, height: SCREEN_H }}>
       <div className="relative h-[330px]">
-        <TaggedPhoto photoId={build.photoId} tags={build.tags} alt={`${build.meta} 오너 사진`} width={720} small refAspect={build.refAspect} />
+        <TaggedPhoto photoId={build.photoId} tags={build.tags} alt={`${build.meta} 예시 사진`} width={720} small refAspect={build.refAspect} />
         <ArrowLeft aria-hidden className="pointer-events-none absolute top-12 left-5 size-6" strokeWidth={1.75} />
       </div>
       <div className="mt-3 flex items-center gap-2.5 px-5">
