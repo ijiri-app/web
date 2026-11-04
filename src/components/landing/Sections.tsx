@@ -31,7 +31,7 @@ const steps: Step[] = [
     focus: [180, 165, 1],
     visual: (
       <div className="relative h-[460px] overflow-hidden rounded-[20px]">
-        <TaggedPhoto photoId={heroPhotoId} tags={heroTags} alt="튜닝된 BMW M4 CS 오너 사진" width={1400} refAspect={heroRefAspect} />
+        <TaggedPhoto photoId={heroPhotoId} tags={heroTags} alt="부품 태그를 단 튜닝카 예시 사진" width={1400} refAspect={heroRefAspect} />
       </div>
     ),
     lead: "부품 태그",

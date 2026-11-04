@@ -16,7 +16,10 @@ function TabBar({ active }: { active: number }) {
   return (
     <div className="absolute inset-x-4 bottom-5 flex h-14 items-center justify-center rounded-full bg-surface-3/70 px-3">
       {icons.map((Icon, i) => (
-        <span key={i} className={`flex h-11 w-14 items-center justify-center rounded-full ${i === active ? "bg-white/10 text-text-1 ring-1 ring-white/15" : "text-icon-off"}`}>
+        <span
+          key={i}
+          className={`flex h-11 w-14 items-center justify-center rounded-full ${i === active ? "bg-white/10 text-text-1 ring-1 ring-white/15" : "text-icon-off"}`}
+        >
           <Icon aria-hidden className="size-5" strokeWidth={1.75} />
         </span>
       ))}
@@ -28,13 +31,13 @@ function TabBar({ active }: { active: number }) {
 export function InterestScreen() {
   const cars = [
     ["현대", "아반떼 N", true],
-    ["현대", "아이오닉 5 N"],
-    ["기아", "K5"],
-    ["현대", "제네시스 쿠페"],
-    ["기아", "스팅어"],
-    ["토요타", "GR86"],
-    ["BMW", "M4"],
     ["BMW", "M3"],
+    ["BMW", "M4"],
+    ["BMW", "3시리즈"],
+    ["BMW", "4시리즈"],
+    ["현대", "제네시스 쿠페"],
+    ["제네시스", "G70"],
+    ["기아", "스팅어"],
   ] as const;
   return (
     <Frame>
@@ -54,7 +57,10 @@ export function InterestScreen() {
         </div>
         <div className="mt-4 grid grid-cols-2 gap-2">
           {cars.map(([brand, name, on]) => (
-            <div key={name} className={`relative flex h-[68px] flex-col justify-center rounded-xl px-3 ${on ? "bg-accent/15 ring-2 ring-accent" : "bg-surface-2"}`}>
+            <div
+              key={name}
+              className={`relative flex h-[68px] flex-col justify-center rounded-xl px-3 ${on ? "bg-accent/15 ring-2 ring-accent" : "bg-surface-2"}`}
+            >
               <span className="text-[12px] text-text-3">{brand}</span>
               <span className="text-[16px] font-medium">{name}</span>
               <span className={`absolute top-2.5 right-2.5 flex size-5 items-center justify-center rounded-full ${on ? "bg-accent" : "ring-1 ring-muted"}`}>
@@ -145,7 +151,9 @@ export function PickScreen() {
         {thumbs.map((t, i) => (
           <div key={i} className="relative">
             <CarPhoto src={unsplash(t.photoId, 200)} alt="" className="aspect-square w-full" />
-            <span className={`absolute top-1.5 right-1.5 flex size-5 items-center justify-center rounded-full text-[11px] font-bold ${order[i] ? "bg-accent" : "ring-1 ring-white/70"}`}>
+            <span
+              className={`absolute top-1.5 right-1.5 flex size-5 items-center justify-center rounded-full text-[11px] font-bold ${order[i] ? "bg-accent" : "ring-1 ring-white/70"}`}
+            >
               {order[i] ?? ""}
             </span>
           </div>
@@ -185,7 +193,10 @@ export function NotificationScreen() {
       <ul aria-label="이지리 알림" className="absolute inset-x-2.5 bottom-[120px] flex flex-col gap-2" style={sf}>
         {lockAlerts.map((a) => (
           <li key={a.title} className="notif flex items-center gap-2.5 rounded-[20px] bg-white/20 px-3 py-2.5 backdrop-blur-xl">
-            <span aria-hidden className="flex size-[38px] shrink-0 items-center justify-center rounded-[9px] bg-white font-logo text-[11px] leading-none text-black">
+            <span
+              aria-hidden
+              className="flex size-[38px] shrink-0 items-center justify-center rounded-[9px] bg-white font-logo text-[11px] leading-none text-black"
+            >
               IJIRI
             </span>
             <span className="flex min-w-0 flex-1 flex-col text-white">

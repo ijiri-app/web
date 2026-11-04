@@ -17,7 +17,7 @@ export const faqs = [
   { q: "돈이 드나요?", a: "무료예요." },
   {
     q: "어디서 받을 수 있나요?",
-    a: "Android(Google Play, 원스토어)부터 먼저 나오고, iPhone(App Store)은 그 뒤에 나와요.",
+    a: "Android(Google Play, 원스토어)부터 먼저 나오고, iPhone(App Store)은 그 뒤에 나와요. 출시 소식은 인스타그램 @ijiri_car에서 가장 먼저 알려 드려요.",
   },
   {
     q: "부품 태그가 뭔가요?",

@@ -2,7 +2,8 @@
 
 import { useRef } from "react";
 import { X } from "lucide-react";
-import { liveUrl } from "@/lib/stores";
+import { siInstagram } from "simple-icons";
+import { contact, launched, liveUrl } from "@/lib/stores";
 
 /** 지금 열린 스토어에 맞춘 QR 안내 문구 */
 const installNote = (() => {
@@ -19,15 +20,28 @@ type Props = {
   qrSvg: string;
   className?: string;
   children: React.ReactNode;
+  /** 출시 전 문구. 스토어가 하나도 열리지 않았으면 설치 대신 인스타그램 팔로우로 보낸다 */
+  prelaunch: React.ReactNode;
 };
 
 /**
- * 설치하기 버튼.
+ * 설치하기 버튼. 출시 전에는 인스타그램(출시 소식) 링크가 된다.
  * 폰에서는 /install로 바로 가서 기기에 맞는 스토어로 이동하고,
  * PC(마우스 환경)에서는 같은 주소의 QR 코드를 띄운다.
  */
-export function InstallButton({ qrSvg, className = "", children }: Props) {
+export function InstallButton({ qrSvg, className = "", children, prelaunch }: Props) {
   const dialog = useRef<HTMLDialogElement>(null);
+
+  if (!launched && contact.instagram) {
+    return (
+      <a href={contact.instagram} target="_blank" rel="noopener noreferrer" className={`gap-2 ${className}`}>
+        <svg aria-hidden viewBox="0 0 24 24" className="size-[1.1em] shrink-0 fill-current">
+          <path d={siInstagram.path} />
+        </svg>
+        {prelaunch}
+      </a>
+    );
+  }
 
   const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const desktop = window.matchMedia("(hover: hover) and (pointer: fine)").matches;

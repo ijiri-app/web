@@ -32,10 +32,7 @@ export function FeedScreen({ active = "전체" }: { active?: Build }) {
   const items = active === "전체" ? feedItems : feedItems.filter((item) => item.build === active);
 
   return (
-    <div
-      className="relative overflow-hidden rounded-[40px] bg-bg text-left select-none"
-      style={{ width: SCREEN_W, height: SCREEN_H }}
-    >
+    <div className="relative overflow-hidden rounded-[40px] bg-bg text-left select-none" style={{ width: SCREEN_W, height: SCREEN_H }}>
       <div className="flex items-center justify-between px-5 pt-12">
         <Plus aria-hidden className="size-7 text-text-1" strokeWidth={1.75} />
         <span className="font-logo text-xl text-text-1">IJIRI</span>
@@ -45,10 +42,7 @@ export function FeedScreen({ active = "전체" }: { active?: Build }) {
       <div className="mt-6 border-b border-surface-3">
         <div className="flex px-4">
           {modelTabs.map((tab, i) => (
-            <span
-              key={tab}
-              className={`relative px-2 pb-2.5 text-base font-medium whitespace-nowrap ${i === 0 ? "text-text-1" : "text-text-2"}`}
-            >
+            <span key={tab} className={`relative px-2 pb-2.5 text-base font-medium whitespace-nowrap ${i === 0 ? "text-text-1" : "text-text-2"}`}>
               {tab}
               {i === 0 && <span className="absolute inset-x-0 bottom-0 h-1 bg-accent" />}
             </span>
@@ -72,7 +66,7 @@ export function FeedScreen({ active = "전체" }: { active?: Build }) {
           <div key={item.photoId} className="mb-3 break-inside-avoid">
             <CarPhoto
               src={unsplash(item.photoId, 400)}
-              alt={`${item.year} ${item.model} 오너 사진`}
+              alt={`${item.year} ${item.model} 예시 사진`}
               className={`w-full rounded-lg ${item.tall ? "h-[190px]" : "h-[150px]"}`}
             />
             <div className="mt-1 flex items-center justify-between text-[13px]">

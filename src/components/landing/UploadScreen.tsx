@@ -17,7 +17,7 @@ export function UploadScreen() {
       </div>
 
       <div className="relative mx-4 mt-5 h-[300px] overflow-hidden rounded-xl">
-        <CarPhoto src={unsplash(main.photoId, 720)} alt="번호판을 가릴 오너 사진" className="size-full" />
+        <CarPhoto src={unsplash(main.photoId, 720)} alt="번호판을 가릴 예시 사진" className="size-full" />
         <span className="absolute top-3 left-3 rounded-md bg-accent-strong px-2 py-1 text-[13px] font-semibold">자동으로 찾았어요</span>
         <span aria-hidden className="absolute bottom-[22%] left-[38%] h-[9%] w-[24%] rounded-sm border-2 border-accent bg-black/80" />
       </div>

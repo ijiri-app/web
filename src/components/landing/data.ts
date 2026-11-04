@@ -7,7 +7,8 @@
 export const unsplash = (id: string, width = 800) =>
   `https://unsplash.com/photos/${id}/download?w=${width}`;
 
-export const buildChips = ["전체", "데일리", "서킷", "스탠스", "VIP", "순정", "드래그"] as const;
+/** 앱의 빌드 방향 4개 */
+export const buildChips = ["전체", "데일리", "서킷", "스탠스", "순정룩"] as const;
 export type Build = (typeof buildChips)[number];
 
 export type FeedItem = {
@@ -21,14 +22,15 @@ export type FeedItem = {
 
 export const feedItems: FeedItem[] = [
   { photoId: "dveDkZQJVjQ", year: "2023", model: "M4 CS", parts: 7, build: "서킷" },
-  { photoId: "mhnv9jK2rE4", year: "2022", model: "제네시스", parts: 5, build: "VIP", tall: true },
+  { photoId: "mhnv9jK2rE4", year: "2022", model: "제네시스", parts: 5, build: "스탠스", tall: true },
   { photoId: "qEXp4K4Y8t4", year: "2021", model: "M4", parts: 14, build: "데일리" },
-  { photoId: "-mMRfzaeamg", year: "2024", model: "현대", parts: 3, build: "순정" },
+  { photoId: "-mMRfzaeamg", year: "2024", model: "현대", parts: 3, build: "순정룩" },
   { photoId: "ITny35bfO00", year: "2020", model: "BMW M", parts: 9, build: "스탠스", tall: true },
   { photoId: "MCKMptaw8xc", year: "2019", model: "스포츠카", parts: 23, build: "서킷" },
 ];
 
-export const modelTabs = ["전체", "아반떼 N", "M4", "제네시스 쿠페"];
+/** 출시 핵심 4계열 */
+export const modelTabs = ["전체", "아반떼 N", "M3·M4", "제네시스 쿠페", "G70·스팅어"];
 
 export type PartCategory = "ext" | "int" | "pwr" | "und";
 
@@ -88,7 +90,6 @@ export type OwnerBuild = {
   title: string;
   photoId: string;
   likes: number;
-  comments: number;
   saves: number;
   tags: Tag[];
   parts: { cat: PartCategory; items: string[] }[];
@@ -109,7 +110,6 @@ export const ownerBuilds: OwnerBuild[] = [
     title: "주말 트랙데이 셋업",
     photoId: "dveDkZQJVjQ",
     likes: 12,
-    comments: 4,
     saves: 31,
     tags: heroTags,
     refAspect: heroRefAspect,
@@ -127,7 +127,6 @@ export const ownerBuilds: OwnerBuild[] = [
     title: "출퇴근도 하는 M4",
     photoId: "qEXp4K4Y8t4",
     likes: 27,
-    comments: 9,
     saves: 54,
     tags: [
       { label: "흡기 킷", category: "pwr", ax: 46, ay: 50, lx: 40, ly: 28, side: "left" },
@@ -142,13 +141,12 @@ export const ownerBuilds: OwnerBuild[] = [
   },
   {
     id: "genesis",
-    name: "제네시스 VIP",
+    name: "제네시스 스탠스",
     owner: "g.vip.kr",
-    meta: "제네시스 2022년식 VIP",
-    title: "저차고 VIP 셋업",
+    meta: "제네시스 2022년식 스탠스",
+    title: "에어서스 저차고 셋업",
     photoId: "mhnv9jK2rE4",
     likes: 19,
-    comments: 6,
     saves: 22,
     tags: [
       { label: "크롬 몰딩", category: "ext", ax: 44, ay: 46, lx: 36, ly: 26, side: "left" },
@@ -170,7 +168,6 @@ export const ownerBuilds: OwnerBuild[] = [
     title: "캠버 맞춘 스탠스",
     photoId: "ITny35bfO00",
     likes: 41,
-    comments: 15,
     saves: 68,
     tags: [
       { label: "오버 펜더", category: "ext", ax: 30, ay: 58, lx: 22, ly: 34, side: "left" },

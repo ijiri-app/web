@@ -1,6 +1,6 @@
 import { Mail } from "lucide-react";
 import { siInstagram } from "simple-icons";
-import { legal } from "@/lib/legal";
+import { isBlank, legal } from "@/lib/legal";
 import { contact, liveUrl } from "@/lib/stores";
 
 /* 푸터: 로고와 한 줄 소개, 메뉴 열, 아래 줄에 사업자 정보와 정책 */
@@ -97,7 +97,7 @@ export function SiteFooter() {
 
       <div className="flex flex-col gap-3 bg-bg px-5 py-6 text-[13px] text-text-3 md:px-12 lg:flex-row lg:items-center lg:justify-between lg:px-[72px]">
         <div className="flex flex-col gap-1 lg:flex-row lg:gap-6">
-          <span>운영자 {legal.operator}</span>
+          {!isBlank(legal.operator) && <span>운영자 {legal.operator}</span>}
           <span>문의 {contact.email}</span>
           <span>© 2026 IJIRI. All rights reserved.</span>
         </div>
