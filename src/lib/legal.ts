@@ -6,7 +6,7 @@ export const legal = {
   operator: "이도건",
   effective: "2026년중",
   playDeveloper: "Team IJIRI",
-  r2Region: "아시아·태평양 지역 (APAC, 정확한 나라는 Cloudflare가 정함)",
+  r2Region: "아시아·태평양 지역 (APAC)",
   /**
    * 인증 메일을 보내는 SMTP. 서버 MAIL_HOST에 맞춘다.
    * kakao = 다음 스마트워크(smtp.daum.net, 국내), gmail = Gmail(smtp.gmail.com, 미국으로 국외 이전)
