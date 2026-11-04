@@ -10,6 +10,12 @@ export const metadata: Metadata = pageMetadata({
   description: "이지리가 수집하는 개인정보, 이용 목적, 보관 기간, 위탁, 이용자 권리와 행사 방법을 안내합니다.",
 });
 
+/** 인증 메일 발송 업체 (src/lib/legal.ts의 mailVendor) */
+const mail =
+  legal.mailVendor === "gmail"
+    ? { company: "Google LLC", service: "Gmail", overseas: true }
+    : { company: "주식회사 카카오", service: "다음 스마트워크", overseas: false };
+
 const sections: LegalSection[] = [
   {
     id: "items",
@@ -119,15 +125,15 @@ const sections: LegalSection[] = [
           <tbody>
             <tr>
               <td>Cloudflare, Inc.</td>
-              <td>사진 저장 (Cloudflare R2)</td>
+              <td>사진 저장 (Cloudflare R2), 앱과 서버 사이 접속 경로 제공 (Cloudflare Tunnel)</td>
             </tr>
             <tr>
               <td>650 Industries, Inc. (Expo)</td>
               <td>푸시 알림 발송</td>
             </tr>
             <tr>
-              <td>Amazon Web Services, Inc.</td>
-              <td>인증 메일 발송 (Amazon SES)</td>
+              <td>{mail.company}</td>
+              <td>인증 메일 발송 ({mail.service})</td>
             </tr>
           </tbody>
         </table>
@@ -153,9 +159,9 @@ const sections: LegalSection[] = [
               <td>
                 국가: {legal.r2Region}
                 <br />
-                항목: 게시물 사진, 프로필 사진
+                항목: 게시물 사진, 프로필 사진, 앱과 서버가 주고받는 데이터(암호화된 상태로 거쳐 감)
                 <br />
-                목적: 사진 저장과 전송
+                목적: 사진 저장과 전송, 서버 접속 경로 제공
                 <br />
                 기간: 게시물 삭제 또는 탈퇴 후 30일까지
               </td>
@@ -172,18 +178,20 @@ const sections: LegalSection[] = [
                 기간: 알림을 끄거나 탈퇴할 때까지
               </td>
             </tr>
-            <tr>
-              <td>Amazon Web Services, Inc.</td>
-              <td>
-                국가: {legal.sesRegion}
-                <br />
-                항목: 이메일
-                <br />
-                목적: 가입 인증, 비밀번호 재설정 메일 발송
-                <br />
-                기간: 발송 후 {legal.sesRetention}
-              </td>
-            </tr>
+            {mail.overseas && (
+              <tr>
+                <td>{mail.company}</td>
+                <td>
+                  국가: 미국
+                  <br />
+                  항목: 이메일, 메일 내용(인증 번호)
+                  <br />
+                  목적: 가입 인증, 비밀번호 재설정 메일 발송
+                  <br />
+                  기간: 메일 서비스의 보관 기간까지
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
         <p>
@@ -225,6 +233,8 @@ const sections: LegalSection[] = [
       <ol>
         <li>비밀번호는 되돌릴 수 없게 암호화해서 저장해요.</li>
         <li>모든 통신은 암호화(HTTPS)해요.</li>
+        <li>회원 정보는 운영자가 직접 관리하는 국내 서버에 저장하고, 서버는 밖에서 바로 접속할 수 없게 막아 두었어요.</li>
+        <li>백업은 암호화된 연결로 따로 보관하고, 탈퇴한 회원의 정보가 남지 않도록 30일까지만 둬요.</li>
         <li>개인정보에 접근할 수 있는 사람을 최소로 제한해요.</li>
       </ol>
     ),
